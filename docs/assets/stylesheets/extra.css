@@ -1,21 +1,37 @@
 /* Alopex DB Custom Styles for MkDocs Material */
+/* Arctic Fox Theme - Silver & Deep Blue */
 
 /* ===== Color Scheme Overrides ===== */
 :root {
-    --md-primary-fg-color: #FF6B35;
-    --md-primary-fg-color--light: #FF8A5B;
-    --md-primary-fg-color--dark: #E85A24;
-    --md-accent-fg-color: #4ECDC4;
+    /* Arctic color palette */
+    --alopex-silver: #C0C5CE;
+    --alopex-silver-light: #DFE1E8;
+    --alopex-silver-dark: #A7ADBA;
+    --alopex-deep-blue: #1E3A5F;
+    --alopex-deep-blue-light: #2E5077;
+    --alopex-ice-blue: #5FB4C9;
+    --alopex-aurora: #7EC8E3;
+    --alopex-frost: #B8D4E3;
+
+    --md-primary-fg-color: var(--alopex-deep-blue);
+    --md-primary-fg-color--light: var(--alopex-deep-blue-light);
+    --md-primary-fg-color--dark: #152C4A;
+    --md-accent-fg-color: var(--alopex-ice-blue);
 }
 
 [data-md-color-scheme="slate"] {
-    --md-default-bg-color: #0D1117;
-    --md-default-bg-color--light: #161B22;
-    --md-default-fg-color: #E6EDF3;
-    --md-default-fg-color--light: #8B949E;
-    --md-typeset-color: #E6EDF3;
-    --md-code-bg-color: #161B22;
-    --md-code-fg-color: #E6EDF3;
+    --md-default-bg-color: #0B1929;
+    --md-default-bg-color--light: #0F2137;
+    --md-default-fg-color: #E8EEF2;
+    --md-default-fg-color--light: #A0B4C4;
+    --md-typeset-color: #E8EEF2;
+    --md-code-bg-color: #0F2137;
+    --md-code-fg-color: #E8EEF2;
+}
+
+[data-md-color-scheme="default"] {
+    --md-default-bg-color: #F8FAFC;
+    --md-default-bg-color--light: #FFFFFF;
 }
 
 /* ===== Hero Section ===== */
@@ -29,7 +45,14 @@
     font-size: 3.5rem !important;
     font-weight: 700 !important;
     margin-bottom: 0.5rem !important;
-    background: linear-gradient(135deg, var(--md-default-fg-color) 0%, var(--md-primary-fg-color--light) 100%);
+    background: linear-gradient(135deg, var(--alopex-silver-light) 0%, var(--alopex-ice-blue) 50%, var(--alopex-aurora) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+[data-md-color-scheme="default"] .hero-title {
+    background: linear-gradient(135deg, var(--alopex-deep-blue) 0%, var(--alopex-deep-blue-light) 50%, var(--alopex-ice-blue) 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -66,9 +89,9 @@
 }
 
 .grid.cards > ul > li:hover {
-    border-color: var(--md-primary-fg-color);
+    border-color: var(--alopex-ice-blue);
     transform: translateY(-2px);
-    box-shadow: 0 4px 20px rgba(255, 107, 53, 0.1);
+    box-shadow: 0 4px 20px rgba(94, 180, 201, 0.15);
 }
 
 .grid.cards > ul > li > p:first-child {
@@ -103,7 +126,7 @@
 }
 
 .md-typeset table:not([class]) th {
-    background: var(--md-primary-fg-color);
+    background: var(--alopex-deep-blue);
     color: white;
 }
 
@@ -129,17 +152,17 @@
 }
 
 .md-typeset .md-button--primary {
-    background: linear-gradient(135deg, var(--md-primary-fg-color) 0%, var(--md-primary-fg-color--dark) 100%);
-    border-color: var(--md-primary-fg-color);
+    background: linear-gradient(135deg, var(--alopex-deep-blue) 0%, var(--alopex-deep-blue-light) 100%);
+    border-color: var(--alopex-deep-blue);
 }
 
 .md-typeset .md-button--primary:hover {
-    box-shadow: 0 4px 20px rgba(255, 107, 53, 0.3);
+    box-shadow: 0 4px 20px rgba(30, 58, 95, 0.4);
 }
 
 /* ===== Navigation ===== */
 .md-nav__link--active {
-    color: var(--md-primary-fg-color) !important;
+    color: var(--alopex-ice-blue) !important;
 }
 
 /* ===== Footer ===== */
@@ -193,7 +216,7 @@
 
 /* ===== Announcement Bar ===== */
 .md-banner {
-    background: linear-gradient(135deg, var(--md-primary-fg-color) 0%, var(--md-primary-fg-color--dark) 100%);
+    background: linear-gradient(135deg, var(--alopex-deep-blue) 0%, var(--alopex-deep-blue-light) 100%);
 }
 
 .md-banner__inner {
@@ -208,11 +231,11 @@
 /* ===== Back to top ===== */
 .md-top {
     border-radius: 8px;
-    background: var(--md-primary-fg-color);
+    background: var(--alopex-deep-blue);
 }
 
 .md-top:hover {
-    background: var(--md-primary-fg-color--dark);
+    background: var(--alopex-deep-blue-light);
 }
 
 /* ===== Copy button ===== */
@@ -221,11 +244,30 @@
 }
 
 .md-clipboard:hover {
-    color: var(--md-primary-fg-color);
+    color: var(--alopex-ice-blue);
 }
 
 /* ===== Version Badge ===== */
 .md-typeset .md-tag {
-    background: var(--md-primary-fg-color);
+    background: var(--alopex-deep-blue);
     color: white;
+}
+
+/* ===== Arctic Fox Accent Elements ===== */
+.md-header {
+    background: linear-gradient(135deg, var(--alopex-deep-blue) 0%, #152C4A 100%);
+}
+
+/* Subtle aurora effect on hover for interactive elements */
+a:hover {
+    text-decoration-color: var(--alopex-ice-blue);
+}
+
+/* Code syntax - ice blue accents */
+.md-typeset code {
+    border: 1px solid rgba(94, 180, 201, 0.2);
+}
+
+[data-md-color-scheme="slate"] .md-typeset code {
+    background: rgba(15, 33, 55, 0.8);
 }

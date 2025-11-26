@@ -14,17 +14,17 @@ theme:
   custom_dir: docs/overrides
 
   palette:
-    # Dark mode (default)
+    # Dark mode (default) - Arctic theme
     - scheme: slate
-      primary: deep orange
-      accent: teal
+      primary: indigo
+      accent: cyan
       toggle:
         icon: material/brightness-4
         name: Switch to light mode
-    # Light mode
+    # Light mode - Snow theme
     - scheme: default
-      primary: deep orange
-      accent: teal
+      primary: indigo
+      accent: cyan
       toggle:
         icon: material/brightness-7
         name: Switch to dark mode
