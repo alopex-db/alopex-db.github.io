@@ -1,0 +1,141 @@
+site_name: Alopex DB
+site_url: https://alopex-db.github.io
+site_description: The unified database engine that scales from embedded to distributed. Native SQL, Vector Search, and Graph capabilities in one Rust-based engine.
+site_author: Alopex DB Team
+
+repo_name: alopex-db/alopex
+repo_url: https://github.com/alopex-db/alopex
+
+copyright: Copyright &copy; 2024-2025 Alopex DB Team
+
+theme:
+  name: material
+  language: en
+  custom_dir: docs/overrides
+
+  palette:
+    # Dark mode (default)
+    - scheme: slate
+      primary: deep orange
+      accent: teal
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
+    # Light mode
+    - scheme: default
+      primary: deep orange
+      accent: teal
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+
+  font:
+    text: Inter
+    code: JetBrains Mono
+
+  logo: assets/images/logo.svg
+  favicon: assets/images/favicon.png
+
+  icon:
+    repo: fontawesome/brands/github
+
+  features:
+    - navigation.instant
+    - navigation.instant.prefetch
+    - navigation.tracking
+    - navigation.tabs
+    - navigation.tabs.sticky
+    - navigation.sections
+    - navigation.expand
+    - navigation.path
+    - navigation.top
+    - navigation.footer
+    - search.suggest
+    - search.highlight
+    - search.share
+    - content.code.copy
+    - content.code.annotate
+    - content.tabs.link
+    - toc.follow
+    - announce.dismiss
+
+extra:
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/alopex-db
+      name: Alopex DB on GitHub
+
+  generator: false
+
+  analytics:
+    provider: google
+    property: G-XXXXXXXXXX
+
+  status:
+    new: Recently added
+    deprecated: Deprecated
+
+extra_css:
+  - assets/stylesheets/extra.css
+
+markdown_extensions:
+  - abbr
+  - admonition
+  - attr_list
+  - def_list
+  - footnotes
+  - md_in_html
+  - tables
+  - toc:
+      permalink: true
+      toc_depth: 3
+  - pymdownx.arithmatex:
+      generic: true
+  - pymdownx.betterem:
+      smart_enable: all
+  - pymdownx.caret
+  - pymdownx.details
+  - pymdownx.emoji:
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
+  - pymdownx.highlight:
+      anchor_linenums: true
+      line_spans: __span
+      pygments_lang_class: true
+  - pymdownx.inlinehilite
+  - pymdownx.keys
+  - pymdownx.mark
+  - pymdownx.smartsymbols
+  - pymdownx.snippets
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+  - pymdownx.tabbed:
+      alternate_style: true
+  - pymdownx.tasklist:
+      custom_checkbox: true
+  - pymdownx.tilde
+
+plugins:
+  - search:
+      separator: '[\s\-,:!=\[\]()"/]+|(?!\b)(?=[A-Z][a-z])|\.(?!\d)|&[lg]t;'
+  - minify:
+      minify_html: true
+
+nav:
+  - Home: index.md
+  - Getting Started:
+    - Quick Start: getting-started/quickstart.md
+    - Installation: getting-started/installation.md
+  - Concepts:
+    - Overview: concepts/overview.md
+    - Three Modes: concepts/modes.md
+    - Vector Search: concepts/vector-search.md
+    - Architecture: concepts/architecture.md
+  - Guides:
+    - SQL + Vector: guides/sql-vector.md
+    - Lake-Link: guides/lake-link.md
+  - Roadmap: roadmap.md
+  - Contributing: contributing.md

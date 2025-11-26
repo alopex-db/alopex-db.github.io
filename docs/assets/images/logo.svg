@@ -1,0 +1,117 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <defs>
+    <!-- Metallic silver gradient - main body -->
+    <linearGradient id="silverMetal" x1="100%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#F8F9FA"/>
+      <stop offset="25%" style="stop-color:#DEE2E6"/>
+      <stop offset="50%" style="stop-color:#ADB5BD"/>
+      <stop offset="75%" style="stop-color:#CED4DA"/>
+      <stop offset="100%" style="stop-color:#E9ECEF"/>
+    </linearGradient>
+
+    <!-- Chrome highlight gradient -->
+    <linearGradient id="chromeHighlight" x1="100%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#FFFFFF"/>
+      <stop offset="40%" style="stop-color:#F8F9FA"/>
+      <stop offset="100%" style="stop-color:#ADB5BD"/>
+    </linearGradient>
+
+    <!-- Dark metallic for shadows -->
+    <linearGradient id="darkMetal" x1="100%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#6C757D"/>
+      <stop offset="50%" style="stop-color:#495057"/>
+      <stop offset="100%" style="stop-color:#343A40"/>
+    </linearGradient>
+
+    <!-- Ice blue accent -->
+    <linearGradient id="iceAccent" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#4ECDC4"/>
+      <stop offset="100%" style="stop-color:#45B7AA"/>
+    </linearGradient>
+
+    <!-- Lighter silver for child fox -->
+    <linearGradient id="silverLight" x1="100%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#FFFFFF"/>
+      <stop offset="50%" style="stop-color:#F8F9FA"/>
+      <stop offset="100%" style="stop-color:#DEE2E6"/>
+    </linearGradient>
+  </defs>
+
+  <!-- ===== PARENT FOX (rear, larger) - facing left ===== -->
+  <g id="parentFox">
+    <!-- Head base - side profile facing left -->
+    <polygon points="95,25 95,55 75,70 55,65 45,50 50,35 65,20 85,18" fill="url(#silverMetal)"/>
+
+    <!-- Ear - sharp triangle -->
+    <polygon points="85,18 92,2 70,15" fill="url(#silverMetal)"/>
+    <polygon points="86,16 90,5 74,14" fill="url(#chromeHighlight)"/>
+    <polygon points="87,14 89,7 78,13" fill="url(#darkMetal)" opacity="0.4"/>
+
+    <!-- Snout profile -->
+    <polygon points="55,65 45,50 35,55 40,65 50,70" fill="url(#silverMetal)"/>
+    <polygon points="52,63 45,52 38,56 42,64" fill="url(#chromeHighlight)" opacity="0.6"/>
+
+    <!-- Nose -->
+    <polygon points="38,55 35,55 36,58 39,58" fill="#343A40"/>
+
+    <!-- Eye socket -->
+    <polygon points="68,35 58,32 54,42 60,48 70,45" fill="url(#darkMetal)" opacity="0.7"/>
+
+    <!-- Eye -->
+    <polygon points="66,37 60,35 57,42 62,46 68,43" fill="#0D1117"/>
+    <polygon points="64,38 61,37 59,41 62,44" fill="url(#iceAccent)"/>
+    <circle cx="63" cy="40" r="1.2" fill="#FFFFFF"/>
+
+    <!-- Face highlight -->
+    <polygon points="80,30 65,28 55,45 65,55 80,50" fill="url(#chromeHighlight)" opacity="0.5"/>
+
+    <!-- Neck/chest fur -->
+    <polygon points="95,55 75,70 80,80 100,70" fill="url(#silverMetal)"/>
+    <polygon points="92,58 78,70 82,77 95,68" fill="url(#chromeHighlight)" opacity="0.4"/>
+
+    <!-- Edge highlight -->
+    <polyline points="92,2 85,18 95,25" fill="none" stroke="#FFFFFF" stroke-width="0.5" opacity="0.5"/>
+  </g>
+
+  <!-- ===== CHILD FOX (front, smaller) - facing left ===== -->
+  <g id="childFox">
+    <!-- Head base - side profile facing left, positioned in front and below -->
+    <polygon points="60,50 60,72 45,82 30,78 22,68 25,58 35,48 50,46" fill="url(#silverLight)"/>
+
+    <!-- Ear - smaller sharp triangle -->
+    <polygon points="50,46 54,35 38,44" fill="url(#silverLight)"/>
+    <polygon points="51,45 53,37 42,43" fill="url(#chromeHighlight)"/>
+    <polygon points="51,44 52,39 45,43" fill="url(#darkMetal)" opacity="0.3"/>
+
+    <!-- Snout profile - smaller, cuter proportions -->
+    <polygon points="30,78 22,68 14,72 17,79 25,83" fill="url(#silverLight)"/>
+    <polygon points="28,77 22,70 16,73 19,78" fill="url(#chromeHighlight)" opacity="0.7"/>
+
+    <!-- Nose - smaller -->
+    <polygon points="16,72 14,72 15,74 17,74" fill="#343A40"/>
+
+    <!-- Eye socket -->
+    <polygon points="42,58 34,56 31,63 36,68 44,66" fill="url(#darkMetal)" opacity="0.6"/>
+
+    <!-- Eye - larger relative to face (cuter) -->
+    <polygon points="41,59 35,57 32,63 37,67 43,65" fill="#0D1117"/>
+    <polygon points="39,60 36,59 34,63 37,66" fill="url(#iceAccent)"/>
+    <circle cx="38" cy="62" r="1.5" fill="#FFFFFF"/>
+
+    <!-- Face highlight -->
+    <polygon points="52,55 40,54 32,65 40,73 52,68" fill="url(#chromeHighlight)" opacity="0.5"/>
+
+    <!-- Chest fur -->
+    <polygon points="60,72 45,82 48,92 62,85" fill="url(#silverLight)"/>
+    <polygon points="58,74 47,82 50,89 60,83" fill="url(#chromeHighlight)" opacity="0.4"/>
+
+    <!-- Edge highlight -->
+    <polyline points="54,35 50,46 60,50" fill="none" stroke="#FFFFFF" stroke-width="0.4" opacity="0.6"/>
+  </g>
+
+  <!-- Connecting element - subtle line suggesting closeness -->
+  <path d="M 75,70 Q 65,75 60,72" fill="none" stroke="url(#silverMetal)" stroke-width="1" opacity="0.3"/>
+
+  <!-- Accent glow around both -->
+  <ellipse cx="50" cy="60" rx="48" ry="38" fill="none" stroke="url(#iceAccent)" stroke-width="0.4" opacity="0.2"/>
+</svg>

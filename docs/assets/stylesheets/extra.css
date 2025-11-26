@@ -1,0 +1,231 @@
+/* Alopex DB Custom Styles for MkDocs Material */
+
+/* ===== Color Scheme Overrides ===== */
+:root {
+    --md-primary-fg-color: #FF6B35;
+    --md-primary-fg-color--light: #FF8A5B;
+    --md-primary-fg-color--dark: #E85A24;
+    --md-accent-fg-color: #4ECDC4;
+}
+
+[data-md-color-scheme="slate"] {
+    --md-default-bg-color: #0D1117;
+    --md-default-bg-color--light: #161B22;
+    --md-default-fg-color: #E6EDF3;
+    --md-default-fg-color--light: #8B949E;
+    --md-typeset-color: #E6EDF3;
+    --md-code-bg-color: #161B22;
+    --md-code-fg-color: #E6EDF3;
+}
+
+/* ===== Hero Section ===== */
+.hero {
+    text-align: center;
+    padding: 2rem 1rem 3rem;
+    margin-bottom: 2rem;
+}
+
+.hero-title {
+    font-size: 3.5rem !important;
+    font-weight: 700 !important;
+    margin-bottom: 0.5rem !important;
+    background: linear-gradient(135deg, var(--md-default-fg-color) 0%, var(--md-primary-fg-color--light) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.hero-tagline {
+    font-size: 1.5rem !important;
+    font-weight: 400 !important;
+    color: var(--md-default-fg-color--light) !important;
+    margin-bottom: 1.5rem !important;
+}
+
+/* ===== Grid Cards ===== */
+.grid.cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1rem;
+    margin: 1.5rem 0;
+}
+
+.grid.cards > ul {
+    display: contents;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.grid.cards > ul > li {
+    background: var(--md-code-bg-color);
+    border: 1px solid var(--md-default-fg-color--lightest);
+    border-radius: 8px;
+    padding: 1.25rem;
+    transition: all 0.2s ease;
+}
+
+.grid.cards > ul > li:hover {
+    border-color: var(--md-primary-fg-color);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 20px rgba(255, 107, 53, 0.1);
+}
+
+.grid.cards > ul > li > p:first-child {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 0.75rem;
+}
+
+/* Icons in grid cards */
+.grid.cards .lg {
+    font-size: 2rem;
+    margin-right: 0.5rem;
+}
+
+.grid.cards .middle {
+    vertical-align: middle;
+}
+
+/* ===== Code Blocks ===== */
+.md-typeset pre > code {
+    border-radius: 8px;
+}
+
+.md-typeset code {
+    border-radius: 4px;
+}
+
+/* ===== Tables ===== */
+.md-typeset table:not([class]) {
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.md-typeset table:not([class]) th {
+    background: var(--md-primary-fg-color);
+    color: white;
+}
+
+[data-md-color-scheme="slate"] .md-typeset table:not([class]) tr:nth-child(even) {
+    background: var(--md-code-bg-color);
+}
+
+/* ===== Admonitions ===== */
+.md-typeset .admonition,
+.md-typeset details {
+    border-radius: 8px;
+}
+
+/* ===== Buttons ===== */
+.md-typeset .md-button {
+    border-radius: 8px;
+    font-weight: 500;
+    transition: all 0.2s ease;
+}
+
+.md-typeset .md-button:hover {
+    transform: translateY(-2px);
+}
+
+.md-typeset .md-button--primary {
+    background: linear-gradient(135deg, var(--md-primary-fg-color) 0%, var(--md-primary-fg-color--dark) 100%);
+    border-color: var(--md-primary-fg-color);
+}
+
+.md-typeset .md-button--primary:hover {
+    box-shadow: 0 4px 20px rgba(255, 107, 53, 0.3);
+}
+
+/* ===== Navigation ===== */
+.md-nav__link--active {
+    color: var(--md-primary-fg-color) !important;
+}
+
+/* ===== Footer ===== */
+.footer-tagline {
+    text-align: center;
+    padding: 2rem;
+    color: var(--md-default-fg-color--light);
+    font-size: 0.9rem;
+}
+
+/* ===== Mermaid Diagrams ===== */
+.mermaid {
+    background: transparent !important;
+}
+
+[data-md-color-scheme="slate"] .mermaid {
+    --mermaid-font-family: var(--md-text-font-family);
+}
+
+/* ===== Responsive ===== */
+@media screen and (max-width: 76.1875em) {
+    .hero-title {
+        font-size: 2.5rem !important;
+    }
+
+    .hero-tagline {
+        font-size: 1.25rem !important;
+    }
+}
+
+@media screen and (max-width: 44.9375em) {
+    .hero-title {
+        font-size: 2rem !important;
+    }
+
+    .grid.cards {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* ===== Tab Content ===== */
+.md-typeset .tabbed-set {
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+/* ===== Timeline (for roadmap) ===== */
+.md-typeset .mermaid .timeline {
+    max-width: 100%;
+}
+
+/* ===== Announcement Bar ===== */
+.md-banner {
+    background: linear-gradient(135deg, var(--md-primary-fg-color) 0%, var(--md-primary-fg-color--dark) 100%);
+}
+
+.md-banner__inner {
+    color: white;
+}
+
+/* ===== Search ===== */
+.md-search__form {
+    border-radius: 8px;
+}
+
+/* ===== Back to top ===== */
+.md-top {
+    border-radius: 8px;
+    background: var(--md-primary-fg-color);
+}
+
+.md-top:hover {
+    background: var(--md-primary-fg-color--dark);
+}
+
+/* ===== Copy button ===== */
+.md-clipboard {
+    color: var(--md-default-fg-color--light);
+}
+
+.md-clipboard:hover {
+    color: var(--md-primary-fg-color);
+}
+
+/* ===== Version Badge ===== */
+.md-typeset .md-tag {
+    background: var(--md-primary-fg-color);
+    color: white;
+}
