@@ -131,7 +131,8 @@ nav:
     - Installation: getting-started/installation.md
   - Concepts:
     - Overview: concepts/overview.md
-    - Three Modes: concepts/modes.md
+    - Any Scale: concepts/modes.md
+    - Chirps: concepts/chirps.md
     - Vector Search: concepts/vector-search.md
     - Architecture: concepts/architecture.md
   - Guides:

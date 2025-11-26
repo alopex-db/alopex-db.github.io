@@ -1,21 +1,37 @@
 ---
-title: Three Modes
-description: Understanding Alopex DB's deployment modes
+title: Any Scale
+description: Understanding Alopex DB's flexible deployment topologies
 ---
 
-# Three Modes, One Engine
+# Any Scale, One Engine
 
-Alopex DB provides three deployment modes that share the same core engine, allowing you to start small and scale infinitely without changing your data model or application code.
+Alopex DB provides a spectrum of deployment topologies—from a single embedded library to a globally distributed cluster. Start small and scale infinitely without changing your data model or application code.
 
-## Mode Comparison
+## Deployment Spectrum
 
-| Feature | Embedded | Single-Node | Distributed |
-|:--------|:---------|:------------|:------------|
-| **Deployment** | Library | Standalone Server | Cluster |
-| **Architecture** | In-process | Client-Server | Shared-nothing |
-| **Scaling** | Vertical | Vertical | Horizontal |
-| **High Availability** | No | No | Yes (Raft) |
-| **Use Case** | Edge, Mobile, CLI | Microservices, Dev | Production |
+```mermaid
+graph LR
+    W[WASM Viewer] -.->|Read-only| E[Embedded]
+    E --> S[Single-Node]
+    S --> R[Replicated]
+    R --> D[Distributed]
+
+    style W fill:#152C4A,color:#fff
+    style E fill:#1E3A5F,color:#fff
+    style S fill:#2E5077,color:#fff
+    style R fill:#3D6A99,color:#fff
+    style D fill:#5FB4C9,color:#fff
+```
+
+| Topology | Scaling | HA | Write | Use Case |
+|:---------|:--------|:---|:------|:---------|
+| **WASM Viewer** | - | No | No | Browser data exploration |
+| **Embedded** | Vertical | No | Yes | Edge, Mobile, CLI |
+| **Single-Node** | Vertical | No | Yes | Dev, Small workloads |
+| **Replicated** | Vertical | Yes | Yes | HA without sharding |
+| **Distributed** | Horizontal | Yes | Yes | Large-scale production |
+
+---
 
 ## :package: Embedded Mode
 
@@ -118,9 +134,9 @@ CREATE TABLE products (
 
 ---
 
-## :earth_americas: Distributed Mode
+## :arrows_counterclockwise: Replicated Mode
 
-A horizontally scalable cluster for production workloads.
+Primary-replica topology for high availability without horizontal sharding.
 
 ```mermaid
 graph TB
@@ -130,27 +146,91 @@ graph TB
     end
 
     subgraph "Cluster"
-        subgraph "Node 1"
-            N1[Alopex Node]
-            D1[(Data)]
+        P[Primary]
+        R1[Replica 1]
+        R2[Replica 2]
+    end
+
+    C1 -->|Write| P
+    C2 -->|Read| R1
+    P -.->|Replicate| R1
+    P -.->|Replicate| R2
+```
+
+### Characteristics
+
+- **Primary-replica**: Single writer, multiple readers
+- **Automatic failover**: Replica promotion on primary failure
+- **Read scaling**: Distribute read load across replicas
+- **Simpler operations**: No sharding complexity
+
+### Use Cases
+
+- :shield: **High Availability**: Fault tolerance without sharding
+- :book: **Read-heavy workloads**: Scale reads horizontally
+- :zap: **Low-latency reads**: Local replicas near users
+- :building_construction: **Stepping stone**: Before full distribution
+
+### Replication Modes
+
+| Mode | Durability | Latency |
+|:-----|:-----------|:--------|
+| **Sync** | Strong (no data loss) | Higher |
+| **Semi-sync** | At least 1 replica | Balanced |
+| **Async** | Eventual | Lowest |
+
+### Example
+
+```bash
+# Start primary
+alopex-server --mode primary --port 5432 --data ./primary
+
+# Start replicas
+alopex-server --mode replica --primary localhost:5432 --port 5433
+alopex-server --mode replica --primary localhost:5432 --port 5434
+
+# Check replication status
+alopex-cli replication status
+```
+
+```sql
+-- Route reads to replicas
+SET alopex.read_from = 'replica';
+SELECT * FROM products WHERE id = 123;
+
+-- Writes always go to primary
+INSERT INTO products (name) VALUES ('New Product');
+```
+
+---
+
+## :earth_americas: Distributed Mode
+
+A horizontally scalable cluster with range sharding and Raft consensus.
+
+```mermaid
+graph TB
+    subgraph "Clients"
+        C1[Client 1]
+        C2[Client 2]
+    end
+
+    subgraph "Cluster"
+        subgraph "Range A"
+            N1[Node 1 - Leader]
+            N2[Node 2 - Follower]
         end
-        subgraph "Node 2"
-            N2[Alopex Node]
-            D2[(Data)]
-        end
-        subgraph "Node 3"
-            N3[Alopex Node]
-            D3[(Data)]
+        subgraph "Range B"
+            N3[Node 3 - Leader]
+            N4[Node 4 - Follower]
         end
     end
 
     C1 <--> N1
-    C2 <--> N2
+    C2 <--> N3
     N1 <-.->|Raft| N2
-    N2 <-.->|Raft| N3
-    N3 <-.->|Raft| N1
-    N1 <-.->|Chirps| N2
-    N2 <-.->|Chirps| N3
+    N3 <-.->|Raft| N4
+    N1 <-.->|Chirps| N3
 ```
 
 ### Characteristics
@@ -173,8 +253,8 @@ graph TB
 Data is partitioned into ranges and distributed:
 
 ```
-Range 1: [a-m) → Node 1, Node 2 (replica)
-Range 2: [m-z) → Node 2, Node 3 (replica)
+Range A: [a-m) → Node 1 (Leader), Node 2 (Follower)
+Range B: [m-z) → Node 3 (Leader), Node 4 (Follower)
 ```
 
 #### Raft Consensus
@@ -211,9 +291,9 @@ alopex-cluster status
 
 ---
 
-## Migration Between Modes
+## Migration Between Topologies
 
-One of Alopex's key features is seamless migration between modes.
+One of Alopex's key features is seamless migration between deployment topologies.
 
 ### Embedded → Single-Node
 
@@ -225,11 +305,24 @@ alopex-cli export --from ./embedded_data --to ./export.parquet
 alopex-server import --from ./export.parquet
 ```
 
-### Single-Node → Distributed
+### Single-Node → Replicated
 
 ```bash
-# Initialize cluster from existing data
-alopex-cluster init --from ./single_node_data --nodes 3
+# Add replicas to existing server
+alopex-server --mode replica --primary localhost:5432 --port 5433
+
+# Promote to HA mode
+alopex-cli replication enable --replicas 2
+```
+
+### Replicated → Distributed
+
+```bash
+# Initialize sharding on existing replicated cluster
+alopex-cluster init --from primary:5432 --shards 4
+
+# Enable range distribution
+alopex-cli sharding enable
 ```
 
 !!! tip "Zero Downtime Migration"
@@ -240,22 +333,114 @@ alopex-cluster init --from ./single_node_data --nodes 3
     alopex-cluster migrate --from single-node:5432 --live
     ```
 
-## Choosing the Right Mode
+---
+
+## :globe_with_meridians: WASM Mode (Read-Only Viewer)
+
+A browser-based read-only viewer for exploring pre-built database snapshots.
+
+```mermaid
+graph LR
+    subgraph "Browser Environment"
+        APP[JavaScript App]
+        WASM[Alopex WASM Module]
+        IDB[(IndexedDB Cache)]
+    end
+
+    subgraph "Server"
+        SNAP[DB Snapshot]
+    end
+
+    APP <--> WASM
+    WASM <--> IDB
+    SNAP -->|Fetch| WASM
+```
+
+### Characteristics
+
+- **Read-only**: SELECT queries only, no writes
+- **Pre-built snapshots**: Loads server-generated SSTable files
+- **Offline capable**: IndexedDB caching for offline access
+- **Lightweight**: < 1MB WASM binary (gzipped)
+
+### Use Cases
+
+- :bar_chart: **Data Exploration**: Browse datasets in the browser
+- :notebook: **Documentation**: Interactive examples
+- :iphone: **Offline Viewing**: Cached snapshots work offline
+- :mag: **Vector Search Demo**: Client-side similarity search
+
+### Example
+
+```javascript
+import { AlopexViewer } from '@alopex-db/wasm';
+
+// Load snapshot from URL
+const viewer = await AlopexViewer.loadSnapshot(
+  'https://example.com/data/snapshot.alopex'
+);
+
+// SQL SELECT only
+const results = await viewer.query(
+  'SELECT * FROM products WHERE category = ?',
+  ['electronics']
+);
+
+// Vector search (Flat algorithm)
+const similar = await viewer.vectorSearch({
+  table: 'documents',
+  queryVector: embedding,
+  similarity: 'cosine',
+  limit: 10
+});
+```
+
+### Limitations
+
+| Feature | Supported |
+|:--------|:---------:|
+| SELECT queries | :white_check_mark: |
+| INSERT/UPDATE/DELETE | :x: |
+| Transactions | :x: |
+| Vector Search (Flat) | :white_check_mark: |
+| Vector Search (HNSW) | :x: |
+| IndexedDB caching | :white_check_mark: |
+
+---
+
+## Choosing the Right Topology
 
 ```mermaid
 graph TD
     START[Start Here] --> Q1{Need network access?}
-    Q1 -->|No| EMBEDDED[Embedded Mode]
+    Q1 -->|No| EMBEDDED[Embedded]
     Q1 -->|Yes| Q2{Need high availability?}
-    Q2 -->|No| SINGLE[Single-Node Mode]
-    Q2 -->|Yes| DIST[Distributed Mode]
+    Q2 -->|No| SINGLE[Single-Node]
+    Q2 -->|Yes| Q3{Data fits on one node?}
+    Q3 -->|Yes| REPLICATED[Replicated]
+    Q3 -->|No| DISTRIBUTED[Distributed]
 
     EMBEDDED --> USE1[Mobile, Edge, CLI]
     SINGLE --> USE2[Dev, Small Prod]
-    DIST --> USE3[Production, Scale]
+    REPLICATED --> USE3[HA, Read-heavy]
+    DISTRIBUTED --> USE4[Scale, Multi-region]
 ```
+
+### Decision Matrix
+
+| Requirement | WASM | Embedded | Single | Replicated | Distributed |
+|:------------|:----:|:--------:|:------:|:----------:|:-----------:|
+| Browser runtime | :white_check_mark: | :x: | :x: | :x: | :x: |
+| Write operations | :x: | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: |
+| No network | :white_check_mark: | :white_check_mark: | :x: | :x: | :x: |
+| Multi-client | :x: | :x: | :white_check_mark: | :white_check_mark: | :white_check_mark: |
+| High availability | :x: | :x: | :x: | :white_check_mark: | :white_check_mark: |
+| Read scaling | :x: | :x: | :x: | :white_check_mark: | :white_check_mark: |
+| Write scaling | :x: | :x: | :x: | :x: | :white_check_mark: |
+| Data > 1 node | :x: | :x: | :x: | :x: | :white_check_mark: |
 
 ## Next Steps
 
+- [:octicons-arrow-right-24: Chirps](chirps.md) - Cluster messaging layer
 - [:octicons-arrow-right-24: Vector Search](vector-search.md) - Learn about vector operations
 - [:octicons-arrow-right-24: Architecture](architecture.md) - Deep dive into internals

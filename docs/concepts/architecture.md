@@ -298,29 +298,53 @@ Key Space: [0000...FFFF]
 
 ### Chirps Mesh
 
-QUIC-based gossip protocol for cluster communication:
+Chirps is the **control plane foundation** for Alopex DB clusters. It provides node discovery, membership management, and message transport with a three-layer architecture:
 
 ```mermaid
-graph LR
-    subgraph "Chirps Network"
-        N1[Node 1]
-        N2[Node 2]
-        N3[Node 3]
-        N4[Node 4]
+graph TB
+    subgraph "Chirps Architecture"
+        API[API Layer<br/>send_to / broadcast / subscribe]
+        ROUTER[Routing Layer<br/>Message Profiles]
+
+        subgraph "Backend Layer"
+            QUIC[QUIC Backend]
+            IGGY[Iggy Backend]
+        end
     end
 
-    N1 <-.->|QUIC| N2
-    N2 <-.->|QUIC| N3
-    N3 <-.->|QUIC| N4
-    N4 <-.->|QUIC| N1
-    N1 <-.->|QUIC| N3
-    N2 <-.->|QUIC| N4
+    subgraph "Alopex DB"
+        RAFT[Raft Messages]
+        DATA[Data Events]
+    end
+
+    RAFT -->|Control Profile| API
+    DATA -->|Durable Profile| API
+    API --> ROUTER
+    ROUTER -->|Low Latency| QUIC
+    ROUTER -->|Persistent| IGGY
+
+    style QUIC fill:#1E3A5F,color:#fff
+    style IGGY fill:#5FB4C9,color:#fff
 ```
 
-Features:
-- **SWIM protocol** for failure detection
-- **QUIC transport** for low-latency, encrypted communication
-- **Gossip-based** metadata propagation
+#### Message Profiles
+
+| Profile | Purpose | Backend | Use Case |
+|:--------|:--------|:--------|:---------|
+| **Control** | Raft consensus, cluster control | QUIC | Priority streams, < 1ms latency |
+| **Ephemeral** | Gossip, transient data | QUIC | Best effort, no persistence |
+| **Durable** | Event streams, audit logs | Iggy | Persistent, replayable (v0.9+) |
+
+#### Key Features
+
+- **SWIM Protocol**: Failure detection via ping/ack/ping-req
+- **QUIC Transport**: TLS 1.3, 0-RTT resumption, multiplexed streams
+- **Priority Streams**: Raft messages get dedicated high-priority channels
+- **Membership Events**: `on_node_join`, `on_node_leave`, `on_status_change` hooks
+
+!!! info "Learn More"
+
+    See the dedicated [Chirps documentation](chirps.md) for detailed architecture and configuration.
 
 ## Memory Management
 
