@@ -29,6 +29,14 @@ The unified database engine that scales from a single embedded file to a globall
 
 ---
 
+## :rocket: Current Status
+
+!!! success "v0.1 Embedded KV Core — Complete"
+
+    Alopex DB v0.1 is ready! The embedded foundation with ACID transactions, WAL durability, and MVCC isolation is complete. Start building today with our Key-Value API.
+
+---
+
 ## :thinking: The Problem
 
 Modern AI applications require multiple database technologies—creating complexity, inconsistency, and operational overhead.
@@ -51,11 +59,11 @@ Modern AI applications require multiple database technologies—creating complex
     ---
 
     - One unified engine
-    - Seamless mode switching
+    - Seamless topology migration
     - Single API everywhere
     - Native multi-model support
 
-    :white_check_mark: **One engine that adapts to your workload**
+    :white_check_mark: **One engine that adapts to your scale**
 
 </div>
 
@@ -93,29 +101,31 @@ Modern AI applications require multiple database technologies—creating complex
 
     ---
 
-    Full transactional guarantees across SQL, vector, and graph operations. MVCC/OCC for concurrent access.
+    Full transactional guarantees across SQL, vector, and graph operations. MVCC with Snapshot Isolation for concurrent access.
 
--   :globe_with_meridians:{ .lg .middle } **WebAssembly Ready**
+-   :satellite:{ .lg .middle } **Chirps Mesh Network**
 
     ---
 
-    Run in the browser with IndexedDB/OPFS storage. Same API everywhere—embedded, server, or edge.
+    QUIC-based cluster communication with SWIM protocol for membership. Three message profiles for Raft, gossip, and event streaming.
 
 </div>
 
 ---
 
-## :package: Three Modes, One Engine
+## :package: Any Scale, One Engine
 
 Start small, scale infinitely—without changing your data model or application code.
 
 | Mode | Use Case | Architecture |
 |:-----|:---------|:-------------|
+| :globe_with_meridians: **WASM Viewer** | Browser Data Exploration | Read-only viewer with IndexedDB caching |
 | :package: **Embedded** | Mobile Apps, Local RAG, Edge Devices | Single Binary / Library (like SQLite) |
 | :desktop_computer: **Single-Node** | Microservices, Dev/Test Environments | Standalone Server (Postgres-compatible*) |
-| :earth_americas: **Distributed** | High-Availability Production | Shared-nothing Cluster (Range Sharding + Raft) |
+| :arrows_counterclockwise: **Replicated** | High Availability, Read-heavy Workloads | Primary-Replica with automatic failover |
+| :earth_americas: **Distributed** | Large-Scale Production | Multi-Raft Cluster (Range Sharding) |
 
-[:octicons-arrow-right-24: Learn more about modes](concepts/modes.md)
+[:octicons-arrow-right-24: Learn more about deployment modes](concepts/modes.md)
 
 ---
 
@@ -161,28 +171,73 @@ Start small, scale infinitely—without changing your data model or application 
 ## :construction: Roadmap
 
 ```mermaid
-timeline
-    title Alopex DB Development Roadmap
-    section 2025
-        Q2 : v0.1 Embedded
-           : Key-Value store
-           : Basic Vector support
-        Q3 : v0.2 Single-Node
-           : SQL parser
-           : HNSW index
-        Q3 : v0.2.5 WASM Beta
-           : Browser runtime
-           : IndexedDB storage
-        Q4 : v0.3 Distributed
-           : Raft replication
-           : Range sharding
-    section 2026
-        Q1 : v1.0 Production
-           : Multi-region
-           : Full documentation
+gantt
+    title Alopex DB Development Timeline
+    dateFormat  YYYY-MM
+    axisFormat  %Y-%m
+
+    section Foundation
+    v0.1 Embedded Core       :done, 2025-01, 2025-11
+    v0.2 Vector Core (Flat)  :active, 2025-11, 2026-01
+
+    section SQL & Server
+    v0.3 SQL Frontend        :2026-01, 2026-02
+    v0.4 Server + HNSW       :2026-02, 2026-04
+
+    section Distributed
+    v0.7 Cluster-aware       :2026-06, 2026-08
+    v0.9 Multi-Raft          :2026-10, 2026-12
+
+    section Production
+    v1.0 GA                  :milestone, 2027-03, 0d
 ```
 
+### What's Complete
+
+| Version | Features | Status |
+|:--------|:---------|:------:|
+| **v0.1** | Embedded KV, WAL, MVCC, Transactions | :white_check_mark: Complete |
+| **Chirps v0.3** | Gossip, SWIM, Membership API | :white_check_mark: Complete |
+
+### What's Next
+
+| Version | Features | Target |
+|:--------|:---------|:-------|
+| **v0.2** | Vector Type, Flat Search, Columnar Compression | Jan 2026 |
+| **v0.3** | SQL Parser, DDL/DML, Embedded SQL | Feb 2026 |
+| **v0.4** | Server Mode, REST/gRPC, HNSW Index | Apr 2026 |
+
 [:octicons-arrow-right-24: View detailed roadmap](roadmap.md)
+
+---
+
+## :link: Chirps — Cluster Foundation
+
+Alopex Chirps is the control plane for distributed Alopex DB clusters.
+
+<div class="grid cards" markdown>
+
+-   :satellite_antenna:{ .lg .middle } **SWIM Protocol**
+
+    ---
+
+    Failure detection via ping/ack/ping-req with configurable timeouts. Scalable membership management.
+
+-   :zap:{ .lg .middle } **QUIC Transport**
+
+    ---
+
+    TLS 1.3, 0-RTT resumption, multiplexed streams. Priority channels for Raft consensus.
+
+-   :envelope:{ .lg .middle } **Message Profiles**
+
+    ---
+
+    Control (Raft), Ephemeral (Gossip), Durable (Event Streams). Route by reliability needs.
+
+</div>
+
+[:octicons-arrow-right-24: Learn about Chirps architecture](concepts/chirps.md)
 
 ---
 
