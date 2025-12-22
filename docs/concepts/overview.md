@@ -49,7 +49,7 @@ The name "Alopex" comes from the Arctic Fox (*Vulpes lagopus*)—an animal known
 - Seamlessly transitions from local library to multi-node cluster
 - Same API across all deployment modes
 - Progressive scaling without data migration
-- Multi-model: SQL + Vector + Graph
+- Multi-model: SQL + Vector + HNSW
 
 ### :shield: Unbreakable (Resilient)
 
@@ -65,11 +65,13 @@ graph TB
     subgraph "Client Layer"
         CLI[CLI Tools]
         SDK[Rust SDK]
+        PY[Python SDK]
         WASM[WASM Bindings]
     end
 
     subgraph "Query Layer"
         SQL[SQL Parser]
+        DF[DataFrame API]
         PLAN[Query Planner]
         EXEC[Executor]
     end
@@ -83,6 +85,7 @@ graph TB
         LSM[LSM-Tree Engine]
         WAL[Write-Ahead Log]
         VEC[Vector Index]
+        COL[Columnar Segments]
     end
 
     subgraph "Cluster Layer"
@@ -93,14 +96,17 @@ graph TB
 
     CLI --> SQL
     SDK --> SQL
+    PY --> SQL
     WASM --> SQL
     SQL --> PLAN
+    DF --> PLAN
     PLAN --> EXEC
     EXEC --> TX
     TX --> MVCC
     MVCC --> LSM
     LSM --> WAL
     LSM --> VEC
+    LSM --> COL
     LSM --> RAFT
     RAFT --> SHARD
     SHARD --> CHIRPS
@@ -108,15 +114,17 @@ graph TB
 
 ## Key Components
 
-| Component | Description |
-|:----------|:------------|
-| **alopex-core** | Core storage engine with LSM-Tree |
-| **alopex-sql** | SQL parser, planner, and executor |
-| **alopex-embedded** | Embedded mode library API |
-| **alopex-server** | Single-node server with HTTP/gRPC |
-| **alopex-cluster** | Distributed mode with Raft |
-| **alopex-cli** | Command-line tools |
-| **alopex-chirps** | Gossip-based cluster messaging |
+| Component | Description | Status |
+|:----------|:------------|:-------|
+| **alopex-core** | Core storage engine with LSM-Tree, Vector, Columnar | :white_check_mark: v0.3.1 |
+| **alopex-sql** | SQL parser, planner, and executor | :white_check_mark: v0.3.0 (crates.io) |
+| **alopex-embedded** | Embedded mode library API | :white_check_mark: v0.3.1 |
+| **alopex-dataframe** | Polars-compatible DataFrame API | :material-calendar: v0.1.0 (Planned) |
+| **alopex-py** | Python bindings via PyO3 | :material-calendar: v0.1.0 (Planned) |
+| **alopex-server** | Single-node server with HTTP/gRPC | :material-calendar: v0.4 (Planned) |
+| **alopex-cluster** | Distributed mode with Raft | :material-calendar: v0.7 (Planned) |
+| **alopex-cli** | Command-line tools | :material-calendar: v0.3.1 (Planned) |
+| **alopex-chirps** | Gossip-based cluster messaging | :white_check_mark: v0.5.0 |
 
 ## Data Models
 
@@ -126,49 +134,133 @@ Standard SQL with extensions for modern workloads:
 
 ```sql
 CREATE TABLE users (
-    id UUID PRIMARY KEY,
+    id INTEGER PRIMARY KEY,
     name TEXT NOT NULL,
-    created_at TIMESTAMP DEFAULT NOW()
+    email TEXT,
+    created_at TIMESTAMP
 );
+
+INSERT INTO users (id, name, email) VALUES (1, 'Alice', 'alice@example.com');
+SELECT * FROM users WHERE id = 1;
 ```
 
-### Vector
+### Vector with HNSW
 
-First-class vector support for AI applications:
+First-class vector support with high-performance indexing:
 
 ```sql
+-- Create table with vector column
 CREATE TABLE documents (
-    id UUID PRIMARY KEY,
+    id INTEGER PRIMARY KEY,
     content TEXT,
-    embedding VECTOR(1536)  -- Native vector type
+    embedding VECTOR(1536)
 );
+
+-- Create HNSW index for fast similarity search
+CREATE INDEX idx_embedding ON documents USING HNSW (embedding);
+
+-- Hybrid search with vector similarity
+SELECT id, content, vector_similarity(embedding, ?) AS score
+FROM documents
+ORDER BY score DESC
+LIMIT 10;
 ```
 
-### Graph
+### Columnar Storage
 
-Optimized storage for knowledge graphs:
+Optimized for analytical workloads:
 
 ```sql
-CREATE GRAPH knowledge (
-    NODE document (id UUID, embedding VECTOR(384)),
-    EDGE references (source UUID, target UUID, weight FLOAT)
-);
+-- Create columnar table for analytics
+CREATE TABLE events (
+    event_id INTEGER,
+    user_id INTEGER,
+    event_type TEXT,
+    timestamp TIMESTAMP,
+    payload TEXT
+) WITH (storage = 'columnar');
+
+-- Aggregate queries are fast
+SELECT event_type, COUNT(*) as count
+FROM events
+WHERE timestamp > '2025-01-01'
+GROUP BY event_type;
+```
+
+### DataFrame API (Coming in v0.4)
+
+Polars-compatible API for data analysis:
+
+```rust
+use alopex_dataframe::{DataFrame, col, lit};
+
+let df = DataFrame::read_parquet("data.parquet")?;
+
+let result = df
+    .lazy()
+    .filter(col("score").gt(lit(0.5)))
+    .group_by([col("category")])
+    .agg([col("value").sum().alias("total")])
+    .collect()?;
+```
+
+## Crate Dependency Structure
+
+```
+┌─────────────────────────────────────────────────────────────────┐
+│                        alopex-core                               │
+│  (KV, LSM, Columnar, Vector, HNSW)                               │
+└─────────────────────┬───────────────────────────────────────────┘
+                      │
+        ┌─────────────┴─────────────┐
+        │                           │
+        ▼                           ▼
+┌───────────────────┐       ┌───────────────────┐
+│  alopex-dataframe │       │    alopex-sql     │
+│  (DataFrame API)  │       │  (SQL Frontend)   │
+│  - Eager/Lazy     │       │  - Parser         │
+│  - Expression     │       │  - Planner        │
+│  - Optimizer      │       │  - Executor       │
+└─────────┬─────────┘       └─────────┬─────────┘
+          │                           │
+          └─────────────┬─────────────┘
+                        │
+                        ▼
+              ┌───────────────────┐
+              │  alopex-embedded  │
+              │  (Embedded API)   │
+              │  - Database       │
+              │  - Transaction    │
+              │  - SQL/Vector     │
+              └─────────┬─────────┘
+                        │
+                        ▼
+              ┌───────────────────┐
+              │     alopex-py     │
+              │  (Python Wrapper) │
+              │  - PyO3 Bindings  │
+              │  - NumPy 統合     │
+              └───────────────────┘
 ```
 
 ## Next Steps
 
 <div class="grid cards" markdown>
 
--   [:octicons-arrow-right-24: **Three Modes**](modes.md)
+-   [:octicons-arrow-right-24: **Deployment Modes**](modes.md)
 
     Learn about embedded, single-node, and distributed deployments.
 
 -   [:octicons-arrow-right-24: **Vector Search**](vector-search.md)
 
-    Deep dive into vector operations and hybrid queries.
+    Deep dive into vector operations and HNSW indexing.
 
 -   [:octicons-arrow-right-24: **Architecture**](architecture.md)
 
     Technical details of the storage engine.
+
+-   [:octicons-arrow-right-24: **Chirps**](chirps.md)
+
+    Cluster messaging and Raft consensus.
 
 </div>

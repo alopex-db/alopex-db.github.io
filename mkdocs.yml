@@ -137,6 +137,7 @@ nav:
     - Architecture: concepts/architecture.md
   - Guides:
     - SQL + Vector: guides/sql-vector.md
-    - Lake-Link: guides/lake-link.md
+    - Python: guides/python.md
+    - DataFrame API: guides/dataframe.md
   - Roadmap: roadmap.md
   - Contributing: contributing.md

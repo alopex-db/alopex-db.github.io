@@ -5,13 +5,17 @@ description: Alopex DB development roadmap and milestones
 
 # Roadmap
 
-This roadmap outlines the planned development of Alopex DB from the current alpha state to production readiness.
+This roadmap outlines the planned development of Alopex DB from the current state to production readiness.
 
 ## Current Status
 
-!!! success "v0.1 Complete (November 2025)"
+!!! success "v0.3 Complete — Published on crates.io (December 2025)"
 
-    Alopex DB v0.1 **Embedded KV Core** is complete. Core embedded functionality with transactions, WAL, and columnar storage foundations are ready. Chirps v0.3 (cluster messaging) is also complete.
+    Alopex DB v0.3 **SQL Frontend + HNSW** is complete and published on crates.io. Full SQL support, Vector SQL, HNSW indexing, and Embedded Integration are ready for use.
+
+    ```bash
+    cargo add alopex-embedded alopex-sql
+    ```
 
 ## Timeline
 
@@ -22,163 +26,207 @@ gantt
     axisFormat  %Y-%m
 
     section Foundation
-    v0.1 Embedded Core       :done, 2025-01, 2025-11
-    v0.2 Vector Core (Flat)  :active, 2025-11, 2026-01
+    v0.1-v0.2 Core          :done, 2025-01, 2025-10
+    v0.3 SQL + HNSW         :done, 2025-10, 2025-12
 
-    section SQL & Server
-    v0.3 SQL Frontend        :2026-01, 2026-02
-    v0.4 Server + HNSW       :2026-02, 2026-04
-    v0.5 Durability          :2026-04, 2026-05
-
-    section WASM
-    v0.6 WASM Viewer         :2026-05, 2026-06
-
-    section Distributed
-    v0.7 Cluster-aware       :2026-06, 2026-08
-    v0.8 Metadata Raft       :2026-08, 2026-10
-    v0.9 Multi-Raft          :2026-10, 2026-12
+    section Python & Server
+    v0.3.1 Python + CLI     :active, 2025-12, 2026-02
+    v0.4 Server + DataFrame :2026-02, 2026-04
 
     section Production
-    v0.10 Hardening          :2027-01, 2027-02
-    v1.0 GA                  :milestone, 2027-03, 0d
+    v0.5 Durability + JOIN  :2026-04, 2026-06
+    v0.6 WASM Viewer        :2026-06, 2026-08
+
+    section Distributed
+    v0.7 Cluster-aware      :2026-08, 2026-10
+    v0.8 Metadata Raft      :2026-10, 2026-12
+    v0.9 Multi-Raft         :2027-01, 2027-02
+
+    section GA
+    v0.10 Hardening         :2027-02, 2027-03
+    v1.0 GA                 :milestone, 2027-03, 0d
 ```
 
 ---
 
-## v0.1 — Embedded KV Core { #v01 }
+## Version Compatibility Matrix
+
+| Alopex DB | alopex-core | alopex-dataframe | alopex-sql | alopex-embedded | alopex-py | Chirps |
+|:----------|:------------|:-----------------|:-----------|:----------------|:----------|:-------|
+| **v0.3** | v0.3.0 | - | v0.3.0 | v0.3.0 | - | v0.5.0 |
+| v0.3.1 | v0.3.1 | - | v0.3.0 | v0.3.1 | **v0.1.0** | v0.5.0 |
+| v0.4 | v0.4 | **v0.1.0** | v0.4 | v0.4 | v0.1.x | v0.5.0 |
+| v0.5 | v0.5 | v0.2.0 | v0.5 | v0.5 | **v0.2.0** | v0.5.0 |
+| v0.6 | v0.6 | v0.3.0 | v0.6 | v0.6 | v0.2.x | v0.5.0 |
+| v0.7 | v0.7 | v0.4.0 | v0.7+ | v0.7 | v0.2.x | v0.5+ |
+| v1.0 | v1.0 | v1.0 | v1.0 | v1.0 | v1.0 | v0.8 |
+
+---
+
+## Phase 1: Foundation (v0.1 - v0.2) { #phase1 }
 
 **Status**: :material-check-all: Complete
-**Released**: November 2025
 
-The foundation release with embedded KV storage, transactions, and columnar foundations.
-
-### Completed Features
+### v0.1 — Embedded KV Core
 
 - [x] LSM-Tree storage engine
 - [x] Write-Ahead Log (WAL) with crash recovery
 - [x] Key-Value API (`open`/`put`/`get`/`delete`)
 - [x] Transactions (`begin`/`commit`/`rollback`)
 - [x] MVCC with Snapshot Isolation
-- [x] Concurrent access (multi-thread safe)
-- [x] Columnar segment layout design
-- [x] Streaming read/write with backpressure
-- [x] Large value (BLOB) chunked storage
 
-### Acceptance Criteria Met
+### v0.2 — Vector Core + Columnar
 
-| Criterion | Status |
-|:----------|:------:|
-| DB open with defaults | :white_check_mark: |
-| Transaction consistency | :white_check_mark: |
-| WAL durability | :white_check_mark: |
-| Rollback correctness | :white_check_mark: |
-| Read-only transaction errors | :white_check_mark: |
-| Crash recovery via WAL | :white_check_mark: |
-| 2-thread concurrency | :white_check_mark: |
-| Streaming O(chunk) memory | :white_check_mark: |
+- [x] Vector type (`VECTOR(dimension)`)
+- [x] Flat search (cosine, L2, inner product)
+- [x] Columnar segment storage with compression
+- [x] In-memory mode support
+- [x] Vector delete/compaction
 
 ---
 
-## v0.2 — Vector Core (Flat Search) { #v02 }
+## Phase 2: SQL & HNSW (v0.3) { #phase2 }
 
-**Status**: :material-progress-clock: In Progress
-**Target**: January 2026
+**Status**: :material-check-all: Complete — **crates.io Published**
 
-Adding vector type and flat (brute-force) similarity search.
+### v0.3 — SQL Frontend + HNSW Index
 
-### Features
+The first public release on crates.io with full SQL support and HNSW indexing.
 
-- [ ] Vector type (`VECTOR(dimension)`)
-- [ ] **Flat search** (cosine, L2, inner product)
-- [ ] Vector upsert/search API
-- [ ] Metadata filtering with vectors
-- [ ] Columnar compression implementation
-- [ ] KV + Vector unified transactions
+#### Completed Features
 
-### Acceptance Criteria
+- [x] SQL Parser (DDL: CREATE/DROP TABLE/INDEX, DML: SELECT/INSERT/UPDATE/DELETE)
+- [x] Query Planner with Catalog and LogicalPlan
+- [x] SQL Executor (iterator-based execution)
+- [x] `vector_similarity()` function with Top-K optimization
+- [x] **HNSW Index** for high-performance similarity search
+- [x] Columnar COPY/Bulk Load (Parquet/CSV → ColumnarSegment)
+- [x] Embedded Integration (`Database::execute_sql`, `Transaction::execute_sql`)
 
-- Top-K precision validation
-- KV + Vector same-transaction consistency
-- Benchmark baseline established
-- Columnar compression roundtrip verified
-
----
-
-## v0.3 — Local SQL Frontend { #v03 }
-
-**Status**: :material-calendar: Planned
-**Target**: February 2026
-
-SQL parser and execution for embedded mode.
-
-### Features
-
-- [ ] SQL parser (based on `sqlparser-rs`)
-- [ ] DDL: `CREATE TABLE`, `DROP TABLE`
-- [ ] DML: `SELECT`, `INSERT`, `UPDATE`, `DELETE`
-- [ ] SQL → Core mapping
-- [ ] Embedded SQL + Vector interface
-
-### SQL Preview
+#### SQL Examples
 
 ```sql
+-- Create table with vector column
 CREATE TABLE documents (
-    id TEXT PRIMARY KEY,
+    id INTEGER PRIMARY KEY,
     content TEXT,
-    embedding VECTOR(384)
+    embedding VECTOR(1536)
 );
 
-SELECT id, content, cosine_similarity(embedding, ?) as score
+-- Insert with vector
+INSERT INTO documents (id, content, embedding)
+VALUES (1, 'Hello world', [0.1, 0.2, ...]);
+
+-- Hybrid search with vector similarity
+SELECT id, content, vector_similarity(embedding, ?) AS score
 FROM documents
 ORDER BY score DESC
 LIMIT 10;
+
+-- Create HNSW index
+CREATE INDEX idx_emb ON documents USING HNSW (embedding);
 ```
 
 ---
 
-## v0.4 — Single-Node Server + HNSW { #v04 }
+## Phase 3: Python & Server (v0.3.1 - v0.4) { #phase3 }
+
+### v0.3.1 — Python Wrapper (alopex-py) { #v031 }
+
+**Status**: :material-progress-clock: In Progress
+**Target**: Q1 2026
+
+Python bindings via PyO3 for the embedded database.
+
+#### Features
+
+- [ ] PyO3 module structure with error handling
+- [ ] `Database` / `Transaction` bindings
+- [ ] SQL API bindings (`execute_sql`, `QueryResult`)
+- [ ] Vector/HNSW API bindings
+- [ ] NumPy integration (zero-copy arrays)
+- [ ] Type stubs (`.pyi` files) for IDE support
+- [ ] CI/CD with maturin + pytest
+
+#### Preview
+
+```python
+import alopex
+
+# Open database
+db = alopex.Database.open("./my_data")
+
+# Execute SQL
+results = db.execute_sql(
+    "SELECT * FROM docs WHERE vector_similarity(embedding, ?) > 0.8",
+    [query_embedding]
+)
+
+# HNSW search
+similar = db.search_hnsw("docs", query_embedding, k=10)
+for doc_id, score in similar:
+    print(f"{doc_id}: {score:.4f}")
+```
+
+### v0.4 — Server Mode + DataFrame { #v04 }
 
 **Status**: :material-calendar: Planned
-**Target**: April 2026
+**Target**: Q2 2026
 
-Standalone server with network APIs and HNSW indexing.
+Standalone server and Polars-compatible DataFrame API.
 
-### Features
+#### Server Features
 
-- [ ] `alopex-server` binary
-- [ ] HTTP REST API
-- [ ] gRPC API
-- [ ] **HNSW vector index**
-- [ ] `alopex-cli` client
-- [ ] Basic authentication
-- [ ] Connection pooling
+- [ ] `alopex-server` binary with HTTP/gRPC API
+- [ ] SQL API (DDL/DML/SELECT with streaming)
+- [ ] Vector API (HNSW/Flat search)
+- [ ] Authentication (dev mode + token-based)
+- [ ] `alopex-cli` client tool
+
+#### DataFrame Features (alopex-dataframe)
+
+- [ ] `DataFrame` / `LazyFrame` / `Expr` types
+- [ ] I/O: `read_csv`, `read_parquet`, `scan_*` variants
+- [ ] Operations: `select`, `filter`, `with_columns`
+- [ ] Aggregations: `group_by`, `agg`, `sum`, `mean`, etc.
+- [ ] Lazy evaluation with query optimization
+
+#### DataFrame Preview
+
+```rust
+use alopex_dataframe::{DataFrame, col, lit};
+
+let df = DataFrame::read_parquet("data.parquet")?;
+
+let result = df
+    .lazy()
+    .filter(col("score").gt(lit(0.5)))
+    .select([col("id"), col("content")])
+    .collect()?;
+```
 
 ---
 
-## v0.5 — Durability & Reliability { #v05 }
+## Phase 4: Durability & WASM (v0.5 - v0.6) { #phase4 }
+
+### v0.5 — Durability + JOIN { #v05 }
 
 **Status**: :material-calendar: Planned
-**Target**: May 2026
+**Target**: Q2 2026
 
-Enhanced crash recovery and observability.
-
-### Features
-
-- [ ] WAL/crash recovery hardening
+- [ ] WAL/Crash recovery hardening
 - [ ] Backup and restore
+- [ ] JOIN support (inner, left, right, full)
+- [ ] GROUP BY / Aggregation
 - [ ] Prometheus metrics
 - [ ] Structured logging
 
----
-
-## v0.6 — WASM Edition (Read-Only Viewer) { #v06 }
+### v0.6 — WASM Viewer { #v06 }
 
 **Status**: :material-calendar: Planned
-**Target**: June 2026
+**Target**: Q3 2026
 
 Browser-based read-only viewer for database snapshots.
-
-### Features
 
 - [ ] `wasm32-unknown-unknown` target
 - [ ] Pre-built SSTable loader
@@ -186,17 +234,6 @@ Browser-based read-only viewer for database snapshots.
 - [ ] SQL SELECT only
 - [ ] Vector Search (Flat only)
 - [ ] npm package (`@alopex-db/wasm`)
-
-### Limitations
-
-| Feature | Supported |
-|:--------|:---------:|
-| SELECT queries | :white_check_mark: |
-| INSERT/UPDATE/DELETE | :x: |
-| Transactions | :x: |
-| HNSW search | :x: |
-
-### Usage Preview
 
 ```typescript
 import { AlopexViewer } from '@alopex-db/wasm';
@@ -207,86 +244,48 @@ const results = await viewer.query('SELECT * FROM products LIMIT 10');
 
 ---
 
-## v0.7 — Cluster-Aware Alopex { #v07 }
+## Phase 5: Distributed (v0.7 - v0.9) { #phase5 }
+
+### v0.7 — Cluster-Aware { #v07 }
 
 **Status**: :material-calendar: Planned
-**Target**: August 2026
-
-**Depends on**: Chirps v0.3 (complete)
-
-First cluster integration using Chirps for membership.
-
-### Features
+**Target**: Q4 2026
+**Depends on**: Chirps v0.3
 
 - [ ] `alopex-cluster` module
 - [ ] Chirps membership integration
 - [ ] Node discovery and events
 - [ ] Logical sharding design
-- [ ] Control/Ephemeral profiles only
 
-!!! warning "Limitation"
-
-    Durable profile not available (Chirps IggyBackend not yet implemented)
-
----
-
-## v0.8 — Distributed Metadata & Raft { #v08 }
+### v0.8 — Metadata Raft { #v08 }
 
 **Status**: :material-calendar: Planned
-**Target**: October 2026
+**Target**: Q4 2026
+**Depends on**: Chirps v0.6
 
-**Depends on**: Chirps v0.4 (Raft-ready transport)
-
-Raft consensus for metadata and single data range.
-
-### Features
-
-- [ ] **Metadata Raft Group** (`raft-rs`)
-- [ ] Chirps priority streams for Raft
-- [ ] Single Data Range Raft (PoC)
+- [ ] Metadata Raft Group
+- [ ] MultiRaftManager integration
 - [ ] Shard/range metadata management
-- [ ] Control profile for Raft messages
 
----
-
-## v0.9 — Multi-Raft + CRDT { #v09 }
+### v0.9 — Multi-Raft + CRDT { #v09 }
 
 **Status**: :material-calendar: Planned
-**Target**: December 2026
+**Target**: Q1 2027
+**Depends on**: Chirps v0.7
 
-**Depends on**: Chirps v0.7+ (IggyBackend)
-
-Full distributed capabilities with Multi-Raft and CRDT.
-
-### Features
-
-- [ ] **Multi-Raft** (range partitioning)
-- [ ] **CRDT** (Counter, Set for eventual consistency)
+- [ ] Multi-Raft (range partitioning)
+- [ ] CRDT (Counter, Set for eventual consistency)
 - [ ] Changefeed via Durable profile
-- [ ] 3-5 node clusters
 - [ ] Distributed transactions
-- [ ] Cluster monitor CLI
-
-### Consistency Modes
-
-```sql
--- Strong consistency (Raft)
-CREATE TABLE orders (...) WITH (consistency = 'strong');
-
--- Eventual consistency (CRDT Counter)
-CREATE TABLE metrics (...) WITH (consistency = 'eventual', crdt_type = 'counter');
-```
 
 ---
 
-## v0.10 — Hardening & Freeze { #v010 }
+## Phase 6: Production (v0.10 - v1.0) { #phase6 }
+
+### v0.10 — Hardening { #v010 }
 
 **Status**: :material-calendar: Planned
-**Target**: February 2027
-
-Stability testing and API freeze.
-
-### Goals
+**Target**: Q1 2027
 
 - [ ] Single-node regression suite
 - [ ] Cluster consistency tests
@@ -294,23 +293,16 @@ Stability testing and API freeze.
 - [ ] Configuration freeze
 - [ ] API stability guarantee
 
----
-
-## v1.0 — Production Ready { #v10 }
+### v1.0 — General Availability { #v10 }
 
 **Status**: :material-calendar: Planned
 **Target**: Q1 2027
 
-General availability release.
-
-### Features
-
 - [ ] 3-10 node production support
 - [ ] Rolling upgrades
-- [ ] Backup/restore procedures
 - [ ] Complete documentation
-- [ ] Tutorials and best practices
 - [ ] API/ABI compatibility tests
+- [ ] Federation support
 
 ---
 
@@ -321,30 +313,38 @@ Alopex Chirps (cluster messaging layer) has its own development track:
 | Version | Status | Features |
 |:--------|:-------|:---------|
 | v0.1-v0.3 | :white_check_mark: Complete | Gossip, SWIM, Membership API |
-| v0.4 | :material-calendar: Planned | Raft-ready transport, priority streams |
-| v0.5 | :material-calendar: Planned | Performance optimization |
-| v0.6 | :material-calendar: Planned | Observability, admin API |
+| v0.4 | :white_check_mark: Complete | Raft-ready transport, QoS streams |
+| v0.5 | :white_check_mark: Complete | Raft Consensus API, WalRaftStorage |
+| v0.5.1 | :material-calendar: Planned | File Transfer API |
+| v0.6 | :material-calendar: Planned | Multi-Raft, TSO, Observability |
 | v0.7+ | :material-calendar: Planned | IggyBackend, Durable profile |
 
 ---
 
-## Future Considerations { #future }
+## alopex-dataframe Roadmap { #dataframe }
 
-Features being considered for post-1.0 releases:
+Polars-compatible DataFrame engine in pure Rust:
 
-### v1.1+
+| Version | Phase | Features |
+|:--------|:------|:---------|
+| v0.1.0 | DF-0 | DataFrame/Series types, Arrow integration |
+| v0.2.0 | DF-1 | CSV/Parquet I/O, select/filter/group_by, LazyFrame |
+| v0.3.0 | DF-2 | JOIN, sort, fill_null, Predicate Pushdown |
+| v0.4.0 | DF-3 | Window functions, pivot/unpivot, str/dt namespaces |
 
-- [ ] Full-text search integration
-- [ ] Time-series optimizations
-- [ ] Materialized views
-- [ ] Graph queries
+---
 
-### v2.0
+## alopex-py Roadmap { #python }
 
-- [ ] Multi-tenancy
-- [ ] Serverless mode
-- [ ] Auto-scaling
-- [ ] ML integration
+Python bindings with NumPy and DataFrame support:
+
+| Version | Phase | Features |
+|:--------|:------|:---------|
+| v0.1.0 | Phase 1 | Database/Transaction basic API |
+| v0.1.1 | Phase 1 | Vector/HNSW API |
+| v0.1.2 | Phase 1 | NumPy integration, GIL release |
+| v0.2.0 | Phase 2 | DataFrame API (via alopex-dataframe) |
+| v0.3.0 | Phase 3 | Client API (Server connection) |
 
 ---
 
@@ -356,9 +356,10 @@ We welcome contributions! Priority areas:
 |:-----|:---------|:-----------|
 | Documentation | High | Easy |
 | Test coverage | High | Medium |
-| Benchmarks | Medium | Medium |
-| Vector search optimizations | Medium | Hard |
+| Python bindings | High | Medium |
+| DataFrame operations | Medium | Medium |
 | SQL parser extensions | Medium | Hard |
+| Vector search optimizations | Medium | Hard |
 
 [:octicons-arrow-right-24: Contributing Guide](contributing.md)
 
@@ -368,10 +369,12 @@ We welcome contributions! Priority areas:
 
 ### Recent Updates
 
-- **2025-11**: v0.1 Embedded KV Core complete
-- **2025-11**: Chirps v0.3 complete (Gossip, SWIM, Membership)
-- **2025-11**: Columnar storage design finalized
-- **2025-03**: Initial embedded KV demo
-- **2025-01**: Repository created
+- **2025-12**: v0.3 SQL Frontend + HNSW **published on crates.io**
+- **2025-11**: HNSW index implementation complete
+- **2025-10**: alopex-sql Parser/Planner/Executor complete
+- **2025-09**: Columnar-based Vector Store complete
+- **2025-08**: LSM-Tree file mode complete
+- **2025-06**: In-memory mode complete
+- **2025-01**: Project started
 
 For detailed changes, see the [GitHub Releases](https://github.com/alopex-db/alopex/releases).

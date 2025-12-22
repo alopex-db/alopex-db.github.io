@@ -26,19 +26,14 @@ Add Alopex to your Rust project:
 
     ```toml
     [dependencies]
-    alopex-embedded = "0.1"
-
-    # Optional: Enable vector support
-    alopex-embedded = { version = "0.1", features = ["vectors"] }
+    alopex-embedded = "0.3"
+    alopex-sql = "0.3"
     ```
 
 === "Cargo CLI"
 
     ```bash
-    cargo add alopex-embedded
-
-    # With vector support
-    cargo add alopex-embedded --features vectors
+    cargo add alopex-embedded alopex-sql
     ```
 
 ### From Source
@@ -64,14 +59,15 @@ cargo install --path alopex-cli
 
 | Feature | Description | Default |
 |:--------|:------------|:--------|
-| `vectors` | Enable vector storage and search | :x: |
+| `hnsw` | Enable HNSW vector indexing | :white_check_mark: |
 | `compression` | Enable data compression | :white_check_mark: |
 | `metrics` | Prometheus metrics export | :x: |
 | `tracing` | Distributed tracing support | :x: |
 
 ```toml
 [dependencies]
-alopex-embedded = { version = "0.1", features = ["vectors", "metrics"] }
+alopex-embedded = { version = "0.3", features = ["hnsw", "metrics"] }
+alopex-sql = "0.3"
 ```
 
 ## Platform-Specific Notes

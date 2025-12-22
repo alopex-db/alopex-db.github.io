@@ -20,7 +20,7 @@ hide:
 
 The unified database engine that scales from a single embedded file to a globally distributed cluster.
 
-**Native SQL, Vector Search, and Graph capabilities** in one Rust-based engine.
+**Native SQL, Vector Search, and HNSW indexing** in one Rust-based engine.
 
 [Get Started](getting-started/quickstart.md){ .md-button .md-button--primary }
 [View on GitHub :fontawesome-brands-github:](https://github.com/alopex-db/alopex){ .md-button }
@@ -31,9 +31,13 @@ The unified database engine that scales from a single embedded file to a globall
 
 ## :rocket: Current Status
 
-!!! success "v0.1 Embedded KV Core — Complete"
+!!! success "v0.3 SQL Frontend + HNSW — Complete & Published"
 
-    Alopex DB v0.1 is ready! The embedded foundation with ACID transactions, WAL durability, and MVCC isolation is complete. Start building today with our Key-Value API.
+    Alopex DB v0.3 is **published on crates.io**! Full SQL support with Vector SQL, HNSW indexing, and Embedded Integration are ready. Start building AI applications today.
+
+    ```bash
+    cargo add alopex-embedded alopex-sql
+    ```
 
 ---
 
@@ -73,23 +77,23 @@ Modern AI applications require multiple database technologies—creating complex
 
 <div class="grid cards" markdown>
 
--   :dart:{ .lg .middle } **Native Vector Support**
+-   :dart:{ .lg .middle } **Native Vector + HNSW**
 
     ---
 
-    `VECTOR(N)` is a first-class data type with ACID transactions. Run hybrid queries combining SQL filters with vector similarity search.
+    `VECTOR(N)` is a first-class data type with ACID transactions. HNSW indexing for high-performance similarity search with hybrid SQL queries.
 
--   :spider_web:{ .lg .middle } **Graph-Ready Storage**
-
-    ---
-
-    Optimized for Knowledge Graph storage with nodes, edges, and embeddings. Perfect for RAG applications requiring relationship traversal.
-
--   :bar_chart:{ .lg .middle } **Lake-Link Architecture**
+-   :zap:{ .lg .middle } **SQL Frontend**
 
     ---
 
-    Zero-ETL Parquet import directly into indexed vectors and graphs. Cold/hot data tiering with instant re-hydration.
+    Full SQL support with DDL/DML, `vector_similarity()` function, and Top-K optimization. Published on **crates.io**.
+
+-   :bar_chart:{ .lg .middle } **Columnar Storage**
+
+    ---
+
+    Optimized columnar segments with compression, statistics, and predicate pushdown for analytical workloads.
 
 -   :crab:{ .lg .middle } **Pure Rust Engine**
 
@@ -101,13 +105,13 @@ Modern AI applications require multiple database technologies—creating complex
 
     ---
 
-    Full transactional guarantees across SQL, vector, and graph operations. MVCC with Snapshot Isolation for concurrent access.
+    Full transactional guarantees across SQL, vector, and KV operations. MVCC with Snapshot Isolation for concurrent access.
 
 -   :satellite:{ .lg .middle } **Chirps Mesh Network**
 
     ---
 
-    QUIC-based cluster communication with SWIM protocol for membership. Three message profiles for Raft, gossip, and event streaming.
+    QUIC-based cluster communication with SWIM protocol for membership. Raft-ready transport with priority streams.
 
 </div>
 
@@ -121,7 +125,7 @@ Start small, scale infinitely—without changing your data model or application 
 |:-----|:---------|:-------------|
 | :globe_with_meridians: **WASM Viewer** | Browser Data Exploration | Read-only viewer with IndexedDB caching |
 | :package: **Embedded** | Mobile Apps, Local RAG, Edge Devices | Single Binary / Library (like SQLite) |
-| :desktop_computer: **Single-Node** | Microservices, Dev/Test Environments | Standalone Server (Postgres-compatible*) |
+| :desktop_computer: **Single-Node** | Microservices, Dev/Test Environments | Standalone Server (HTTP/gRPC) |
 | :arrows_counterclockwise: **Replicated** | High Availability, Read-heavy Workloads | Primary-Replica with automatic failover |
 | :earth_americas: **Distributed** | Large-Scale Production | Multi-Raft Cluster (Range Sharding) |
 
@@ -134,34 +138,51 @@ Start small, scale infinitely—without changing your data model or application 
 === "Hybrid Search"
 
     ```sql
-    -- Create a table with mixed data types
+    -- Create a table with vector column
     CREATE TABLE knowledge_chunks (
-        id UUID PRIMARY KEY,
+        id INTEGER PRIMARY KEY,
         content TEXT,
-        embedding VECTOR(1536), -- OpenAI compatible
-        created_at TIMESTAMP
+        embedding VECTOR(1536)
     );
 
     -- Hybrid Search: SQL Filter + Vector Similarity
-    SELECT content,
-           cosine_similarity(embedding, [0.1, 0.5, ...]) AS score
+    SELECT id, content,
+           vector_similarity(embedding, ?) AS score
     FROM knowledge_chunks
-    WHERE created_at > '2024-01-01'
     ORDER BY score DESC
     LIMIT 5;
     ```
 
-=== "Lake-Link Import"
+=== "HNSW Index"
 
     ```sql
-    -- Turn raw Parquet data into a queryable Knowledge Graph
-    COPY FROM 's3://datalake/wiki_dump.parquet'
-    INTO GRAPH wiki_graph
-    MAP COLUMNS (
-        id => node_id,
-        vector_col => embedding,
-        links => edges  -- Auto-generate graph edges
-    );
+    -- Create HNSW index for fast similarity search
+    CREATE INDEX idx_embedding ON knowledge_chunks
+    USING HNSW (embedding)
+    WITH (m = 16, ef_construction = 200);
+
+    -- Search with HNSW acceleration
+    SELECT id, content
+    FROM knowledge_chunks
+    ORDER BY vector_similarity(embedding, ?) DESC
+    LIMIT 10;
+    ```
+
+=== "Embedded Rust API"
+
+    ```rust
+    use alopex_embedded::Database;
+
+    let db = Database::open("./my_data")?;
+
+    // Execute SQL
+    let results = db.execute_sql(
+        "SELECT * FROM docs WHERE vector_similarity(embedding, ?) > 0.8",
+        &[query_vector]
+    )?;
+
+    // HNSW search
+    let similar = db.search_hnsw("docs", &query_vector, 10)?;
     ```
 
 [:octicons-arrow-right-24: View SQL + Vector guide](guides/sql-vector.md)
@@ -177,37 +198,77 @@ gantt
     axisFormat  %Y-%m
 
     section Foundation
-    v0.1 Embedded Core       :done, 2025-01, 2025-11
-    v0.2 Vector Core (Flat)  :active, 2025-11, 2026-01
+    v0.1-v0.2 Core          :done, 2025-01, 2025-10
+    v0.3 SQL + HNSW         :done, 2025-10, 2025-12
 
-    section SQL & Server
-    v0.3 SQL Frontend        :2026-01, 2026-02
-    v0.4 Server + HNSW       :2026-02, 2026-04
-
-    section Distributed
-    v0.7 Cluster-aware       :2026-06, 2026-08
-    v0.9 Multi-Raft          :2026-10, 2026-12
+    section Python & Server
+    v0.3.1 Python Wrapper   :active, 2025-12, 2026-02
+    v0.4 Server + DataFrame :2026-02, 2026-04
 
     section Production
-    v1.0 GA                  :milestone, 2027-03, 0d
+    v0.5 Durability         :2026-04, 2026-06
+    v0.6 WASM Viewer        :2026-06, 2026-08
+    v0.7 Cluster-aware      :2026-08, 2026-10
+    v1.0 GA                 :milestone, 2027-03, 0d
 ```
 
 ### What's Complete
 
 | Version | Features | Status |
 |:--------|:---------|:------:|
-| **v0.1** | Embedded KV, WAL, MVCC, Transactions | :white_check_mark: Complete |
-| **Chirps v0.3** | Gossip, SWIM, Membership API | :white_check_mark: Complete |
+| **v0.1-v0.2** | Embedded KV, WAL, MVCC, Vector (Flat), Columnar | :white_check_mark: Complete |
+| **v0.3** | SQL Frontend, HNSW Index, Embedded Integration | :white_check_mark: **crates.io Published** |
+| **Chirps v0.5** | Gossip, SWIM, Membership, Raft Consensus API | :white_check_mark: Complete |
 
 ### What's Next
 
 | Version | Features | Target |
 |:--------|:---------|:-------|
-| **v0.2** | Vector Type, Flat Search, Columnar Compression | Jan 2026 |
-| **v0.3** | SQL Parser, DDL/DML, Embedded SQL | Feb 2026 |
-| **v0.4** | Server Mode, REST/gRPC, HNSW Index | Apr 2026 |
+| **v0.3.1** | Python Wrapper (alopex-py), CLI | Q1 2026 |
+| **v0.4** | Server Mode, DataFrame API | Q2 2026 |
+| **v0.5** | Durability, JOIN Support | Q2 2026 |
 
 [:octicons-arrow-right-24: View detailed roadmap](roadmap.md)
+
+---
+
+## :snake: Python Support (Coming Soon)
+
+=== "Database API"
+
+    ```python
+    import alopex
+
+    # Open database
+    db = alopex.Database.open("./my_data")
+
+    # Execute SQL
+    results = db.execute_sql(
+        "SELECT * FROM docs WHERE category = ?",
+        ["science"]
+    )
+
+    # Vector search
+    similar = db.search_hnsw("docs", query_embedding, k=10)
+    ```
+
+=== "DataFrame API"
+
+    ```python
+    import alopex
+
+    # Polars-compatible DataFrame API
+    df = alopex.read_parquet("data.parquet")
+
+    result = (
+        df.lazy()
+        .filter(alopex.col("score") > 0.5)
+        .select(["id", "content", "embedding"])
+        .collect()
+    )
+    ```
+
+[:octicons-arrow-right-24: Python Guide](guides/python.md) *(Coming in v0.3.1)*
 
 ---
 
@@ -229,11 +290,11 @@ Alopex Chirps is the control plane for distributed Alopex DB clusters.
 
     TLS 1.3, 0-RTT resumption, multiplexed streams. Priority channels for Raft consensus.
 
--   :envelope:{ .lg .middle } **Message Profiles**
+-   :envelope:{ .lg .middle } **Raft Consensus**
 
     ---
 
-    Control (Raft), Ephemeral (Gossip), Durable (Event Streams). Route by reliability needs.
+    Raft-ready transport with StateMachine/RaftStorage traits. WAL-based persistent storage.
 
 </div>
 
