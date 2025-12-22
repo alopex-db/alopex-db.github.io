@@ -5,6 +5,9 @@ description: Cluster messaging and membership layer for Alopex DB
 
 # Chirps - Cluster Messaging Layer
 
+[![crates.io](https://img.shields.io/crates/v/alopex-chirps.svg)](https://crates.io/crates/alopex-chirps)
+[![docs.rs](https://docs.rs/alopex-chirps/badge.svg)](https://docs.rs/alopex-chirps)
+
 Alopex Chirps is the backbone of Alopex DB's distributed architecture. It provides gossip-based membership management and flexible messaging capabilities that power all cluster operations.
 
 ## Overview

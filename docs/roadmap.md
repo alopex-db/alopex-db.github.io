@@ -49,9 +49,22 @@ gantt
 
 ---
 
+## Published Crates
+
+The following crates are available on **crates.io**:
+
+| Crate | Version | Description |
+|:------|:--------|:------------|
+| [![alopex-embedded](https://img.shields.io/crates/v/alopex-embedded.svg)](https://crates.io/crates/alopex-embedded) | v0.3.1 | Embedded database API |
+| [![alopex-sql](https://img.shields.io/crates/v/alopex-sql.svg)](https://crates.io/crates/alopex-sql) | v0.3.0 | SQL parser, planner, executor |
+| [![alopex-core](https://img.shields.io/crates/v/alopex-core.svg)](https://crates.io/crates/alopex-core) | v0.3.1 | Core storage engine |
+| [![alopex-chirps](https://img.shields.io/crates/v/alopex-chirps.svg)](https://crates.io/crates/alopex-chirps) | v0.5.0 | Cluster messaging layer |
+
+---
+
 ## Version Compatibility Matrix
 
-| Alopex DB | alopex-core | alopex-dataframe | alopex-sql | alopex-embedded | alopex-py | Chirps |
+| Alopex DB | [alopex-core](https://crates.io/crates/alopex-core) | alopex-dataframe | [alopex-sql](https://crates.io/crates/alopex-sql) | [alopex-embedded](https://crates.io/crates/alopex-embedded) | alopex-py | [Chirps](https://crates.io/crates/alopex-chirps) |
 |:----------|:------------|:-----------------|:-----------|:----------------|:----------|:-------|
 | **v0.3** | v0.3.0 | - | v0.3.0 | v0.3.0 | - | v0.5.0 |
 | v0.3.1 | v0.3.1 | - | v0.3.0 | v0.3.1 | **v0.1.0** | v0.5.0 |

@@ -7,6 +7,10 @@ description: Get started with Alopex DB in minutes
 
 Get up and running with Alopex DB in just a few minutes. Alopex DB v0.3 is now available on **crates.io** with full SQL support and HNSW indexing.
 
+[![crates.io](https://img.shields.io/crates/v/alopex-embedded.svg)](https://crates.io/crates/alopex-embedded)
+[![crates.io](https://img.shields.io/crates/v/alopex-sql.svg)](https://crates.io/crates/alopex-sql)
+[![crates.io](https://img.shields.io/crates/v/alopex-core.svg)](https://crates.io/crates/alopex-core)
+
 ## Prerequisites
 
 - **Rust** 1.75 or later

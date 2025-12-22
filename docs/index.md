@@ -39,6 +39,11 @@ The unified database engine that scales from a single embedded file to a globall
     cargo add alopex-embedded alopex-sql
     ```
 
+    [:simple-rust: alopex-embedded](https://crates.io/crates/alopex-embedded){ .md-button .md-button--primary }
+    [:simple-rust: alopex-sql](https://crates.io/crates/alopex-sql){ .md-button }
+    [:simple-rust: alopex-core](https://crates.io/crates/alopex-core){ .md-button }
+    [:simple-rust: alopex-chirps](https://crates.io/crates/alopex-chirps){ .md-button }
+
 ---
 
 ## :thinking: The Problem
@@ -273,6 +278,8 @@ gantt
 ---
 
 ## :link: Chirps — Cluster Foundation
+
+[![crates.io](https://img.shields.io/crates/v/alopex-chirps.svg)](https://crates.io/crates/alopex-chirps)
 
 Alopex Chirps is the control plane for distributed Alopex DB clusters.
 

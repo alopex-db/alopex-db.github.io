@@ -116,15 +116,15 @@ graph TB
 
 | Component | Description | Status |
 |:----------|:------------|:-------|
-| **alopex-core** | Core storage engine with LSM-Tree, Vector, Columnar | :white_check_mark: v0.3.1 |
-| **alopex-sql** | SQL parser, planner, and executor | :white_check_mark: v0.3.0 (crates.io) |
-| **alopex-embedded** | Embedded mode library API | :white_check_mark: v0.3.1 |
+| [**alopex-core**](https://crates.io/crates/alopex-core) | Core storage engine with LSM-Tree, Vector, Columnar | :white_check_mark: v0.3.1 |
+| [**alopex-sql**](https://crates.io/crates/alopex-sql) | SQL parser, planner, and executor | :white_check_mark: v0.3.0 |
+| [**alopex-embedded**](https://crates.io/crates/alopex-embedded) | Embedded mode library API | :white_check_mark: v0.3.1 |
 | **alopex-dataframe** | Polars-compatible DataFrame API | :material-calendar: v0.1.0 (Planned) |
 | **alopex-py** | Python bindings via PyO3 | :material-calendar: v0.1.0 (Planned) |
 | **alopex-server** | Single-node server with HTTP/gRPC | :material-calendar: v0.4 (Planned) |
 | **alopex-cluster** | Distributed mode with Raft | :material-calendar: v0.7 (Planned) |
 | **alopex-cli** | Command-line tools | :material-calendar: v0.3.1 (Planned) |
-| **alopex-chirps** | Gossip-based cluster messaging | :white_check_mark: v0.5.0 |
+| [**alopex-chirps**](https://crates.io/crates/alopex-chirps) | Gossip-based cluster messaging | :white_check_mark: v0.5.0 |
 
 ## Data Models
 

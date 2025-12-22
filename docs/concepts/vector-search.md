@@ -5,6 +5,9 @@ description: Native vector support in Alopex DB
 
 # Vector Search
 
+[![crates.io](https://img.shields.io/crates/v/alopex-embedded.svg)](https://crates.io/crates/alopex-embedded)
+[![crates.io](https://img.shields.io/crates/v/alopex-core.svg)](https://crates.io/crates/alopex-core)
+
 Alopex DB treats vectors as first-class citizens, enabling powerful AI and machine learning applications with native ACID guarantees.
 
 ## Why Native Vectors?
