@@ -9,12 +9,16 @@ This roadmap outlines the planned development of Alopex DB from the current stat
 
 ## Current Status
 
-!!! success "v0.3 Complete — Published on crates.io (December 2025)"
+!!! success "v0.3.3 Complete — Published on crates.io & PyPI (December 2025)"
 
-    Alopex DB v0.3 **SQL Frontend + HNSW** is complete and published on crates.io. Full SQL support, Vector SQL, HNSW indexing, and Embedded Integration are ready for use.
+    Alopex DB v0.3.3 with **SQL Frontend + HNSW + Python Bindings** is complete. Full SQL support, Vector SQL, HNSW indexing, Embedded Integration, and Python bindings are ready for use.
 
     ```bash
+    # Rust
     cargo add alopex-embedded alopex-sql
+
+    # Python
+    pip install alopex
     ```
 
 ## Timeline
@@ -28,10 +32,10 @@ gantt
     section Foundation
     v0.1-v0.2 Core          :done, 2025-01, 2025-10
     v0.3 SQL + HNSW         :done, 2025-10, 2025-12
+    v0.3.3 Python + CLI     :done, 2025-12, 2025-12
 
-    section Python & Server
-    v0.3.1 Python + CLI     :active, 2025-12, 2026-02
-    v0.4 Server + DataFrame :2026-02, 2026-04
+    section Server & DataFrame
+    v0.4 Server + DataFrame :active, 2026-01, 2026-03
 
     section Production
     v0.5 Durability + JOIN  :2026-04, 2026-06
@@ -64,15 +68,18 @@ The following crates are available on **crates.io**:
 
 ## Version Compatibility Matrix
 
-| Alopex DB | [alopex-core](https://crates.io/crates/alopex-core) | alopex-dataframe | [alopex-sql](https://crates.io/crates/alopex-sql) | [alopex-embedded](https://crates.io/crates/alopex-embedded) | alopex-py | [Chirps](https://crates.io/crates/alopex-chirps) |
+| Alopex DB | [alopex-core](https://crates.io/crates/alopex-core) | alopex-dataframe | [alopex-sql](https://crates.io/crates/alopex-sql) | [alopex-embedded](https://crates.io/crates/alopex-embedded) | [alopex-py](https://pypi.org/project/alopex/) | [Chirps](https://crates.io/crates/alopex-chirps) |
 |:----------|:------------|:-----------------|:-----------|:----------------|:----------|:-------|
 | **v0.3** | v0.3.0 | - | v0.3.0 | v0.3.0 | - | v0.5.0 |
-| v0.3.1 | v0.3.1 | - | v0.3.0 | v0.3.1 | **v0.1.0** | v0.5.0 |
-| v0.4 | v0.4 | **v0.1.0** | v0.4 | v0.4 | v0.1.x | v0.5.0 |
-| v0.5 | v0.5 | v0.2.0 | v0.5 | v0.5 | **v0.2.0** | v0.5.0 |
-| v0.6 | v0.6 | v0.3.0 | v0.6 | v0.6 | v0.2.x | v0.5.0 |
-| v0.7 | v0.7 | v0.4.0 | v0.7+ | v0.7 | v0.2.x | v0.5+ |
-| v1.0 | v1.0 | v1.0 | v1.0 | v1.0 | v1.0 | v0.8 |
+| **v0.3.3** | v0.3.3 | - | v0.3.0 | v0.3.3 | **v0.3.3** | v0.5.0 |
+| v0.4 | v0.4 | **v0.1.0** | v0.4 | v0.4 | - | v0.5.0 |
+| v0.5 | v0.5 | v0.2.0 | v0.5 | v0.5 | - | v0.5.0 |
+| v0.6 | v0.6 | v0.3.0 | v0.6 | v0.6 | - | v0.5.0 |
+| v0.7 | v0.7 | v0.4.0 | v0.7+ | v0.7 | - | v0.5+ |
+| v1.0 | v1.0 | v1.0 | v1.0 | v1.0 | - | v0.8 |
+
+!!! note "alopex-py Independent Versioning"
+    alopex-py follows its own versioning scheme independent of the Rust workspace. See [alopex-py Roadmap](#python) for details.
 
 ---
 
@@ -142,24 +149,24 @@ CREATE INDEX idx_emb ON documents USING HNSW (embedding);
 
 ---
 
-## Phase 3: Python & Server (v0.3.1 - v0.4) { #phase3 }
+## Phase 3: Python & Server (v0.3.3 - v0.4) { #phase3 }
 
-### v0.3.1 — Python Wrapper (alopex-py) { #v031 }
+### v0.3.3 — Python Wrapper (alopex-py) { #v033 }
 
-**Status**: :material-progress-clock: In Progress
-**Target**: Q1 2026
+**Status**: :material-check-all: Complete — **PyPI Published**
+**Released**: December 2025
 
 Python bindings via PyO3 for the embedded database.
 
 #### Features
 
-- [ ] PyO3 module structure with error handling
-- [ ] `Database` / `Transaction` bindings
-- [ ] SQL API bindings (`execute_sql`, `QueryResult`)
-- [ ] Vector/HNSW API bindings
-- [ ] NumPy integration (zero-copy arrays)
-- [ ] Type stubs (`.pyi` files) for IDE support
-- [ ] CI/CD with maturin + pytest
+- [x] PyO3 module structure with error handling
+- [x] `Database` / `Transaction` bindings
+- [x] SQL API bindings (`execute_sql`, `QueryResult`)
+- [x] Type stubs (`.pyi` files) for IDE support
+- [x] CI/CD with maturin + pytest + TestPyPI verification
+- [ ] Vector/HNSW API bindings — *planned for v0.3.4*
+- [ ] NumPy integration (zero-copy arrays) — *planned for v0.3.5*
 
 #### Preview
 
@@ -349,15 +356,17 @@ Polars-compatible DataFrame engine in pure Rust:
 
 ## alopex-py Roadmap { #python }
 
-Python bindings with NumPy and DataFrame support:
+Python bindings with NumPy and DataFrame support. alopex-py follows its own versioning scheme independent of the Rust workspace.
 
-| Version | Phase | Features |
-|:--------|:------|:---------|
-| v0.1.0 | Phase 1 | Database/Transaction basic API |
-| v0.1.1 | Phase 1 | Vector/HNSW API |
-| v0.1.2 | Phase 1 | NumPy integration, GIL release |
-| v0.2.0 | Phase 2 | DataFrame API (via alopex-dataframe) |
-| v0.3.0 | Phase 3 | Client API (Server connection) |
+| Version | Phase | Features | Status |
+|:--------|:------|:---------|:-------|
+| **v0.3.3** | Phase 1 | Database/Transaction/SQL basic API | :white_check_mark: PyPI Published |
+| v0.3.4 | Phase 1+ | Vector/HNSW API extensions | :material-calendar: Planned |
+| v0.3.5 | Phase 1+ | NumPy integration (zero-copy arrays) | :material-calendar: Planned |
+| v0.4.0 | Phase 1+ | Catalog API (Polars Unity Catalog compatible) | :material-calendar: Planned |
+| v0.5.0 | Phase 2 | DataFrame API MVP (via alopex-dataframe) | :material-calendar: Planned |
+| v0.6.0 | Phase 2 | DataFrame extended features | :material-calendar: Planned |
+| v0.7.0 | Phase 3 | Client API (Server connection) | :material-calendar: Planned |
 
 ---
 
@@ -382,6 +391,7 @@ We welcome contributions! Priority areas:
 
 ### Recent Updates
 
+- **2025-12-27**: v0.3.3 alopex-py **published on PyPI**
 - **2025-12**: v0.3 SQL Frontend + HNSW **published on crates.io**
 - **2025-11**: HNSW index implementation complete
 - **2025-10**: alopex-sql Parser/Planner/Executor complete
