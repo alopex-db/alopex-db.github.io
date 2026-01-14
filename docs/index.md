@@ -31,16 +31,17 @@ The unified database engine that scales from a single embedded file to a globall
 
 ## :rocket: Current Status
 
-!!! success "v0.3 SQL Frontend + HNSW — Complete & Published"
+!!! success "v0.4.0 Server + DataFrame — Complete & Published"
 
-    Alopex DB v0.3 is **published on crates.io**! Full SQL support with Vector SQL, HNSW indexing, and Embedded Integration are ready. Start building AI applications today.
+    Alopex DB v0.4.0 is **published on crates.io**! Server mode with HTTP/gRPC API, async/stream foundation, and Polars-compatible DataFrame engine are ready. Build scalable AI applications today.
 
     ```bash
-    cargo add alopex-embedded alopex-sql
+    cargo add alopex-embedded alopex-sql alopex-server
     ```
 
     [:simple-rust: alopex-embedded](https://crates.io/crates/alopex-embedded){ .md-button .md-button--primary }
     [:simple-rust: alopex-sql](https://crates.io/crates/alopex-sql){ .md-button }
+    [:simple-rust: alopex-server](https://crates.io/crates/alopex-server){ .md-button }
     [:simple-rust: alopex-core](https://crates.io/crates/alopex-core){ .md-button }
     [:simple-rust: alopex-chirps](https://crates.io/crates/alopex-chirps){ .md-button }
 
@@ -207,8 +208,8 @@ gantt
     v0.3 SQL + HNSW         :done, 2025-10, 2025-12
 
     section Python & Server
-    v0.3.1 Python Wrapper   :active, 2025-12, 2026-02
-    v0.4 Server + DataFrame :2026-02, 2026-04
+    v0.3.3 Python Wrapper   :done, 2025-12, 2025-12
+    v0.4 Server + DataFrame :done, 2026-01, 2026-01
 
     section Production
     v0.5 Durability         :2026-04, 2026-06
@@ -223,21 +224,23 @@ gantt
 |:--------|:---------|:------:|
 | **v0.1-v0.2** | Embedded KV, WAL, MVCC, Vector (Flat), Columnar | :white_check_mark: Complete |
 | **v0.3** | SQL Frontend, HNSW Index, Embedded Integration | :white_check_mark: **crates.io Published** |
+| **v0.3.3** | Python Wrapper (alopex-py), CLI | :white_check_mark: **PyPI Published** |
+| **v0.4.0** | Server Mode, DataFrame API, Async/Stream | :white_check_mark: **crates.io Published** |
 | **Chirps v0.5** | Gossip, SWIM, Membership, Raft Consensus API | :white_check_mark: Complete |
 
 ### What's Next
 
 | Version | Features | Target |
 |:--------|:---------|:-------|
-| **v0.3.1** | Python Wrapper (alopex-py), CLI | Q1 2026 |
-| **v0.4** | Server Mode, DataFrame API | Q2 2026 |
-| **v0.5** | Durability, JOIN Support | Q2 2026 |
+| **v0.4.1** | CLI Extensions (Server connection, TUI preview) | Q1 2026 |
+| **v0.5** | Durability, JOIN Support, GROUP BY | Q2 2026 |
+| **v0.6** | WASM Viewer | Q3 2026 |
 
 [:octicons-arrow-right-24: View detailed roadmap](roadmap.md)
 
 ---
 
-## :snake: Python Support (Coming Soon)
+## :snake: Python Support (Available Now)
 
 === "Database API"
 
@@ -273,7 +276,7 @@ gantt
     )
     ```
 
-[:octicons-arrow-right-24: Python Guide](guides/python.md) *(Coming in v0.3.1)*
+[:octicons-arrow-right-24: Python Guide](guides/python.md)
 
 ---
 

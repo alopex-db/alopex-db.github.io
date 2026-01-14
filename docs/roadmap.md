@@ -9,13 +9,13 @@ This roadmap outlines the planned development of Alopex DB from the current stat
 
 ## Current Status
 
-!!! success "v0.3.3 Complete — Published on crates.io & PyPI (December 2025)"
+!!! success "v0.4.0 Complete — Published on crates.io & PyPI (January 2026)"
 
-    Alopex DB v0.3.3 with **SQL Frontend + HNSW + Python Bindings** is complete. Full SQL support, Vector SQL, HNSW indexing, Embedded Integration, and Python bindings are ready for use.
+    Alopex DB v0.4.0 with **Server Mode + Async/Stream + DataFrame** is complete. HTTP/gRPC API, runtime-agnostic async facade, streaming SELECT, and Polars-compatible DataFrame foundation are ready for use.
 
     ```bash
     # Rust
-    cargo add alopex-embedded alopex-sql
+    cargo add alopex-embedded alopex-sql alopex-server
 
     # Python
     pip install alopex
@@ -35,7 +35,7 @@ gantt
     v0.3.3 Python + CLI     :done, 2025-12, 2025-12
 
     section Server & DataFrame
-    v0.4 Server + DataFrame :active, 2026-01, 2026-03
+    v0.4 Server + DataFrame :done, 2026-01, 2026-01
 
     section Production
     v0.5 Durability + JOIN  :2026-04, 2026-06
@@ -59,9 +59,10 @@ The following crates are available on **crates.io**:
 
 | Crate | Version | Description |
 |:------|:--------|:------------|
-| [![alopex-embedded](https://img.shields.io/crates/v/alopex-embedded.svg)](https://crates.io/crates/alopex-embedded) | v0.3.1 | Embedded database API |
-| [![alopex-sql](https://img.shields.io/crates/v/alopex-sql.svg)](https://crates.io/crates/alopex-sql) | v0.3.0 | SQL parser, planner, executor |
-| [![alopex-core](https://img.shields.io/crates/v/alopex-core.svg)](https://crates.io/crates/alopex-core) | v0.3.1 | Core storage engine |
+| [![alopex-embedded](https://img.shields.io/crates/v/alopex-embedded.svg)](https://crates.io/crates/alopex-embedded) | v0.4.0 | Embedded database API |
+| [![alopex-sql](https://img.shields.io/crates/v/alopex-sql.svg)](https://crates.io/crates/alopex-sql) | v0.4.0 | SQL parser, planner, executor |
+| [![alopex-core](https://img.shields.io/crates/v/alopex-core.svg)](https://crates.io/crates/alopex-core) | v0.4.0 | Core storage engine |
+| [![alopex-server](https://img.shields.io/crates/v/alopex-server.svg)](https://crates.io/crates/alopex-server) | v0.4.0 | HTTP/gRPC server |
 | [![alopex-chirps](https://img.shields.io/crates/v/alopex-chirps.svg)](https://crates.io/crates/alopex-chirps) | v0.5.0 | Cluster messaging layer |
 
 ---
@@ -72,7 +73,7 @@ The following crates are available on **crates.io**:
 |:----------|:------------|:-----------------|:-----------|:----------------|:----------|:-------|
 | **v0.3** | v0.3.0 | - | v0.3.0 | v0.3.0 | - | v0.5.0 |
 | **v0.3.3** | v0.3.3 | - | v0.3.0 | v0.3.3 | **v0.3.3** | v0.5.0 |
-| v0.4 | v0.4 | **v0.1.0** | v0.4 | v0.4 | - | v0.5.0 |
+| **v0.4.0** | **v0.4.0** | **v0.1.0** | **v0.4.0** | **v0.4.0** | **v0.4.0** | v0.5.0 |
 | v0.5 | v0.5 | v0.2.0 | v0.5 | v0.5 | - | v0.5.0 |
 | v0.6 | v0.6 | v0.3.0 | v0.6 | v0.6 | - | v0.5.0 |
 | v0.7 | v0.7 | v0.4.0 | v0.7+ | v0.7 | - | v0.5+ |
@@ -188,28 +189,30 @@ for doc_id, score in similar:
     print(f"{doc_id}: {score:.4f}")
 ```
 
-### v0.4 — Server Mode + DataFrame { #v04 }
+### v0.4.0 — Server Mode + DataFrame { #v04 }
 
-**Status**: :material-calendar: Planned
-**Target**: Q2 2026
+**Status**: :material-check-all: Complete — **crates.io Published**
+**Released**: January 2026
 
-Standalone server and Polars-compatible DataFrame API.
+Standalone server and Polars-compatible DataFrame API foundation.
 
 #### Server Features
 
-- [ ] `alopex-server` binary with HTTP/gRPC API
-- [ ] SQL API (DDL/DML/SELECT with streaming)
-- [ ] Vector API (HNSW/Flat search)
-- [ ] Authentication (dev mode + token-based)
-- [ ] `alopex-cli` client tool
+- [x] `alopex-server` binary with HTTP/gRPC API
+- [x] SQL API (DDL/DML/SELECT with streaming)
+- [x] Vector API (HNSW/Flat search)
+- [x] Session Manager with TLS support
+- [x] Observability (metrics, tracing)
+- [x] Runtime-agnostic async facade with tokio adapter
 
-#### DataFrame Features (alopex-dataframe)
+#### DataFrame Features (alopex-dataframe v0.1.0)
 
-- [ ] `DataFrame` / `LazyFrame` / `Expr` types
-- [ ] I/O: `read_csv`, `read_parquet`, `scan_*` variants
-- [ ] Operations: `select`, `filter`, `with_columns`
-- [ ] Aggregations: `group_by`, `agg`, `sum`, `mean`, etc.
-- [ ] Lazy evaluation with query optimization
+- [x] `DataFrame` / `LazyFrame` / `Expr` types
+- [x] I/O: `read_csv`, `read_parquet`, `scan_*` variants
+- [x] Operations: `select`, `filter`, `with_columns`
+- [x] Aggregations: `group_by`, `agg`, `sum`, `mean`, etc.
+- [x] Lazy evaluation with query optimization
+- [x] Predicate/Projection Pushdown
 
 #### DataFrame Preview
 
@@ -391,6 +394,7 @@ We welcome contributions! Priority areas:
 
 ### Recent Updates
 
+- **2026-01-14**: v0.4.0 Server + DataFrame **published on crates.io**
 - **2025-12-27**: v0.3.3 alopex-py **published on PyPI**
 - **2025-12**: v0.3 SQL Frontend + HNSW **published on crates.io**
 - **2025-11**: HNSW index implementation complete
