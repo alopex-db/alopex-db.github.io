@@ -29,6 +29,12 @@ The unified database engine that scales from a single embedded file to a globall
 
 ---
 
+## :computer: CLI Defaults
+
+On a TTY, the CLI launches the TUI by default; use `--batch` or `--output` to
+force batch output. Run `alopex` or `alopex server` to open the admin console and
+access lifecycle actions.
+
 ## :rocket: Current Status
 
 !!! success "v0.4.0 Server + DataFrame — Complete & Published"
@@ -232,7 +238,7 @@ gantt
 
 | Version | Features | Target |
 |:--------|:---------|:-------|
-| **v0.4.1** | CLI Extensions (Server connection, TUI preview) | Q1 2026 |
+| **v0.4.1** | CLI Extensions (Default TUI, Admin lifecycle) | Q1 2026 |
 | **v0.5** | Durability, JOIN Support, GROUP BY | Q2 2026 |
 | **v0.6** | WASM Viewer | Q3 2026 |
 

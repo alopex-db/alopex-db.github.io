@@ -55,6 +55,13 @@ cargo test
 cargo install --path alopex-cli
 ```
 
+### CLI (Optional)
+
+The CLI defaults to the TUI on TTY terminals. Force batch output with `--batch`
+or an explicit `--output` format. Run `alopex` (no subcommand) or `alopex server`
+to open the admin console; lifecycle actions (archive/restore/backup/export) live
+in the Lifecycle panel and require server permissions.
+
 ### Feature Flags
 
 | Feature | Description | Default |
@@ -118,8 +125,8 @@ wasm-pack build --target web alopex-wasm
 # Check version
 alopex --version
 
-# Run built-in tests
-alopex test
+# Run a quick interactive query (TUI opens on TTY)
+alopex --data-dir ./data sql "SELECT 1"
 
 # Quick benchmark
 alopex bench --quick

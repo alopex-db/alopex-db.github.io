@@ -11,6 +11,12 @@ Get up and running with Alopex DB in just a few minutes. Alopex DB v0.3 is now a
 [![crates.io](https://img.shields.io/crates/v/alopex-sql.svg)](https://crates.io/crates/alopex-sql)
 [![crates.io](https://img.shields.io/crates/v/alopex-core.svg)](https://crates.io/crates/alopex-core)
 
+## CLI Preview
+
+On a TTY, the CLI launches the TUI by default; use `--batch` or `--output` to
+force batch output. Run `alopex` or `alopex server` to open the admin console and
+access lifecycle actions.
+
 ## Prerequisites
 
 - **Rust** 1.75 or later
@@ -214,6 +220,18 @@ cargo run --example embedded-vector
 # Run HNSW example
 cargo run --example embedded-hnsw
 ```
+
+## CLI Quick Preview
+
+Install the CLI from source and run an interactive query:
+
+```bash
+cargo install --path alopex-cli
+alopex --data-dir ./data sql "SELECT 1"
+```
+
+On a TTY, the CLI opens the TUI by default. Use `--batch` or `--output json` to
+force batch output.
 
 ## Configuration Options
 
