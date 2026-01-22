@@ -58,9 +58,13 @@ cargo install --path alopex-cli
 ### CLI (Optional)
 
 The CLI defaults to the TUI on TTY terminals. Force batch output with `--batch`
-or an explicit `--output` format. Run `alopex` (no subcommand) or `alopex server`
-to open the admin console; lifecycle actions (archive/restore/backup/export) live
-in the Lifecycle panel and require server permissions.
+or an explicit `--output` format. In the results TUI, press `a` to open the admin
+console when available. The status bar emphasizes **Connection/Focus/Action**
+and **Ops** so you can see the current target and primary actions at a glance.
+Run `alopex` (no subcommand) or `alopex server` to open the admin console; lifecycle
+actions (archive/restore/backup/export) live in the Actions list and require
+server permissions. The admin console uses a rainfrog-style layout (left resource
+tree, right detail input, right-bottom status/preview) with `h/l` focus switching.
 
 ### Feature Flags
 

@@ -14,8 +14,11 @@ Get up and running with Alopex DB in just a few minutes. Alopex DB v0.3 is now a
 ## CLI Preview
 
 On a TTY, the CLI launches the TUI by default; use `--batch` or `--output` to
-force batch output. Run `alopex` or `alopex server` to open the admin console and
-access lifecycle actions.
+force batch output. In the results TUI, press `a` to open the admin console
+when available. The status bar emphasizes **Connection/Focus/Action** and
+**Ops** so you can see the current target and primary actions at a glance. The
+admin console uses a rainfrog-style layout (left resource tree, right detail
+input, right-bottom status/preview) with `h/l` focus switching.
 
 ## Prerequisites
 
