@@ -9,6 +9,10 @@ This roadmap outlines the planned development of Alopex DB from the current stat
 
 ## Current Status
 
+!!! success "alopex-cli v0.4.2 Released (January 2026)"
+
+    **alopex-cli v0.4.2** with **TUI as default** is complete. All commands now support TUI mode, Admin TUI for lifecycle operations, mTLS certificate validation, and SELECT literal support (without FROM clause).
+
 !!! success "v0.4.0 Complete — Published on crates.io & PyPI (January 2026)"
 
     Alopex DB v0.4.0 with **Server Mode + Async/Stream + DataFrame** is complete. HTTP/gRPC API, runtime-agnostic async facade, streaming SELECT, and Polars-compatible DataFrame foundation are ready for use.
@@ -74,6 +78,7 @@ The following crates are available on **crates.io**:
 | **v0.3** | v0.3.0 | - | v0.3.0 | v0.3.0 | - | v0.5.0 |
 | **v0.3.3** | v0.3.3 | - | v0.3.0 | v0.3.3 | **v0.3.3** | v0.5.0 |
 | **v0.4.0** | **v0.4.0** | **v0.1.0** | **v0.4.0** | **v0.4.0** | **v0.4.0** | v0.5.0 |
+| **v0.4.2** | v0.4.0 | v0.1.0 | v0.4.0 | v0.4.0 | v0.4.0 | v0.5.0 |
 | v0.5 | v0.5 | v0.2.0 | v0.5 | v0.5 | - | v0.5.0 |
 | v0.6 | v0.6 | v0.3.0 | v0.6 | v0.6 | - | v0.5.0 |
 | v0.7 | v0.7 | v0.4.0 | v0.7+ | v0.7 | - | v0.5+ |
@@ -394,6 +399,7 @@ We welcome contributions! Priority areas:
 
 ### Recent Updates
 
+- **2026-01-24**: alopex-cli v0.4.2 **released** — TUI default, Admin TUI, security fixes, SELECT literal support
 - **2026-01-14**: v0.4.0 Server + DataFrame **published on crates.io**
 - **2025-12-27**: v0.3.3 alopex-py **published on PyPI**
 - **2025-12**: v0.3 SQL Frontend + HNSW **published on crates.io**
