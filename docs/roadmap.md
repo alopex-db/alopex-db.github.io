@@ -9,21 +9,21 @@ This roadmap outlines the planned development of Alopex DB from the current stat
 
 ## Current Status
 
-!!! success "alopex-cli v0.4.2 Released (January 2026)"
+!!! success "v0.5.0 Released — Published on crates.io (January 2026)"
 
-    **alopex-cli v0.4.2** with **TUI as default** is complete. All commands now support TUI mode, Admin TUI for lifecycle operations, mTLS certificate validation, and SELECT literal support (without FROM clause).
-
-!!! success "v0.4.0 Complete — Published on crates.io & PyPI (January 2026)"
-
-    Alopex DB v0.4.0 with **Server Mode + Async/Stream + DataFrame** is complete. HTTP/gRPC API, runtime-agnostic async facade, streaming SELECT, and Polars-compatible DataFrame foundation are ready for use.
+    **Alopex DB v0.5.0** is complete with **GROUP BY/Aggregation** and **DataFrame P1 (JOIN/sort/null processing)**. All core crates updated to v0.5.0.
 
     ```bash
     # Rust
-    cargo add alopex-embedded alopex-sql alopex-server
+    cargo add alopex-embedded alopex-sql alopex-server alopex-dataframe
 
     # Python
     pip install alopex
     ```
+
+!!! success "alopex-cli v0.4.2 Released (January 2026)"
+
+    **alopex-cli v0.4.2** with **TUI as default** is complete. All commands now support TUI mode, Admin TUI for lifecycle operations, mTLS certificate validation, and SELECT literal support (without FROM clause).
 
 ## Timeline
 
@@ -40,10 +40,10 @@ gantt
 
     section Server & DataFrame
     v0.4 Server + DataFrame :done, 2026-01, 2026-01
+    v0.5 GROUP BY + JOIN    :done, 2026-01, 2026-01
 
     section Production
-    v0.5 Durability + JOIN  :2026-04, 2026-06
-    v0.6 WASM Viewer        :2026-06, 2026-08
+    v0.6 WASM Viewer        :2026-04, 2026-06
 
     section Distributed
     v0.7 Cluster-aware      :2026-08, 2026-10
@@ -63,26 +63,27 @@ The following crates are available on **crates.io**:
 
 | Crate | Version | Description |
 |:------|:--------|:------------|
-| [![alopex-embedded](https://img.shields.io/crates/v/alopex-embedded.svg)](https://crates.io/crates/alopex-embedded) | v0.4.0 | Embedded database API |
-| [![alopex-sql](https://img.shields.io/crates/v/alopex-sql.svg)](https://crates.io/crates/alopex-sql) | v0.4.0 | SQL parser, planner, executor |
-| [![alopex-core](https://img.shields.io/crates/v/alopex-core.svg)](https://crates.io/crates/alopex-core) | v0.4.0 | Core storage engine |
-| [![alopex-server](https://img.shields.io/crates/v/alopex-server.svg)](https://crates.io/crates/alopex-server) | v0.4.0 | HTTP/gRPC server |
-| [![alopex-chirps](https://img.shields.io/crates/v/alopex-chirps.svg)](https://crates.io/crates/alopex-chirps) | v0.5.0 | Cluster messaging layer |
+| [![alopex-embedded](https://img.shields.io/crates/v/alopex-embedded.svg)](https://crates.io/crates/alopex-embedded) | v0.5.0 | Embedded database API |
+| [![alopex-sql](https://img.shields.io/crates/v/alopex-sql.svg)](https://crates.io/crates/alopex-sql) | v0.5.0 | SQL parser, planner, executor |
+| [![alopex-core](https://img.shields.io/crates/v/alopex-core.svg)](https://crates.io/crates/alopex-core) | v0.5.0 | Core storage engine |
+| [![alopex-server](https://img.shields.io/crates/v/alopex-server.svg)](https://crates.io/crates/alopex-server) | v0.5.0 | HTTP/gRPC server |
+| [![alopex-dataframe](https://img.shields.io/crates/v/alopex-dataframe.svg)](https://crates.io/crates/alopex-dataframe) | v0.2.0 | Polars-compatible DataFrame API |
+| [![alopex-chirps](https://img.shields.io/crates/v/alopex-chirps.svg)](https://crates.io/crates/alopex-chirps) | v0.5.1 | Cluster messaging layer |
 
 ---
 
 ## Version Compatibility Matrix
 
-| Alopex DB | [alopex-core](https://crates.io/crates/alopex-core) | alopex-dataframe | [alopex-sql](https://crates.io/crates/alopex-sql) | [alopex-embedded](https://crates.io/crates/alopex-embedded) | [alopex-py](https://pypi.org/project/alopex/) | [Chirps](https://crates.io/crates/alopex-chirps) |
+| Alopex DB | [alopex-core](https://crates.io/crates/alopex-core) | [alopex-dataframe](https://crates.io/crates/alopex-dataframe) | [alopex-sql](https://crates.io/crates/alopex-sql) | [alopex-embedded](https://crates.io/crates/alopex-embedded) | [alopex-py](https://pypi.org/project/alopex/) | [Chirps](https://crates.io/crates/alopex-chirps) |
 |:----------|:------------|:-----------------|:-----------|:----------------|:----------|:-------|
 | **v0.3** | v0.3.0 | - | v0.3.0 | v0.3.0 | - | v0.5.0 |
 | **v0.3.3** | v0.3.3 | - | v0.3.0 | v0.3.3 | **v0.3.3** | v0.5.0 |
 | **v0.4.0** | **v0.4.0** | **v0.1.0** | **v0.4.0** | **v0.4.0** | **v0.4.0** | v0.5.0 |
-| **v0.4.2** | v0.4.0 | v0.1.0 | v0.4.0 | v0.4.0 | v0.4.0 | v0.5.0 |
-| v0.5 | v0.5 | v0.2.0 | v0.5 | v0.5 | - | v0.5.0 |
-| v0.6 | v0.6 | v0.3.0 | v0.6 | v0.6 | - | v0.5.0 |
-| v0.7 | v0.7 | v0.4.0 | v0.7+ | v0.7 | - | v0.5+ |
-| v1.0 | v1.0 | v1.0 | v1.0 | v1.0 | - | v0.8 |
+| **v0.4.2** | v0.4.2 | v0.1.0 | v0.4.2 | v0.4.2 | v0.4.0 | v0.5.0 |
+| **v0.5.0** | **v0.5.0** | **v0.2.0** | **v0.5.0** | **v0.5.0** | v0.4.0 | **v0.5.1** |
+| v0.6 | v0.6 | v0.3.0 | v0.6 | v0.6 | - | v0.6 |
+| v0.7 | v0.7 | v0.4.0 | v0.7+ | v0.7 | - | v0.6 |
+| v1.0 | v1.0 | v1.0 | v1.0 | v1.0 | v1.0 | v0.9 |
 
 !!! note "alopex-py Independent Versioning"
     alopex-py follows its own versioning scheme independent of the Rust workspace. See [alopex-py Roadmap](#python) for details.
@@ -235,32 +236,36 @@ let result = df
 
 ---
 
-## Phase 4: Durability & WASM (v0.5 - v0.6) { #phase4 }
+## Phase 4: GROUP BY, DataFrame P1, WASM (v0.5 - v0.6) { #phase4 }
 
-### v0.5 — Durability + JOIN { #v05 }
+### v0.5 — GROUP BY + DataFrame P1 { #v05 }
+
+**Status**: :material-check-all: Complete — **crates.io Published**
+**Released**: January 2026
+
+- [x] GROUP BY / Aggregation (alopex-sql v0.5.0)
+- [x] DataFrame P1: JOIN (inner, left, right, full, semi, anti)
+- [x] DataFrame P1: sort / head / tail / unique
+- [x] DataFrame P1: fill_null / drop_nulls / null_count
+- [x] Server API extensions (alopex-server v0.5.0)
+- [ ] WAL/Crash recovery hardening — *planned for v0.5.x*
+- [ ] Performance benchmarks — *planned for v0.5.x*
+
+### v0.6 — WASM Viewer + SQL JOIN { #v06 }
 
 **Status**: :material-calendar: Planned
 **Target**: Q2 2026
 
-- [ ] WAL/Crash recovery hardening
-- [ ] Backup and restore
-- [ ] JOIN support (inner, left, right, full)
-- [ ] GROUP BY / Aggregation
-- [ ] Prometheus metrics
-- [ ] Structured logging
+Browser-based read-only viewer for database snapshots, plus SQL JOIN support.
 
-### v0.6 — WASM Viewer { #v06 }
-
-**Status**: :material-calendar: Planned
-**Target**: Q3 2026
-
-Browser-based read-only viewer for database snapshots.
-
+- [ ] SQL JOIN support (alopex-sql v0.6)
+- [ ] SQL Subquery support
+- [ ] DataFrame P2: cast / pivot / unpivot / window functions
 - [ ] `wasm32-unknown-unknown` target
 - [ ] Pre-built SSTable loader
 - [ ] IndexedDB caching
-- [ ] SQL SELECT only
-- [ ] Vector Search (Flat only)
+- [ ] SQL SELECT only (WASM)
+- [ ] Vector Search (Flat only, WASM)
 - [ ] npm package (`@alopex-db/wasm`)
 
 ```typescript
@@ -343,7 +348,7 @@ Alopex Chirps (cluster messaging layer) has its own development track:
 | v0.1-v0.3 | :white_check_mark: Complete | Gossip, SWIM, Membership API |
 | v0.4 | :white_check_mark: Complete | Raft-ready transport, QoS streams |
 | v0.5 | :white_check_mark: Complete | Raft Consensus API, WalRaftStorage |
-| v0.5.1 | :material-calendar: Planned | File Transfer API |
+| v0.5.1 | :white_check_mark: Complete | File Transfer API |
 | v0.6 | :material-calendar: Planned | Multi-Raft, TSO, Observability |
 | v0.7+ | :material-calendar: Planned | IggyBackend, Durable profile |
 
@@ -353,12 +358,13 @@ Alopex Chirps (cluster messaging layer) has its own development track:
 
 Polars-compatible DataFrame engine in pure Rust:
 
-| Version | Phase | Features |
-|:--------|:------|:---------|
-| v0.1.0 | DF-0 | DataFrame/Series types, Arrow integration |
-| v0.2.0 | DF-1 | CSV/Parquet I/O, select/filter/group_by, LazyFrame |
-| v0.3.0 | DF-2 | JOIN, sort, fill_null, Predicate Pushdown |
-| v0.4.0 | DF-3 | Window functions, pivot/unpivot, str/dt namespaces |
+| Version | Phase | Features | Status |
+|:--------|:------|:---------|:-------|
+| v0.1.0 | DF-0 | DataFrame/Series types, Arrow integration, CSV/Parquet I/O | :white_check_mark: Complete |
+| v0.2.0 | DF-1 | JOIN (all types), sort/head/tail/unique, fill_null/drop_nulls | :white_check_mark: Complete |
+| v0.3.0 | DF-2 | cast, pivot/unpivot, window functions (over, rolling, shift, rank) | :material-calendar: Planned |
+| v0.4.0 | DF-3 | str.* namespace, dt.* namespace, list.* + explode/implode | :material-calendar: Planned |
+| v0.5.0 | DF-4 | Streaming execution, CSE optimization, concat | :material-calendar: Planned |
 
 ---
 
@@ -369,12 +375,12 @@ Python bindings with NumPy and DataFrame support. alopex-py follows its own vers
 | Version | Phase | Features | Status |
 |:--------|:------|:---------|:-------|
 | **v0.3.3** | Phase 1 | Database/Transaction/SQL basic API | :white_check_mark: PyPI Published |
-| v0.3.4 | Phase 1+ | Vector/HNSW API extensions | :material-calendar: Planned |
-| v0.3.5 | Phase 1+ | NumPy integration (zero-copy arrays) | :material-calendar: Planned |
-| v0.4.0 | Phase 1+ | Catalog API (Polars Unity Catalog compatible) | :material-calendar: Planned |
-| v0.5.0 | Phase 2 | DataFrame API MVP (via alopex-dataframe) | :material-calendar: Planned |
-| v0.6.0 | Phase 2 | DataFrame extended features | :material-calendar: Planned |
-| v0.7.0 | Phase 3 | Client API (Server connection) | :material-calendar: Planned |
+| **v0.3.5** | Phase 1+ | NumPy integration (zero-copy arrays + GIL release) | :white_check_mark: PyPI Published |
+| **v0.4.0** | Phase 1+ | Catalog API (Polars Unity Catalog compatible) | :white_check_mark: PyPI Published |
+| v0.5.0 | Phase 2 | DataFrame API MVP (via alopex-dataframe v0.2) | :material-calendar: Planned |
+| v0.6.0 | Phase 2 | DataFrame extended features (P2) | :material-calendar: Planned |
+| v0.7.0 | Phase 3 | DataFrame namespaces (str/dt/list) | :material-calendar: Planned |
+| v1.0.0 | GA | Polars-compatible DataFrame + API stabilization | :material-calendar: Planned |
 
 ---
 
@@ -399,8 +405,10 @@ We welcome contributions! Priority areas:
 
 ### Recent Updates
 
+- **2026-01-29**: **v0.5.0 released** — GROUP BY/Aggregation, DataFrame P1 (JOIN/sort/null), Server API extensions **published on crates.io**
 - **2026-01-24**: alopex-cli v0.4.2 **released** — TUI default, Admin TUI, security fixes, SELECT literal support
 - **2026-01-14**: v0.4.0 Server + DataFrame **published on crates.io**
+- **2026-01-01**: alopex-chirps v0.5.1 **released** — File Transfer API
 - **2025-12-27**: v0.3.3 alopex-py **published on PyPI**
 - **2025-12**: v0.3 SQL Frontend + HNSW **published on crates.io**
 - **2025-11**: HNSW index implementation complete
