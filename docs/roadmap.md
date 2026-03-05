@@ -43,7 +43,7 @@ gantt
     v0.5 GROUP BY + JOIN    :done, 2026-01, 2026-01
 
     section Production
-    v0.6 WASM Viewer        :2026-04, 2026-06
+    v0.6 Practical Foundation :2026-04, 2026-06
 
     section Distributed
     v0.7 Cluster-aware      :2026-08, 2026-10
@@ -236,7 +236,7 @@ let result = df
 
 ---
 
-## Phase 4: GROUP BY, DataFrame P1, WASM (v0.5 - v0.6) { #phase4 }
+## Phase 4: GROUP BY, DataFrame P1, Practical Foundation (v0.5 - v0.6) { #phase4 }
 
 ### v0.5 — GROUP BY + DataFrame P1 { #v05 }
 
@@ -251,29 +251,21 @@ let result = df
 - [ ] WAL/Crash recovery hardening — *planned for v0.5.x*
 - [ ] Performance benchmarks — *planned for v0.5.x*
 
-### v0.6 — WASM Viewer + SQL JOIN { #v06 }
+### v0.6 — Embedded/Server Practical Readiness + SQL JOIN/Subquery { #v06 }
 
 **Status**: :material-calendar: Planned
 **Target**: Q2 2026
 
-Browser-based read-only viewer for database snapshots, plus SQL JOIN support.
+Ship the practical core first: embedded reliability, server operability, SQL JOIN/Subquery, and DataFrame/Python readiness.
 
 - [ ] SQL JOIN support (alopex-sql v0.6)
 - [ ] SQL Subquery support
 - [ ] DataFrame P2: cast / pivot / unpivot / window functions
-- [ ] `wasm32-unknown-unknown` target
-- [ ] Pre-built SSTable loader
-- [ ] IndexedDB caching
-- [ ] SQL SELECT only (WASM)
-- [ ] Vector Search (Flat only, WASM)
-- [ ] npm package (`@alopex-db/wasm`)
+- [ ] Embedded durability hardening (WAL/crash recovery path)
+- [ ] Server operation hardening (backpressure/timeout/observability)
+- [ ] Python API stability for production workflows
 
-```typescript
-import { AlopexViewer } from '@alopex-db/wasm';
-
-const viewer = await AlopexViewer.loadSnapshot('/data/snapshot.alopex');
-const results = await viewer.query('SELECT * FROM products LIMIT 10');
-```
+WASM/web runtime support is deferred and will be re-evaluated after v1.0 based on adoption and product priorities.
 
 ---
 
