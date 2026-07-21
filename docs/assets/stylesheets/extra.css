@@ -271,3 +271,25 @@ a:hover {
 [data-md-color-scheme="slate"] .md-typeset code {
     background: rgba(15, 33, 55, 0.8);
 }
+
+/* ===== Consent banner branding (assets.asopi.tech consent/v1) ===== */
+:root {
+    --asopi-consent-accent: var(--alopex-deep-blue);
+    --asopi-consent-accent-contrast: #fff;
+    --asopi-consent-font: "Inter", system-ui, sans-serif;
+}
+
+body[data-md-color-scheme="slate"] {
+    --asopi-consent-bg: #0F2137;
+    --asopi-consent-fg: #E8EEF2;
+    --asopi-consent-border: #2E5077;
+    --asopi-consent-accent: var(--alopex-ice-blue);
+    --asopi-consent-accent-contrast: #0B1929;
+    --asopi-consent-muted: #A0B4C4;
+    --asopi-consent-bg-dark: #0F2137;
+    --asopi-consent-fg-dark: #E8EEF2;
+    --asopi-consent-border-dark: #2E5077;
+    --asopi-consent-accent-dark: #5FB4C9;
+    --asopi-consent-accent-contrast-dark: #0B1929;
+    --asopi-consent-muted-dark: #A0B4C4;
+}
