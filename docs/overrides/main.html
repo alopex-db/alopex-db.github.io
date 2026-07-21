@@ -11,6 +11,15 @@
     data-linker-domains="asopi.tech,project-jvlang.github.io,alopex-db.github.io,asopitech.github.io,buymeacoffee.com"
     src="https://assets.asopi.tech/consent/v1/consent.js"
     defer></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      var link = document.getElementById('asopi-consent-settings');
+      if (link) link.addEventListener('click', function (event) {
+        event.preventDefault();
+        if (window.AsopiConsentBanner) window.AsopiConsentBanner.showSettings();
+      });
+    });
+  </script>
 {% endblock %}
 
 {% block announce %}
