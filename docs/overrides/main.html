@@ -1,5 +1,18 @@
 {% extends "base.html" %}
 
+{% block extrahead %}
+  {{ super() }}
+  <link rel="stylesheet" href="https://assets.asopi.tech/consent/v1/consent.css">
+  <script
+    data-asopi-consent
+    data-measurement-id="G-84QN39HSQX"
+    data-consent-version="1"
+    data-policy-url="https://asopi.tech/privacy"
+    data-linker-domains="asopi.tech,project-jvlang.github.io,alopex-db.github.io,asopitech.github.io"
+    src="https://assets.asopi.tech/consent/v1/consent.js"
+    defer></script>
+{% endblock %}
+
 {% block announce %}
   <strong>Pre-Alpha:</strong> Alopex DB is in early development.
   <a href="https://github.com/alopex-db/alopex">Star on GitHub</a> to follow progress!

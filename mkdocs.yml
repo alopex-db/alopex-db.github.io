@@ -40,8 +40,6 @@ theme:
     repo: fontawesome/brands/github
 
   features:
-    - navigation.instant
-    - navigation.instant.prefetch
     - navigation.tracking
     - navigation.tabs
     - navigation.tabs.sticky
@@ -66,10 +64,6 @@ extra:
       name: Alopex DB on GitHub
 
   generator: false
-
-  analytics:
-    provider: google
-    property: G-XXXXXXXXXX
 
   status:
     new: Recently added
