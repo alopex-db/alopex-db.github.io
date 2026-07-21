@@ -26,8 +26,8 @@ Add Alopex to your Rust project:
 
     ```toml
     [dependencies]
-    alopex-embedded = "0.4"
-    alopex-sql = "0.4"
+    alopex-embedded = "0.7"
+    alopex-sql = "0.7"
     ```
 
 === "Cargo CLI"
@@ -35,6 +35,31 @@ Add Alopex to your Rust project:
     ```bash
     cargo add alopex-embedded alopex-sql
     ```
+
+### Prebuilt CLI Binaries
+
+Every [GitHub Release](https://github.com/alopex-db/alopex/releases) ships prebuilt CLI binaries — download the one for your platform and put it on your `PATH`:
+
+| Platform | Asset |
+|:---------|:------|
+| Linux (x86_64) | `alopex-linux-x86_64` |
+| macOS (Apple Silicon) | `alopex-macos-aarch64` |
+| macOS (Intel) | `alopex-macos-x86_64` |
+| Windows (x86_64) | `alopex-windows-x86_64.exe` |
+
+Alternatively, install via Cargo:
+
+```bash
+cargo install alopex-cli
+```
+
+### Python
+
+```bash
+pip install alopex
+```
+
+Wheels for Linux / macOS (x86_64, arm64) / Windows are published to [PyPI](https://pypi.org/project/alopex/) with every release.
 
 ### From Source
 
@@ -77,8 +102,8 @@ tree, right detail input, right-bottom status/preview) with `h/l` focus switchin
 
 ```toml
 [dependencies]
-alopex-embedded = { version = "0.4", features = ["hnsw", "metrics"] }
-alopex-sql = "0.4"
+alopex-embedded = { version = "0.7", features = ["hnsw", "metrics"] }
+alopex-sql = "0.7"
 ```
 
 ## Platform-Specific Notes

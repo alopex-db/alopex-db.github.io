@@ -5,9 +5,9 @@ description: Using Alopex DB with Python (alopex-py)
 
 # Python Guide
 
-!!! info "Coming in v0.3.1"
+!!! success "Available Now"
 
-    Python bindings (alopex-py) are currently in development and will be released in v0.3.1. This guide provides a preview of the upcoming API.
+    Python bindings (alopex-py) are published on [PyPI](https://pypi.org/project/alopex/) — currently **v0.7.6**, released in lockstep with the Rust workspace. Install with `pip install alopex`.
 
 ## Overview
 
@@ -230,13 +230,15 @@ db.execute_sql("INSERT INTO temp VALUES (1, 'temporary')")
 
 ## Development Roadmap
 
-| Version | Phase | Features |
-|:--------|:------|:---------|
-| **v0.1.0** | Phase 1 | Database/Transaction basic API |
-| v0.1.1 | Phase 1 | Vector/HNSW API |
-| v0.1.2 | Phase 1 | NumPy integration, GIL release |
-| **v0.2.0** | Phase 2 | DataFrame API (via alopex-dataframe) |
-| **v0.3.0** | Phase 3 | Client API (Server connection) |
+| Version | Phase | Features | Status |
+|:--------|:------|:---------|:-------|
+| **v0.3.3** | Phase 1 | Database/Transaction/SQL basic API | :white_check_mark: Published |
+| **v0.3.5** | Phase 1+ | NumPy integration (zero-copy + GIL release) | :white_check_mark: Published |
+| **v0.4.0** | Phase 1+ | Catalog API | :white_check_mark: Published |
+| **v0.6.0–v0.7.6** | Aligned | Workspace-aligned releases (SQL JOIN/subquery, cluster-aware engine) | :white_check_mark: Published |
+| Phase 2+ | — | DataFrame API via alopex-dataframe, namespaces | :material-calendar: Planned |
+
+See the [alopex-py roadmap](../roadmap.md#python) for details.
 
 ## See Also
 

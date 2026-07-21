@@ -5,7 +5,7 @@ description: Get started with Alopex DB in minutes
 
 # Quick Start
 
-Get up and running with Alopex DB in just a few minutes. Alopex DB v0.3 is now available on **crates.io** with full SQL support and HNSW indexing.
+Get up and running with Alopex DB in just a few minutes. Alopex DB **v0.7.6** is available on **crates.io** and **PyPI** with full SQL support (JOIN & subqueries), HNSW indexing, and prebuilt CLI binaries on [GitHub Releases](https://github.com/alopex-db/alopex/releases).
 
 [![crates.io](https://img.shields.io/crates/v/alopex-embedded.svg)](https://crates.io/crates/alopex-embedded)
 [![crates.io](https://img.shields.io/crates/v/alopex-sql.svg)](https://crates.io/crates/alopex-sql)

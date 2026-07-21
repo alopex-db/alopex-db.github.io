@@ -380,9 +380,9 @@ Chirps versions align with Alopex DB releases:
 
 | Alopex Version | Chirps Version | Available Profiles |
 |:---------------|:---------------|:-------------------|
-| v0.7 | v0.3 | Control, Ephemeral |
-| v0.8 | v0.4 | Control, Ephemeral + Priority Streams |
-| v0.9+ | v0.7+ | Control, Ephemeral, **Durable** |
+| v0.7.x (current) | v0.5.1 | Control, Ephemeral + Priority Streams |
+| v0.8 (planned) | v0.6 | Control, Ephemeral + Multi-Raft/TSO |
+| v0.9+ (planned) | v0.7+ | Control, Ephemeral, **Durable** |
 
 !!! note "Durable Profile"
 

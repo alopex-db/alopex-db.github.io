@@ -5,9 +5,9 @@ description: Polars-compatible DataFrame operations with Alopex DB
 
 # DataFrame API
 
-!!! info "Coming in v0.4"
+!!! success "Available Now"
 
-    The DataFrame API (alopex-dataframe) is planned for v0.4. This guide provides a preview of the upcoming API design.
+    The DataFrame API (alopex-dataframe) is published on [crates.io](https://crates.io/crates/alopex-dataframe) — currently **v0.7.6**, versioned with the workspace. DF-0/DF-1 features (types, CSV/Parquet I/O, select/filter/group_by, JOIN, sort, null handling) are available today; sections below marked *Planned* are not yet released.
 
 ## Overview
 
@@ -145,7 +145,7 @@ let result = df
     .collect()?;
 ```
 
-### Joins (Coming in v0.3.0)
+### Joins
 
 ```rust
 use alopex_dataframe::{DataFrame, col};
@@ -246,7 +246,7 @@ col("a").or(col("b"))
 col("flag").not()
 ```
 
-### String Operations (Coming in v0.4.0)
+### String Operations (Planned — DF-3)
 
 ```rust
 use alopex_dataframe::col;
@@ -260,7 +260,7 @@ col("name").str().ends_with("suffix")
 col("name").str().len_chars()
 ```
 
-### Date/Time Operations (Coming in v0.4.0)
+### Date/Time Operations (Planned — DF-3)
 
 ```rust
 use alopex_dataframe::col;
@@ -322,12 +322,14 @@ let result = df
 
 ## Development Roadmap
 
-| Version | Phase | Features |
-|:--------|:------|:---------|
-| **v0.1.0** | DF-0 | DataFrame/Series types, Arrow integration |
-| **v0.2.0** | DF-1 | CSV/Parquet I/O, select/filter/group_by, LazyFrame |
-| **v0.3.0** | DF-2 | JOIN, sort, fill_null, Predicate Pushdown |
-| **v0.4.0** | DF-3 | Window functions, pivot/unpivot, str/dt namespaces |
+| Phase | Features | Status |
+|:------|:---------|:-------|
+| DF-0 | DataFrame/Series types, Arrow integration, CSV/Parquet I/O, LazyFrame | :white_check_mark: Complete |
+| DF-1 | JOIN (all types), sort/head/tail/unique, fill_null/drop_nulls, Predicate Pushdown | :white_check_mark: Complete |
+| DF-2 | cast, pivot/unpivot, window functions | :material-calendar: Planned |
+| DF-3 | str/dt/list namespaces | :material-calendar: Planned |
+
+Since v0.6.0 the crate is versioned with the workspace — see the [alopex-dataframe roadmap](../roadmap.md#dataframe).
 
 ## Comparison with Polars
 

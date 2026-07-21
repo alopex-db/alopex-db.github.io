@@ -9,21 +9,23 @@ This roadmap outlines the planned development of Alopex DB from the current stat
 
 ## Current Status
 
-!!! success "v0.5.0 Released — Published on crates.io (January 2026)"
+!!! success "v0.7.6 Released — gRPC Cluster Administration (July 18, 2026)"
 
-    **Alopex DB v0.5.0** is complete with **GROUP BY/Aggregation** and **DataFrame P1 (JOIN/sort/null processing)**. All core crates updated to v0.5.0.
+    **Alopex DB v0.7.6** is the latest release. The v0.7 series delivered the **alopex-cluster** crate (cluster-aware foundation), a **mode-parity verification suite**, and **gRPC cluster administration**. All workspace crates (core / sql / embedded / server / dataframe / cluster / cli) are published on crates.io at **v0.7.6**, with matching Python wheels on PyPI.
 
     ```bash
     # Rust
-    cargo add alopex-embedded alopex-sql alopex-server alopex-dataframe
+    cargo add alopex-embedded alopex-sql alopex-server alopex-dataframe alopex-cluster
 
     # Python
     pip install alopex
     ```
 
-!!! success "alopex-cli v0.4.2 Released (January 2026)"
+    Prebuilt CLI binaries for Linux / macOS (x86_64, aarch64) / Windows are attached to every [GitHub Release](https://github.com/alopex-db/alopex/releases).
 
-    **alopex-cli v0.4.2** with **TUI as default** is complete. All commands now support TUI mode, Admin TUI for lifecycle operations, mTLS certificate validation, and SELECT literal support (without FROM clause).
+!!! success "v0.6.0 Released — SQL JOIN/Subquery + Nim FFI Parser (July 7, 2026)"
+
+    **Alopex DB v0.6.0** replaced the Rust SQL parser with a **Nim FFI parser** (MessagePack protocol) and added **SQL JOIN and subquery support**. Since v0.6.0 all workspace crates share a single aligned version.
 
 ## Timeline
 
@@ -42,11 +44,11 @@ gantt
     v0.4 Server + DataFrame :done, 2026-01, 2026-01
     v0.5 GROUP BY + JOIN    :done, 2026-01, 2026-01
 
-    section Production
-    v0.6 Practical Foundation :2026-04, 2026-06
+    section Practical Foundation
+    v0.6 SQL JOIN + Nim Parser :done, 2026-07, 2026-07
 
     section Distributed
-    v0.7 Cluster-aware      :2026-08, 2026-10
+    v0.7 Cluster-aware      :done, 2026-07, 2026-07
     v0.8 Metadata Raft      :2026-10, 2026-12
     v0.9 Multi-Raft         :2027-01, 2027-02
 
@@ -63,11 +65,13 @@ The following crates are available on **crates.io**:
 
 | Crate | Version | Description |
 |:------|:--------|:------------|
-| [![alopex-embedded](https://img.shields.io/crates/v/alopex-embedded.svg)](https://crates.io/crates/alopex-embedded) | v0.5.0 | Embedded database API |
-| [![alopex-sql](https://img.shields.io/crates/v/alopex-sql.svg)](https://crates.io/crates/alopex-sql) | v0.5.0 | SQL parser, planner, executor |
-| [![alopex-core](https://img.shields.io/crates/v/alopex-core.svg)](https://crates.io/crates/alopex-core) | v0.5.0 | Core storage engine |
-| [![alopex-server](https://img.shields.io/crates/v/alopex-server.svg)](https://crates.io/crates/alopex-server) | v0.5.0 | HTTP/gRPC server |
-| [![alopex-dataframe](https://img.shields.io/crates/v/alopex-dataframe.svg)](https://crates.io/crates/alopex-dataframe) | v0.2.0 | Polars-compatible DataFrame API |
+| [![alopex-embedded](https://img.shields.io/crates/v/alopex-embedded.svg)](https://crates.io/crates/alopex-embedded) | v0.7.6 | Embedded database API |
+| [![alopex-sql](https://img.shields.io/crates/v/alopex-sql.svg)](https://crates.io/crates/alopex-sql) | v0.7.6 | SQL parser, planner, executor |
+| [![alopex-core](https://img.shields.io/crates/v/alopex-core.svg)](https://crates.io/crates/alopex-core) | v0.7.6 | Core storage engine |
+| [![alopex-server](https://img.shields.io/crates/v/alopex-server.svg)](https://crates.io/crates/alopex-server) | v0.7.6 | HTTP/gRPC server |
+| [![alopex-dataframe](https://img.shields.io/crates/v/alopex-dataframe.svg)](https://crates.io/crates/alopex-dataframe) | v0.7.6 | Polars-compatible DataFrame API |
+| [![alopex-cluster](https://img.shields.io/crates/v/alopex-cluster.svg)](https://crates.io/crates/alopex-cluster) | v0.7.6 | Cluster-aware distributed mode |
+| [![alopex-cli](https://img.shields.io/crates/v/alopex-cli.svg)](https://crates.io/crates/alopex-cli) | v0.7.6 | CLI with TUI / admin console |
 | [![alopex-chirps](https://img.shields.io/crates/v/alopex-chirps.svg)](https://crates.io/crates/alopex-chirps) | v0.5.1 | Cluster messaging layer |
 
 ---
@@ -81,12 +85,12 @@ The following crates are available on **crates.io**:
 | **v0.4.0** | **v0.4.0** | **v0.1.0** | **v0.4.0** | **v0.4.0** | **v0.4.0** | v0.5.0 |
 | **v0.4.2** | v0.4.2 | v0.1.0 | v0.4.2 | v0.4.2 | v0.4.0 | v0.5.0 |
 | **v0.5.0** | **v0.5.0** | **v0.2.0** | **v0.5.0** | **v0.5.0** | v0.4.0 | **v0.5.1** |
-| v0.6 | v0.6 | v0.3.0 | v0.6 | v0.6 | - | v0.6 |
-| v0.7 | v0.7 | v0.4.0 | v0.7+ | v0.7 | - | v0.6 |
+| **v0.6.0** | **v0.6.0** | **v0.6.0** | **v0.6.0** | **v0.6.0** | **v0.6.0** | v0.5.1 |
+| **v0.7.6** | **v0.7.6** | **v0.7.6** | **v0.7.6** | **v0.7.6** | **v0.7.6** | v0.5.1 |
 | v1.0 | v1.0 | v1.0 | v1.0 | v1.0 | v1.0 | v0.9 |
 
-!!! note "alopex-py Independent Versioning"
-    alopex-py follows its own versioning scheme independent of the Rust workspace. See [alopex-py Roadmap](#python) for details.
+!!! note "Aligned Versioning Since v0.6.0"
+    Up to v0.5.x, alopex-py and alopex-dataframe followed their own versioning schemes. Since **v0.6.0**, all workspace crates and the Python package share a single aligned version per release.
 
 ---
 
@@ -251,19 +255,19 @@ let result = df
 - [ ] WAL/Crash recovery hardening — *planned for v0.5.x*
 - [ ] Performance benchmarks — *planned for v0.5.x*
 
-### v0.6 — Embedded/Server Practical Readiness + SQL JOIN/Subquery { #v06 }
+### v0.6 — SQL JOIN/Subquery + Nim FFI Parser { #v06 }
 
-**Status**: :material-calendar: Planned
-**Target**: Q2 2026
+**Status**: :material-check-all: Complete — **crates.io Published**
+**Released**: July 7, 2026
 
-Ship the practical core first: embedded reliability, server operability, SQL JOIN/Subquery, and DataFrame/Python readiness.
+The SQL frontend was re-architected: the Rust SQL parser was replaced with a **Nim FFI parser** communicating over MessagePack, and JOIN/subquery support landed.
 
-- [ ] SQL JOIN support (alopex-sql v0.6)
-- [ ] SQL Subquery support
-- [ ] DataFrame P2: cast / pivot / unpivot / window functions
-- [ ] Embedded durability hardening (WAL/crash recovery path)
-- [ ] Server operation hardening (backpressure/timeout/observability)
-- [ ] Python API stability for production workflows
+- [x] SQL JOIN support (alopex-sql v0.6)
+- [x] SQL Subquery support
+- [x] Nim FFI SQL parser (MessagePack protocol) — parser shared libraries ship with each release
+- [x] Workspace version alignment across all crates and alopex-py
+
+Carried forward toward v1.0: DataFrame P2 (cast / pivot / unpivot / window functions), embedded durability hardening, and server operation hardening.
 
 WASM/web runtime support is deferred and will be re-evaluated after v1.0 based on adoption and product priorities.
 
@@ -273,14 +277,13 @@ WASM/web runtime support is deferred and will be re-evaluated after v1.0 based o
 
 ### v0.7 — Cluster-Aware { #v07 }
 
-**Status**: :material-calendar: Planned
-**Target**: Q4 2026
-**Depends on**: Chirps v0.3
+**Status**: :material-check-all: Complete — **crates.io Published**
+**Released**: July 14–18, 2026 (v0.7.0 → v0.7.6)
 
-- [ ] `alopex-cluster` module
-- [ ] Chirps membership integration
-- [ ] Node discovery and events
-- [ ] Logical sharding design
+- [x] `alopex-cluster` module published on crates.io
+- [x] Mode-parity verification suite (v0.7.1)
+- [x] gRPC cluster administration (v0.7.6)
+- [x] Release packaging hardening (rpath propagation, Nim parser vendoring)
 
 ### v0.8 — Metadata Raft { #v08 }
 
@@ -348,31 +351,31 @@ Alopex Chirps (cluster messaging layer) has its own development track:
 
 ## alopex-dataframe Roadmap { #dataframe }
 
-Polars-compatible DataFrame engine in pure Rust:
+Polars-compatible DataFrame engine in pure Rust. Since v0.6.0 the crate is versioned with the workspace (currently **v0.7.6**); the remaining feature phases below are tracked by phase name.
 
-| Version | Phase | Features | Status |
-|:--------|:------|:---------|:-------|
-| v0.1.0 | DF-0 | DataFrame/Series types, Arrow integration, CSV/Parquet I/O | :white_check_mark: Complete |
-| v0.2.0 | DF-1 | JOIN (all types), sort/head/tail/unique, fill_null/drop_nulls | :white_check_mark: Complete |
-| v0.3.0 | DF-2 | cast, pivot/unpivot, window functions (over, rolling, shift, rank) | :material-calendar: Planned |
-| v0.4.0 | DF-3 | str.* namespace, dt.* namespace, list.* + explode/implode | :material-calendar: Planned |
-| v0.5.0 | DF-4 | Streaming execution, CSE optimization, concat | :material-calendar: Planned |
+| Phase | Features | Status |
+|:------|:---------|:-------|
+| DF-0 | DataFrame/Series types, Arrow integration, CSV/Parquet I/O | :white_check_mark: Complete |
+| DF-1 | JOIN (all types), sort/head/tail/unique, fill_null/drop_nulls | :white_check_mark: Complete |
+| DF-2 | cast, pivot/unpivot, window functions (over, rolling, shift, rank) | :material-calendar: Planned |
+| DF-3 | str.* namespace, dt.* namespace, list.* + explode/implode | :material-calendar: Planned |
+| DF-4 | Streaming execution, CSE optimization, concat | :material-calendar: Planned |
 
 ---
 
 ## alopex-py Roadmap { #python }
 
-Python bindings with NumPy and DataFrame support. alopex-py follows its own versioning scheme independent of the Rust workspace.
+Python bindings with NumPy and DataFrame support. Up to v0.4.0 alopex-py followed its own versioning scheme; since **v0.6.0** it is released in lockstep with the Rust workspace (currently **v0.7.6** on PyPI, wheels attached to every release).
 
 | Version | Phase | Features | Status |
 |:--------|:------|:---------|:-------|
 | **v0.3.3** | Phase 1 | Database/Transaction/SQL basic API | :white_check_mark: PyPI Published |
 | **v0.3.5** | Phase 1+ | NumPy integration (zero-copy arrays + GIL release) | :white_check_mark: PyPI Published |
 | **v0.4.0** | Phase 1+ | Catalog API (Polars Unity Catalog compatible) | :white_check_mark: PyPI Published |
-| v0.5.0 | Phase 2 | DataFrame API MVP (via alopex-dataframe v0.2) | :material-calendar: Planned |
-| v0.6.0 | Phase 2 | DataFrame extended features (P2) | :material-calendar: Planned |
-| v0.7.0 | Phase 3 | DataFrame namespaces (str/dt/list) | :material-calendar: Planned |
-| v1.0.0 | GA | Polars-compatible DataFrame + API stabilization | :material-calendar: Planned |
+| **v0.6.0–v0.7.6** | Aligned | Workspace-aligned releases (SQL JOIN/subquery, cluster-aware engine) | :white_check_mark: PyPI Published |
+| Phase 2 | — | DataFrame API MVP via alopex-dataframe | :material-calendar: Planned |
+| Phase 3 | — | DataFrame namespaces (str/dt/list) | :material-calendar: Planned |
+| GA | v1.0 | Polars-compatible DataFrame + API stabilization | :material-calendar: Planned |
 
 ---
 
@@ -397,6 +400,10 @@ We welcome contributions! Priority areas:
 
 ### Recent Updates
 
+- **2026-07-18**: **v0.7.6 released** — **gRPC cluster administration**; CLI binaries and Python wheels attached to the release
+- **2026-07-15 〜 07-18**: v0.7.1–v0.7.5 — mode-parity verification suite, release packaging fixes (rpath propagation, Nim parser vendoring)
+- **2026-07-14**: **v0.7.0 released** — cluster-aware release; **alopex-cluster** published on crates.io
+- **2026-07-07**: **v0.6.0 released** — **SQL JOIN/Subquery** support; Rust SQL parser replaced with **Nim FFI parser** (MessagePack); workspace versions aligned across all crates and alopex-py
 - **2026-01-29**: **v0.5.0 released** — GROUP BY/Aggregation, DataFrame P1 (JOIN/sort/null), Server API extensions **published on crates.io**
 - **2026-01-24**: alopex-cli v0.4.2 **released** — TUI default, Admin TUI, security fixes, SELECT literal support
 - **2026-01-14**: v0.4.0 Server + DataFrame **published on crates.io**

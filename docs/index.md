@@ -40,19 +40,24 @@ input, right-bottom status/preview) with `h/l` focus switching.
 
 ## :rocket: Current Status
 
-!!! success "v0.4.0 Server + DataFrame — Complete & Published"
+!!! success "v0.7.6 Released — Cluster-Aware + gRPC Cluster Administration (July 2026)"
 
-    Alopex DB v0.4.0 is **published on crates.io**! Server mode with HTTP/gRPC API, async/stream foundation, and Polars-compatible DataFrame engine are ready. Build scalable AI applications today.
+    Alopex DB **v0.7.6** is out! The v0.6/v0.7 series delivered **SQL JOIN & subqueries** on a new Nim FFI SQL parser, the **alopex-cluster** crate, a mode-parity verification suite, and **gRPC cluster administration**. Every release ships prebuilt CLI binaries (Linux / macOS / Windows) and Python wheels.
 
     ```bash
-    cargo add alopex-embedded alopex-sql alopex-server
+    # Rust
+    cargo add alopex-embedded alopex-sql alopex-server alopex-cluster
+
+    # Python
+    pip install alopex
     ```
 
     [:simple-rust: alopex-embedded](https://crates.io/crates/alopex-embedded){ .md-button .md-button--primary }
     [:simple-rust: alopex-sql](https://crates.io/crates/alopex-sql){ .md-button }
     [:simple-rust: alopex-server](https://crates.io/crates/alopex-server){ .md-button }
-    [:simple-rust: alopex-core](https://crates.io/crates/alopex-core){ .md-button }
+    [:simple-rust: alopex-cluster](https://crates.io/crates/alopex-cluster){ .md-button }
     [:simple-rust: alopex-chirps](https://crates.io/crates/alopex-chirps){ .md-button }
+    [:material-download: CLI Binaries](https://github.com/alopex-db/alopex/releases){ .md-button }
 
 ---
 
@@ -102,7 +107,7 @@ Modern AI applications require multiple database technologies—creating complex
 
     ---
 
-    Full SQL support with DDL/DML, `vector_similarity()` function, and Top-K optimization. Published on **crates.io**.
+    Full SQL support with DDL/DML, JOIN & subqueries, `vector_similarity()` function, and Top-K optimization. Published on **crates.io**.
 
 -   :bar_chart:{ .lg .middle } **Columnar Storage**
 
@@ -219,11 +224,12 @@ gantt
     section Python & Server
     v0.3.3 Python Wrapper   :done, 2025-12, 2025-12
     v0.4 Server + DataFrame :done, 2026-01, 2026-01
+    v0.5 GROUP BY + DataFrame P1 :done, 2026-01, 2026-01
 
-    section Production
-    v0.5 Durability         :2026-04, 2026-06
-    v0.6 WASM Viewer        :2026-06, 2026-08
-    v0.7 Cluster-aware      :2026-08, 2026-10
+    section Distributed
+    v0.6 SQL JOIN + Nim Parser :done, 2026-07, 2026-07
+    v0.7 Cluster-aware      :done, 2026-07, 2026-07
+    v0.8 Metadata Raft      :2026-10, 2026-12
     v1.0 GA                 :milestone, 2027-03, 0d
 ```
 
@@ -235,15 +241,18 @@ gantt
 | **v0.3** | SQL Frontend, HNSW Index, Embedded Integration | :white_check_mark: **crates.io Published** |
 | **v0.3.3** | Python Wrapper (alopex-py), CLI | :white_check_mark: **PyPI Published** |
 | **v0.4.0** | Server Mode, DataFrame API, Async/Stream | :white_check_mark: **crates.io Published** |
+| **v0.5.0** | GROUP BY/Aggregation, DataFrame P1 (JOIN/sort/null) | :white_check_mark: **crates.io Published** |
+| **v0.6.0** | SQL JOIN & Subqueries, Nim FFI SQL Parser | :white_check_mark: **crates.io Published** |
+| **v0.7.x** | alopex-cluster, Mode-Parity Suite, gRPC Cluster Admin | :white_check_mark: **v0.7.6 Published** |
 | **Chirps v0.5** | Gossip, SWIM, Membership, Raft Consensus API | :white_check_mark: Complete |
 
 ### What's Next
 
 | Version | Features | Target |
 |:--------|:---------|:-------|
-| **v0.4.1** | CLI Extensions (Default TUI, Admin lifecycle) | Q1 2026 |
-| **v0.5** | Durability, JOIN Support, GROUP BY | Q2 2026 |
-| **v0.6** | WASM Viewer | Q3 2026 |
+| **v0.8** | Metadata Raft, MultiRaftManager Integration | Q4 2026 |
+| **v0.9** | Multi-Raft (Range Partitioning), CRDT | Q1 2027 |
+| **v1.0** | General Availability | 2027 |
 
 [:octicons-arrow-right-24: View detailed roadmap](roadmap.md)
 

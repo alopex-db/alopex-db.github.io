@@ -52,7 +52,7 @@ fn insert_document(
 }
 ```
 
-### From Python (Coming in v0.3.1)
+### From Python
 
 ```python
 import alopex
@@ -261,7 +261,7 @@ fn retrieve_rag_context(
 }
 ```
 
-### Python RAG Example (Coming in v0.3.1)
+### Python RAG Example
 
 ```python
 import alopex
