@@ -362,6 +362,16 @@ Alopex Skulk is the time-series database of the Alopex family — built on Alope
 
 ---
 
+## :art: Alopex Data UI — One Interface for Data Apps
+
+**One interface, wherever the data moves.** Alopex Data UI is the newest member of the family: a consistent UI model for data applications. Adapters translate schema, queries, filters, selections, and editable records into one **DataSource contract**, so forms, grids, charts, graphs, and maps evolve as one coherent system — whether data arrives from Alopex DB, DuckDB, an API, or a file.
+
+Currently in early development — the concept and component model are published on the project site.
+
+[Visit Alopex Data UI :octicons-arrow-up-right-24:](https://alopex-db.github.io/alopex-ui-pages/){ .md-button .md-button--primary }
+
+---
+
 ## :handshake: Join the Pack
 
 Alopex DB is open-source under the **Apache 2.0 License**.

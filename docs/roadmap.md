@@ -414,6 +414,7 @@ We welcome contributions! Priority areas:
 
 ### Recent Updates
 
+- **2026-07-22**: **Alopex Data UI** development started — [concept site](https://alopex-db.github.io/alopex-ui-pages/) published (a consistent UI model for data applications on one DataSource contract)
 - **2026-07-18**: **v0.7.6 released** — **gRPC cluster administration**; CLI binaries and Python wheels attached to the release
 - **2026-07-15 〜 07-18**: v0.7.1–v0.7.5 — mode-parity verification suite, release packaging fixes (rpath propagation, Nim parser vendoring)
 - **2026-07-14**: **v0.7.0 released** — cluster-aware release; **alopex-cluster** published on crates.io
