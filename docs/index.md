@@ -373,6 +373,19 @@ Currently in early development — the concept and component model are published
 
 ---
 
+## :office: Alopex Enterprise — Beyond OSS
+
+The Alopex platform is not OSS-only. **Alopex Enterprise** — commercial middleware built on the Alopex OSS foundation — is currently in design:
+
+- :lock: **Security Suite** — physical & logical storage encryption (AES-GCM, XChaCha20), identity with JWT / OIDC / RBAC
+- :mag_right: **Unified Query Model** — one engine for SQL / AQL / PromQL, with Enterprise Search (full-text, vector, aggregation)
+- :chart_with_upwards_trend: **Observe (SRE)** — SLO engine, error budgets, and automated actions
+- :gear: **Infrastructure Packages** — distributed config store (etcd/ZK compatible), service discovery + internal DNS
+
+Design phase — no fixed delivery dates yet. Interested in early conversations? [Get in touch](https://asopi.tech/contact).
+
+---
+
 ## :handshake: Join the Pack
 
 Alopex DB is open-source under the **Apache 2.0 License**.
