@@ -306,7 +306,7 @@ Alopex Chirps is the control plane for distributed Alopex DB clusters.
 
 <div class="grid cards" markdown>
 
--   :satellite_antenna:{ .lg .middle } **SWIM Protocol**
+-   :satellite:{ .lg .middle } **SWIM Protocol**
 
     ---
 
