@@ -73,6 +73,7 @@ The following crates are available on **crates.io**:
 | [![alopex-cluster](https://img.shields.io/crates/v/alopex-cluster.svg)](https://crates.io/crates/alopex-cluster) | v0.7.6 | Cluster-aware distributed mode |
 | [![alopex-cli](https://img.shields.io/crates/v/alopex-cli.svg)](https://crates.io/crates/alopex-cli) | v0.7.6 | CLI with TUI / admin console |
 | [![alopex-chirps](https://img.shields.io/crates/v/alopex-chirps.svg)](https://crates.io/crates/alopex-chirps) | v0.5.1 | Cluster messaging layer |
+| [![alopex-skulk](https://img.shields.io/crates/v/alopex-skulk.svg)](https://crates.io/crates/alopex-skulk) | v0.2.0 | Time-series database on Alopex Core |
 
 ---
 
@@ -349,6 +350,19 @@ Alopex Chirps (cluster messaging layer) has its own development track:
 
 ---
 
+## Alopex Skulk Roadmap { #skulk }
+
+Alopex Skulk (the time-series database of the family, built on Alopex Core) is versioned independently:
+
+| Version | Status | Notes |
+|:--------|:-------|:------|
+| v0.1.0 | :white_check_mark: Released (Dec 18, 2025) | Initial public release |
+| v0.2.0 | :white_check_mark: Released (Dec 23, 2025) — **crates.io Published** | Current release |
+
+Skulk's feature set — Gorilla compression, automatic TTL/downsampling, PromQL & SQL-TS queries — is described in [Skulk concepts](concepts/skulk.md).
+
+---
+
 ## alopex-dataframe Roadmap { #dataframe }
 
 Polars-compatible DataFrame engine in pure Rust. Since v0.6.0 the crate is versioned with the workspace (currently **v0.7.6**); the remaining feature phases below are tracked by phase name.
@@ -409,6 +423,8 @@ We welcome contributions! Priority areas:
 - **2026-01-14**: v0.4.0 Server + DataFrame **published on crates.io**
 - **2026-01-01**: alopex-chirps v0.5.1 **released** — File Transfer API
 - **2025-12-27**: v0.3.3 alopex-py **published on PyPI**
+- **2025-12-23**: alopex-skulk v0.2.0 **released** — time-series database on Alopex Core, **published on crates.io**
+- **2025-12-18**: alopex-skulk v0.1.0 **released** — initial public release
 - **2025-12**: v0.3 SQL Frontend + HNSW **published on crates.io**
 - **2025-11**: HNSW index implementation complete
 - **2025-10**: alopex-sql Parser/Planner/Executor complete

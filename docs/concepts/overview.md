@@ -125,6 +125,7 @@ graph TB
 | [**alopex-cluster**](https://crates.io/crates/alopex-cluster) | Distributed mode with Raft | :white_check_mark: v0.7.6 |
 | [**alopex-cli**](https://crates.io/crates/alopex-cli) | Command-line tools (TUI / admin console) | :white_check_mark: v0.7.6 |
 | [**alopex-chirps**](https://crates.io/crates/alopex-chirps) | Gossip-based cluster messaging | :white_check_mark: v0.5.1 |
+| [**alopex-skulk**](https://crates.io/crates/alopex-skulk) | Time-series database built on Alopex Core | :white_check_mark: v0.2.0 |
 
 ## Data Models
 

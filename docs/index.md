@@ -330,6 +330,38 @@ Alopex Chirps is the control plane for distributed Alopex DB clusters.
 
 ---
 
+## :chart_with_upwards_trend: Skulk — Time-Series Companion
+
+[![crates.io](https://img.shields.io/crates/v/alopex-skulk.svg)](https://crates.io/crates/alopex-skulk)
+
+Alopex Skulk is the time-series database of the Alopex family — built on Alopex Core for monitoring, IoT, and log analysis workloads.
+
+<div class="grid cards" markdown>
+
+-   :package:{ .lg .middle } **Gorilla Compression**
+
+    ---
+
+    10:1+ compression ratio with Delta-of-Delta timestamps and XOR-encoded values, stored in a TSM engine on Alopex Core.
+
+-   :hourglass_flowing_sand:{ .lg .middle } **Automatic Lifecycle**
+
+    ---
+
+    Time-based TTL and cascading downsampling (1s → 1h → 1d). Data is treated as a consumable with a natural expiry.
+
+-   :mag:{ .lg .middle } **PromQL + SQL-TS**
+
+    ---
+
+    Prometheus-compatible queries plus SQL extensions: `TIME_BUCKET`, `RATE`, `DELTA`, `FIRST`, `LAST`.
+
+</div>
+
+[:octicons-arrow-right-24: Learn about Skulk](concepts/skulk.md)
+
+---
+
 ## :handshake: Join the Pack
 
 Alopex DB is open-source under the **Apache 2.0 License**.
