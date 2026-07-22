@@ -369,6 +369,7 @@ Alopex Skulk is the time-series database of the Alopex family — built on Alope
 Currently in early development — the concept and component model are published on the project site.
 
 [Visit Alopex Data UI :octicons-arrow-up-right-24:](https://alopex-db.github.io/alopex-ui-pages/){ .md-button .md-button--primary }
+[View on GitHub :fontawesome-brands-github:](https://github.com/alopex-db/alopex-ui){ .md-button }
 
 ---
 
