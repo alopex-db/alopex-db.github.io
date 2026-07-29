@@ -210,6 +210,33 @@ for measurement in ["cpu", "memory", "disk"] {
 `flush_all()` publishes every measurement's buffer at once, each into its own
 Parquet file per time partition. There is no need to flush them individually.
 
+## Moving an Existing v0.2 Data Root
+
+Skulk v0.3 does not read v0.2 TSM or WAL files. Legacy magic is rejected before
+the source is modified, so pointing v0.3 at a v0.2 data root fails cleanly
+rather than corrupting it — but it does mean the data does not come across on
+its own, and there is no migration tool.
+
+Export with v0.2 and re-ingest into a **new** data root:
+
+1. Stop the v0.2 writer.
+2. Read the series out with the v0.2 reader and emit Line Protocol or JSON.
+3. Ingest that into a v0.3 store rooted at a different path.
+4. Set retention policies on the new root before backfilling — with
+   `LateWritePolicy::Accept`, or historical points are refused on arrival.
+
+```rust
+use alopex_skulk::store::retention::{LateWritePolicy, RetentionPolicy, HOUR_NANOS};
+
+let policy = RetentionPolicy::new(90 * 24 * HOUR_NANOS as u64, LateWritePolicy::Accept)?;
+store.set_retention_policy("cpu", policy)?;
+// Backfill now; points older than the window would be rejected under `Reject`.
+```
+
+Keep the v0.2 root read-only until you have verified row counts on the new one.
+Backfilled data lands in the same hourly partitions as live writes, so flush and
+compact as usual once the load finishes.
+
 ## Operational Checklist
 
 - [ ] Flush is driven by a row or byte threshold, not per batch
