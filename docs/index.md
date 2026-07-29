@@ -370,17 +370,18 @@ Query execution (PromQL, SQL-TS) arrives in v0.4; HTTP serving in v0.6.
 
 ---
 
-## :page_facing_up: Trail — Late-Bound Schema for Logs
+## :page_facing_up: Trail — For Logs, Audit Trails, and Events
 
 **Write first. The schema binds when you read.**
 
-Trail is the newest design in the family: an append-only store for logs and
-events whose shape is not known in advance. Columns appear as attributes
-arrive, and a field that changes type mid-stream does not break the pipeline.
+Application logs, audit trails, webhook payloads — the things your system emits
+when something happens. They arrive with fields nobody declared, sometimes
+without a usable timestamp, and occasionally with a field that was an integer
+last week and a string today.
 
-*Late-bound* here means what it means in programming languages — the binding
-happens as late as possible. There is no schema to declare before writing and
-none to define afterwards; the types are decided at the moment you query.
+Alopex DB wants a schema first; Skulk wants a shape that stays fixed and
+numeric. Logs sit in the gap between them, and **that gap is what Trail is
+for** — the newest design in the family.
 
 <div class="grid cards" markdown>
 

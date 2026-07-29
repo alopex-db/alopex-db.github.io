@@ -3,14 +3,77 @@ title: Trail
 description: Log and event store with late-bound schema
 ---
 
-# Trail - Late-Bound Schema Log Store
+# Trail - A Store for Logs and Events
 
 **Write first. The schema binds when you read.**
 
-Trail is an append-only store for logs and events whose shape is not known in
-advance. Columns are built from the attributes that actually arrive, and
-persisted columnar in Parquet. A field that changes type mid-stream does not
-break the pipeline; it becomes a column you can still query.
+## What goes in here
+
+Application logs. Audit trails. Request traces. Webhook payloads. Anything your
+system emits when something happens.
+
+```jsonl
+{"stream":"api",   "level":"info",  "route":"/users",  "status":200, "ms":12}
+{"stream":"api",   "level":"error", "route":"/orders", "status":500, "ms":840, "trace":"abc123"}
+{"stream":"audit", "actor":"deploy-bot", "action":"rollout", "target":"payment-v2"}
+{"stream":"api",   "level":"error", "route":"/orders", "status":"upstream_timeout", "retry":3}
+```
+
+Look at what those four lines do to a database.
+
+- The second carries a `trace` field the first doesn't.
+- The third comes from a different subsystem with an entirely different shape —
+  and no timestamp the sender thought worth including.
+- The fourth has `status` as a **string** where the others had an integer,
+  because a proxy started reporting failures differently. Plus a `retry` field
+  nobody declared.
+
+None of that is malformed. That is just what production emits.
+
+## Why not the stores you already have
+
+Alopex already has two places to put data. Neither one fits this.
+
+<div class="grid cards" markdown>
+
+-   :material-database:{ .lg .middle } **Alopex DB** — schema first
+
+    ---
+
+    Relational, with SQL and vector search. You define columns and types, and
+    it holds you to them.
+
+    That is exactly right for data you model deliberately. It means a
+    `CREATE TABLE` before the first write and an `ALTER` for every new field —
+    which is a migration per deployment when the shape drifts on its own.
+
+-   :material-chart-line:{ .lg .middle } **[Skulk](skulk.md)** — shape known up front
+
+    ---
+
+    Time series: a metric name, its tags, its numeric fields, on a schedule.
+
+    A series identity has to be stable, so `status` cannot be an integer today
+    and a string tomorrow. And every point needs a timestamp — that audit line
+    above has none.
+
+</div>
+
+Between "declare everything first" and "shape is fixed and numeric" there is a
+gap, and logs live in it. **That gap is what Trail is for.**
+
+## How Trail handles those four lines
+
+| What arrived | What Trail does |
+|:--|:--|
+| A `trace` field the earlier rows lacked | A column appears. Earlier rows read back as null. No migration. |
+| An `audit` event with a totally different shape | Its own columns, in the same store. Files don't have to agree on a schema. |
+| No timestamp | Accepted and stamped on arrival, not rejected. |
+| `status` as a string after being an integer | Both are kept. **Ingestion does not stop.** |
+
+The last row is the one that matters at 3am. A store that rejects the type
+change stops accepting data — so a routine deploy takes down the thing you use
+to find out what broke.
 
 ## What "late-bound schema" means
 
@@ -39,29 +102,11 @@ want to.
 [:material-file-document-outline: Read the design](https://github.com/alopex-db/docs/blob/main/design/alopex-trail-proposal.md){ .md-button .md-button--primary }
 [Skulk, the storage core it builds on](skulk.md){ .md-button }
 
-## The Problem
-
-[Skulk](skulk.md) handles time-series where the shape is known up front: a
-metric, its tags, and its fields. That strictness is correct for a TSDB and
-wrong for logs.
-
-Skulk enforces the following at the type level:
-
-| Constraint | Why it blocks log ingestion |
-| --- | --- |
-| Timestamp is mandatory | Logs routinely arrive with missing or malformed time |
-| Tags and fields are separate types | Logs have no such distinction |
-| Exactly five value types | Cannot represent nested JSON or binary payloads |
-| Type conflicts are rejected | A field that is `200` one day and `"timeout"` the next **stops ingestion** |
-| At least one field required | Cannot represent an event with an empty payload |
-
-The fourth row is the decisive one. In a metrics system, rejecting a type change
-is a correctness guarantee. In a log system, it is an outage.
-
-## The Approach
+## The mechanisms behind that
 
 Trail keeps the same storage foundation as Skulk — append-only, columnar,
-Parquet — and changes only the data model above it.
+Parquet — and changes only the data model above it. Four mechanisms do the
+work described above.
 
 <div class="grid cards" markdown>
 
