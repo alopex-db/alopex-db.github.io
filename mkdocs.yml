@@ -130,6 +130,7 @@ nav:
     - Any Scale: concepts/modes.md
     - Chirps: concepts/chirps.md
     - Skulk (Time-Series): concepts/skulk.md
+    - Trail (Logs & Events): concepts/trail.md
     - Vector Search: concepts/vector-search.md
     - Architecture: concepts/architecture.md
   - Guides:
