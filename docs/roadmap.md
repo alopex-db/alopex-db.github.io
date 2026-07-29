@@ -413,7 +413,7 @@ It has its own repository and version series.
 | v0.2.0 | :white_check_mark: Released (Dec 23, 2025) | Retention/TTL, time partitions, TSM compaction |
 | **v0.3.0** | :white_check_mark: **Released (Jul 28, 2026)** | **Arrow + Parquet wide columnar storage, durability, three ingest decoders** |
 | v0.3.1 | :material-wrench: In progress | Ingest throughput and p99 latency against unchanged targets |
-| v0.4 | :material-calendar: Planned | Query engine — PromQL, SQL-TS, predicate pushdown. Both parsers come from the Nim parser Alopex DB already uses, vendored as a prebuilt shared library with a versioned contract; behind a feature flag, so the core builds without it |
+| v0.4 | :material-calendar: Planned | Query engine — PromQL, SQL-TS, predicate pushdown. Parsers are shared with Alopex DB and gated behind a feature flag |
 | v0.5 | :material-calendar: Planned | Downsampling, continuous queries, **Python bindings** |
 | v0.6 | :material-calendar: Planned | HTTP server, Prometheus-compatible endpoints |
 | v0.7 | :material-calendar: Planned | Alerting |
