@@ -125,6 +125,8 @@ nav:
   - Getting Started:
     - Quick Start: getting-started/quickstart.md
     - Installation: getting-started/installation.md
+    - Skulk Quick Start: getting-started/skulk.md
+    - Trail Preview: getting-started/trail.md
   - Concepts:
     - Overview: concepts/overview.md
     - Any Scale: concepts/modes.md
@@ -137,5 +139,6 @@ nav:
     - SQL + Vector: guides/sql-vector.md
     - Python: guides/python.md
     - DataFrame API: guides/dataframe.md
+    - Skulk Ingest: guides/skulk-ingest.md
   - Roadmap: roadmap.md
   - Contributing: contributing.md
