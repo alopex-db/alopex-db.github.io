@@ -27,20 +27,37 @@ This roadmap outlines the planned development of Alopex DB from the current stat
 
     **Alopex DB v0.6.0** replaced the Rust SQL parser with a **Nim FFI parser** (MessagePack protocol) and added **SQL JOIN and subquery support**. Since v0.6.0 all workspace crates share a single aligned version.
 
+!!! success "Alopex Skulk v0.3.0 Released — Arrow + Parquet Storage (July 28, 2026)"
+
+    The time-series core replaced its self-built TSM/Gorilla storage with
+    **Arrow in memory and Parquet on disk**. Pure Rust, 3.7 MB release binary,
+    zero C dependencies. This is a breaking format change from Skulk v0.2.
+
+    ```bash
+    cargo add alopex-skulk
+    ```
+
+    [Skulk roadmap](#skulk) · [What changed and why](concepts/skulk.md)
+
+!!! info "Alopex Trail — design published, implementation not started"
+
+    A log and event store with **late-bound schema**, reusing Skulk's
+    append-only machinery. The design is open before the code exists, so the
+    API can still change based on what you need.
+
+    [Trail roadmap](#trail) · [Read the concept](concepts/trail.md)
+
 ## Timeline
 
 ```mermaid
 gantt
-    title Alopex DB Development Timeline
+    title Alopex Product Family Timeline
     dateFormat  YYYY-MM
     axisFormat  %Y-%m
 
-    section Foundation
+    section Alopex DB
     v0.1-v0.2 Core          :done, 2025-01, 2025-10
     v0.3 SQL + HNSW         :done, 2025-10, 2025-12
-    v0.3.3 Python + CLI     :done, 2025-12, 2025-12
-
-    section Server & DataFrame
     v0.4 Server + DataFrame :done, 2026-01, 2026-01
     v0.5 GROUP BY + JOIN    :done, 2026-01, 2026-01
 
@@ -51,10 +68,23 @@ gantt
     v0.7 Cluster-aware      :done, 2026-07, 2026-07
     v0.8 Metadata Raft      :2026-10, 2026-12
     v0.9 Multi-Raft         :2027-01, 2027-02
-
-    section GA
-    v0.10 Hardening         :2027-02, 2027-03
     v1.0 GA                 :milestone, 2027-03, 0d
+
+    section Chirps
+    v0.5 Raft Consensus     :done, 2025-12, 2026-01
+    v0.6 Multi-Raft + TSO   :2026-10, 2026-12
+    v0.7 Iggy + Durable     :2027-01, 2027-02
+
+    section Skulk
+    v0.1-v0.2 TSM + Lifecycle :done, 2025-10, 2025-12
+    v0.3 Arrow + Parquet    :done, 2026-07, 2026-07
+    v0.3.1 Throughput       :active, 2026-07, 2026-08
+    v0.4 Query Engine       :2026-08, 2026-10
+    v0.8 Sharding on Chirps :2027-01, 2027-03
+
+    section Trail
+    Design published        :done, 2026-07, 2026-07
+    v0.1 Append path        :2026-09, 2026-11
 ```
 
 ---
@@ -73,7 +103,13 @@ The following crates are available on **crates.io**:
 | [![alopex-cluster](https://img.shields.io/crates/v/alopex-cluster.svg)](https://crates.io/crates/alopex-cluster) | v0.7.6 | Cluster-aware distributed mode |
 | [![alopex-cli](https://img.shields.io/crates/v/alopex-cli.svg)](https://crates.io/crates/alopex-cli) | v0.7.6 | CLI with TUI / admin console |
 | [![alopex-chirps](https://img.shields.io/crates/v/alopex-chirps.svg)](https://crates.io/crates/alopex-chirps) | v0.5.1 | Cluster messaging layer |
-| [![alopex-skulk](https://img.shields.io/crates/v/alopex-skulk.svg)](https://crates.io/crates/alopex-skulk) | v0.2.0 | Time-series database on Alopex Core |
+| [![alopex-skulk](https://img.shields.io/crates/v/alopex-skulk.svg)](https://crates.io/crates/alopex-skulk) | v0.3.0 | Time-series storage and ingest core |
+
+!!! note "Independent version series"
+
+    [Skulk](concepts/skulk.md) and [Chirps](concepts/chirps.md) are separate
+    repositories with their own release cadence. They do not track the Alopex DB
+    version number — Skulk is at v0.3.0 while Alopex DB is at v0.7.6.
 
 ---
 
@@ -92,6 +128,12 @@ The following crates are available on **crates.io**:
 
 !!! note "Aligned Versioning Since v0.6.0"
     Up to v0.5.x, alopex-py and alopex-dataframe followed their own versioning schemes. Since **v0.6.0**, all workspace crates and the Python package share a single aligned version per release.
+
+!!! note "Skulk is not in this matrix"
+    Skulk does not depend on `alopex-core` or `alopex-sql`, so it does not track
+    the Alopex DB version. It meets the family at the Chirps layer: sharding at
+    Skulk v0.8 (Chirps membership) and replication at v0.9 (Chirps Raft). See
+    [Skulk Roadmap](#skulk).
 
 ---
 
@@ -346,20 +388,61 @@ Alopex Chirps (cluster messaging layer) has its own development track:
 | v0.5 | :white_check_mark: Complete | Raft Consensus API, WalRaftStorage |
 | v0.5.1 | :white_check_mark: Complete | File Transfer API |
 | v0.6 | :material-calendar: Planned | Multi-Raft, TSO, Observability |
-| v0.7+ | :material-calendar: Planned | IggyBackend, Durable profile |
+| v0.7 | :material-calendar: Planned | IggyBackend, Durable profile |
+| v0.8+ | :material-calendar: Planned | Federation profile, cross-cluster mTLS |
+
+!!! note "Durable profile"
+
+    `MessageProfile::Durable` is defined in the API today but is rejected at
+    runtime until the Iggy backend lands in **v0.7**. `MessageBackend` and
+    `MessageProfile` themselves shipped early, in v0.4/v0.5.
 
 ---
 
-## Alopex Skulk Roadmap { #skulk }
+## Skulk Roadmap { #skulk }
 
-Alopex Skulk (the time-series database of the family, built on Alopex Core) is versioned independently:
+[Alopex Skulk](concepts/skulk.md) is the time-series storage and ingest core.
+It has its own repository and version series.
 
-| Version | Status | Notes |
-|:--------|:-------|:------|
-| v0.1.0 | :white_check_mark: Released (Dec 18, 2025) | Initial public release |
-| v0.2.0 | :white_check_mark: Released (Dec 23, 2025) — **crates.io Published** | Current release |
+| Version | Status | Features |
+|:--------|:-------|:---------|
+| v0.1.0 | :white_check_mark: Released (Dec 18, 2025) | TSM storage, Gorilla compression, WAL, MemTable |
+| v0.2.0 | :white_check_mark: Released (Dec 23, 2025) | Retention/TTL, time partitions, TSM compaction |
+| **v0.3.0** | :white_check_mark: **Released (Jul 28, 2026)** | **Arrow + Parquet wide columnar storage, durability, three ingest decoders** |
+| v0.3.1 | :material-wrench: In progress | Ingest throughput and p99 latency against unchanged targets |
+| v0.4 | :material-calendar: Planned | Query engine — PromQL, SQL-TS, predicate pushdown |
+| v0.5 | :material-calendar: Planned | Downsampling, continuous queries |
+| v0.6 | :material-calendar: Planned | HTTP server, Prometheus-compatible endpoints |
+| v0.7 | :material-calendar: Planned | Alerting |
+| v0.8 | :material-calendar: Planned | Sharding via Chirps membership |
+| v0.9 | :material-calendar: Planned | Shard Raft groups via Chirps Raft API |
+| v1.0 | :material-calendar: Planned | Stable |
 
-Skulk's feature set — Gorilla compression, automatic TTL/downsampling, PromQL & SQL-TS queries — is described in [Skulk concepts](concepts/skulk.md).
+!!! info "v0.3.0 scorecard"
+
+    Compression (7.1× smaller than the v0.2 Gorilla baseline on repeated
+    values), footprint (3.7 MB, zero C dependencies), and durability all meet
+    their targets. Ingest throughput and p99 latency do not — those targets were
+    left unchanged rather than relaxed, and v0.3.1 addresses them.
+
+---
+
+## Trail Roadmap { #trail }
+
+[Alopex Trail](concepts/trail.md) is a proposed log and event store with
+late-bound schema, reusing Skulk's append-only storage machinery. It is a
+published design; implementation has not started.
+
+| Version | Status | Features |
+|:--------|:-------|:---------|
+| v0.1 | :material-lightbulb-outline: Design | Event model, WAL, dynamic column union, Parquet publication, manifest with column summaries, crash recovery |
+| v0.2 | :material-lightbulb-outline: Design | Type shadowing with read-time coalesce, JSON Lines and OTLP decoders, retention |
+| v0.3 | :material-lightbulb-outline: Design | Predicate pushdown, column projection, manifest-driven pruning |
+| v0.4 | :material-lightbulb-outline: Design | Compaction with sidecar indexes; full-text search evaluated |
+
+Trail's WAL and ingest layers reuse code that Skulk v0.3.1 is actively
+changing, so that part of the work follows v0.3.1. The storage, manifest, and
+locking pieces are independent of it.
 
 ---
 
