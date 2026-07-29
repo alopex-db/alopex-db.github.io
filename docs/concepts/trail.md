@@ -235,19 +235,14 @@ The goal is that each product scales out and shrinks back **independently, on
 shared cluster machinery** — add capacity where the load actually is, without
 standing up a separate cluster for every data shape you happen to store.
 
-## Where Trail Gets Used First
+## Its first consumer
 
-[Alopex OTel](otel.md) — the OpenTelemetry platform built on this family — puts
-**Traces and Logs in Trail**, with Metrics in Skulk.
+[Alopex OTel](otel.md) stores traces and logs in Trail, with metrics in Skulk —
+the same append-only-versus-fixed-shape split described above.
 
-The split follows one line: metrics arrive on a schedule, spans and logs arrive
-when something happens. Interval-based machinery — partitioning, downsampling,
-gap-filling — is meaningful for the first and meaningless for the second.
-
-Type shadowing then compounds the fit. OpenTelemetry attributes are typed
-`AnyValue`, and across SDK versions the same key changes type routinely. A
-store that rejects the conflict stops ingesting; Trail shadows it and keeps
-going — the difference between staying up and going down during a deploy.
+It is a demanding first user: OpenTelemetry attributes are typed `AnyValue`, so
+the same key changes type across SDK versions routinely. Trail is not built
+only for that case, but surviving it is a good test of the model.
 
 ## Keeping Data Without Keeping It Expensive
 
@@ -277,9 +272,9 @@ without paying full price for it?
 
     ---
 
-    Uses OpenTelemetry's **adjusted count** from the W3C tracestate, not a
-    bespoke field. Counts and sums extrapolate back to the population;
-    min and max deliberately do not.
+    Sampled events carry the rate they represent, so counts and sums
+    extrapolate back to the population — min and max deliberately don't.
+    Follows OpenTelemetry's *adjusted count* rather than inventing a field.
 
 </div>
 
@@ -290,8 +285,9 @@ The design document records what changed and why.
 
 ## Two Query Surfaces, Not One
 
-Trail ships with a dashboard. That means the query layer has two faces, and
-conflating them would compromise both.
+Trail is queried two ways: by whatever is built on top of it, and by tools that
+already exist. Those pull in opposite directions, and conflating them would
+compromise both.
 
 <div class="grid cards" markdown>
 
@@ -316,30 +312,24 @@ conflating them would compromise both.
 
 </div>
 
-### Why a DSL and not SQL
+### The language Trail speaks
 
-A search DSL is not a weaker language. TraceQL already has `rate`,
-`quantile_over_time`, `by()` grouping, series arithmetic, and `topk`:
+An aggregation DSL: range aggregations, grouping, series arithmetic, explicit
+type bindings like `status@str` — and **joins across signals**, which is the
+query the storage model exists to answer.
 
-```
-({status=error} | count_over_time()) / ({} | count_over_time())
-```
+Correlating a trace with the logs and metrics around it is not something
+TraceQL or LogQL can express; their structural operators never leave a single
+trace.
 
-What TraceQL and LogQL *don't* have is a join across signals — TraceQL's
-structural operators (`>>`, `>`, `~`) never leave a single trace, and SigNoz
-has a join type defined in its IR but marked *not yet supported*.
+### Why compatibility is a separate layer
 
-That gap is where Trail's internal language goes.
+Grafana sends **the raw query string**, so speaking its languages means parsing
+their grammars — and TraceQL's spanset semantics are a different model from
+joins, not a subset of them.
 
-### Why the compatible layer is separate
-
-Grafana sends **the raw query string** — `GET /api/search?q={ status=error }`.
-The language is the contract, so compatibility means parsing their grammar,
-not just matching a protocol.
-
-It also means TraceQL can't simply be a subset of the internal language: its
-spanset semantics are a different model from joins. So they are separate front
-ends that lower into one shared logical plan.
+So they are separate front ends lowering into one shared logical plan, rather
+than one language stretched to cover both.
 
 ## Milestones
 
