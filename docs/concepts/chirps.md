@@ -33,7 +33,7 @@ graph TB
 
         subgraph "Backends"
             QUIC[QUIC Backend]
-            IGGY[Iggy Backend]
+            IGGY[Iggy Backend<br/>planned v0.7]
         end
     end
 
@@ -41,13 +41,16 @@ graph TB
     RAFT --> API
     API --> ROUTER
     ROUTER --> QUIC
-    ROUTER --> IGGY
+    ROUTER -.-> IGGY
     GOSSIP <--> QUIC
 
     style QUIC fill:#1E3A5F,color:#fff
-    style IGGY fill:#2E5077,color:#fff
+    style IGGY stroke-dasharray: 5 5
     style GOSSIP fill:#5FB4C9,color:#fff
 ```
+
+The QUIC backend ships today. The Iggy backend that will carry the Durable
+profile is planned for Chirps v0.7.
 
 ---
 
@@ -78,11 +81,11 @@ mesh.subscribe(|from_node, payload| async move {
 
 Selects the optimal backend based on message profile:
 
-| Profile | Purpose | Backend | Characteristics |
-|:--------|:--------|:--------|:----------------|
-| **Control** | Raft messages, cluster control | QUIC | Low latency, priority streams |
-| **Ephemeral** | Gossip, transient data | QUIC | Best effort, no persistence |
-| **Durable** | Event streams, audit logs | Iggy | Persistent, replayable |
+| Profile | Purpose | Backend | Characteristics | Status |
+|:--------|:--------|:--------|:----------------|:-------|
+| **Control** | Raft messages, cluster control | QUIC | Low latency, priority streams | Shipping |
+| **Ephemeral** | Gossip, transient data | QUIC | Best effort, no persistence | Shipping |
+| **Durable** | Event streams, audit logs | Iggy | Persistent, replayable | Planned (v0.7) |
 
 ### Layer 3: Backend Layer
 
@@ -98,15 +101,16 @@ graph LR
 
     subgraph "Backends"
         Q[QUIC Backend]
-        I[Iggy Backend]
+        I[Iggy Backend<br/>planned v0.7]
     end
 
     C --> Q
     E --> Q
-    D --> I
+    D -.-> I
 
     style Q fill:#1E3A5F,color:#fff
-    style I fill:#5FB4C9,color:#fff
+    style I stroke-dasharray: 5 5
+    style D stroke-dasharray: 5 5
 ```
 
 ---
@@ -157,7 +161,7 @@ sequenceDiagram
 Alopex DB subscribes to membership events for cluster coordination:
 
 ```rust
-mesh.on_node_join(|node_id, addr| {
+mesh.on_node_join(|node_id| {
     // Update routing table
     // Trigger range rebalancing
 });
@@ -167,10 +171,13 @@ mesh.on_node_leave(|node_id| {
     // Initiate Raft leader election if needed
 });
 
-mesh.on_status_change(|node_id, old_status, new_status| {
+mesh.on_status_change(|node_id| {
     // Handle alive → suspect → dead transitions
 });
 ```
+
+Each handler receives the `NodeId` of the affected node. Look up the current
+address or status through the mesh handle when you need more than the identity.
 
 ---
 
@@ -237,7 +244,13 @@ mesh.broadcast(&gossip, MessageProfile::Ephemeral).await?;
 
 ### Durable Profile
 
-For messages requiring persistence (available in v0.9+):
+!!! warning "Planned for Chirps v0.7 — requesting it today returns an error"
+
+    `MessageProfile::Durable` is defined in the API, but `enforce_profile`
+    rejects it until the Iggy backend lands. The snippet below shows the
+    intended shape, not working code.
+
+For messages requiring persistence:
 
 ```rust
 // Change data capture events
@@ -245,7 +258,7 @@ let event = ChangeEvent::Insert { table: "users", row: data };
 mesh.broadcast(&event, MessageProfile::Durable).await?;
 ```
 
-**Characteristics**:
+**Planned characteristics**:
 - Persisted to Iggy streams
 - Replayable from any point
 - Suitable for audit logs, CDC, event sourcing
@@ -268,11 +281,6 @@ nodes = ["seed1:7000", "seed2:7000"]
 type = "quic"
 listen_addr = "0.0.0.0:42000"
 
-[mesh.backends.iggy]
-type = "iggy"
-url = "quic://iggy-cluster:8090"
-stream = "alopex-events"
-
 [[mesh.routes]]
 profile = "Control"
 backend = "quic"
@@ -280,6 +288,17 @@ backend = "quic"
 [[mesh.routes]]
 profile = "Ephemeral"
 backend = "quic"
+```
+
+Once the Iggy backend lands in v0.7, a Durable route is added alongside the
+QUIC ones:
+
+```toml
+# Planned — not yet accepted by v0.5
+[mesh.backends.iggy]
+type = "iggy"
+url = "quic://iggy-cluster:8090"
+stream = "alopex-events"
 
 [[mesh.routes]]
 profile = "Durable"
@@ -376,18 +395,20 @@ impl RaftTransport for ChirpsRaftTransport {
 
 ## Version Compatibility
 
-Chirps versions align with Alopex DB releases:
+Chirps ships today at **v0.5.1**, with QUIC transport, SWIM gossip, and Raft
+storage. Profile availability is staged across releases:
 
-| Alopex Version | Chirps Version | Available Profiles |
-|:---------------|:---------------|:-------------------|
-| v0.7.x (current) | v0.5.1 | Control, Ephemeral + Priority Streams |
-| v0.8 (planned) | v0.6 | Control, Ephemeral + Multi-Raft/TSO |
-| v0.9+ (planned) | v0.7+ | Control, Ephemeral, **Durable** |
+| Alopex Version | Chirps Version | Profiles | Status |
+|:---------------|:---------------|:---------|:-------|
+| v0.7.x | v0.5.1 | Control, Ephemeral + Priority Streams | Shipping |
+| v0.8 | v0.6 | Control, Ephemeral + Multi-Raft/TSO | Planned |
+| v0.9+ | v0.7+ | Control, Ephemeral, **Durable** | Planned |
 
-!!! note "Durable Profile"
+!!! note "Durable profile is planned, not yet available"
 
-    The Durable profile (Iggy backend) is available starting from Alopex v0.9.
-    Earlier versions should use Control or Ephemeral profiles only.
+    `MessageProfile::Durable` exists in the API today but returns an error when
+    requested — the Iggy backend that will implement it is targeted at
+    **Chirps v0.7** (Alopex v0.9). Use Control or Ephemeral until then.
 
 ---
 

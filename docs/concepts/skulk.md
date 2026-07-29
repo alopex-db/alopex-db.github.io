@@ -8,15 +8,22 @@ description: Embedded append-only time-series storage and ingest core
 [![crates.io](https://img.shields.io/crates/v/alopex-skulk.svg)](https://crates.io/crates/alopex-skulk)
 [![docs.rs](https://docs.rs/alopex-skulk/badge.svg)](https://docs.rs/alopex-skulk)
 
-Alopex Skulk is an embedded, append-only time-series storage and ingest core
-written in Rust. It stores wide, multi-field rows in Arrow memory batches and
-Parquet files, while keeping acknowledged writes recoverable through a local WAL.
+**A time-series engine small enough to embed. 3.7 MB, pure Rust, no C toolchain.**
 
-!!! info "Independent product line"
+Alopex Skulk stores wide, multi-field rows in Arrow memory batches and Parquet
+files, keeping acknowledged writes recoverable through a local WAL. It ships as
+a library you link into your process — no server, no daemon, no sidecar.
 
-    Skulk is a **separate repository and version series** from Alopex DB. It does
-    not depend on `alopex-core` or `alopex-sql`. Alopex DB is at v0.7.4; Skulk is
-    at v0.3.0.
+```bash
+cargo add alopex-skulk
+```
+
+Skulk is a standalone crate with its own version series. It does not depend on
+`alopex-core` or `alopex-sql`, so you can adopt it without adopting Alopex DB —
+and when you outgrow a single process, it scales onto the same cluster
+foundation the rest of the family uses.
+
+[Independent today, distributed on shared machinery](#one-foundation-many-engines){ .md-button }
 
 ## Current Scope (v0.3.0)
 
@@ -119,10 +126,46 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
 }
 ```
 
-## Not in v0.3
+## One Foundation, Many Engines
 
-These are future milestones and are **not** part of the v0.3 crate. Do not
-treat them as available features.
+Skulk embeds in a single process today. It is designed not to stay there.
+
+[Chirps](chirps.md) is the shared cluster foundation across the Alopex family —
+QUIC transport, SWIM membership, and Raft consensus, built once and used by
+every product rather than reimplemented per engine. Skulk's distributed
+milestones ride on it directly: **v0.8 brings sharding with Chirps membership,
+v0.9 brings shard Raft groups for replication.**
+
+```mermaid
+graph TB
+    subgraph "Application Layer"
+        DB[Alopex DB<br/>SQL + Vector]
+        SK[Skulk<br/>Time Series]
+        TR[Trail<br/>Logs & Events]
+    end
+
+    subgraph "Foundation Layer"
+        CH[Chirps<br/>QUIC · SWIM · Raft]
+    end
+
+    DB --> CH
+    SK --> CH
+    TR --> CH
+
+    style SK fill:#5FB4C9,color:#000
+    style CH fill:#1E3A5F,color:#fff
+    style TR stroke-dasharray: 5 5
+```
+
+That is what **Adaptive** means in this family: one storage engine that starts
+as a linked library and grows into a cluster member, sharing machinery with the
+relational, vector, and event engines beside it instead of forcing a separate
+cluster for every data shape.
+
+## What Comes Next
+
+v0.3 is the storage and ingest foundation. Query, downsampling, and serving
+build on top of it in later releases — they are not in the current crate.
 
 | Capability | Milestone |
 | --- | --- |
@@ -141,13 +184,12 @@ Skulk v0.3 does not read or migrate v0.2 TSM or WAL files; legacy magic is
 rejected before the source is modified. There is no migration tool. Export data
 with v0.2 and re-ingest it into a new v0.3 data root.
 
-## Open Items
+## What Is Measured
 
-Skulk v0.3.0 **does not meet its fixed ingest throughput and p99 latency
-targets**. The targets were left unchanged rather than relaxed, and the
-measurements are versioned in the repository alongside the code.
-
-Compression, footprint, and durability targets are met.
+Compression, footprint, and durability meet their targets. Ingest throughput
+and p99 latency do not yet — those targets were left unchanged rather than
+relaxed, and the numbers are versioned in the repository next to the code so
+you can see exactly where the engine stands before you adopt it.
 
 ## Learn More
 

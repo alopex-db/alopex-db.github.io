@@ -5,19 +5,21 @@ description: Proposed log and event store with late-bound schema
 
 # Trail - Late-Bound Schema Log Store
 
-!!! warning "Proposal — not an implemented product"
+**Log what you have. Define the schema later — or never.**
 
-    Trail is a **design proposal at the concept stage**. There is no code, no
-    crate, and no repository. Nothing on this page is available to install or
-    use, and the design may change or be dropped entirely.
+Trail is an append-only store for logs and events whose shape is not known in
+advance. Columns are built from the attributes that actually arrive, and
+persisted columnar in Parquet. A field that changes type mid-stream does not
+break the pipeline; it becomes a column you can still query.
 
-    This page exists because Alopex publishes its design reasoning before
-    implementation, not after. Treat every statement here as an intention,
-    not a specification.
+[:material-file-document-outline: Read the design](https://github.com/alopex-db/docs/blob/main/design/alopex-trail-proposal.md){ .md-button .md-button--primary }
+[Skulk, the storage core it builds on](skulk.md){ .md-button }
 
-Trail is a proposed append-only store for logs and events whose **schema is not
-known in advance**. Columns are built from the attributes that actually arrive,
-and persisted columnar in Parquet.
+!!! info "Design stage"
+
+    Trail is a published design, not a released crate. It is on this site so the
+    reasoning is open before the code exists — the same way Skulk's storage
+    decision was published before it was built.
 
 ## The Problem
 
@@ -107,17 +109,62 @@ staged crash-recovery boundaries.
 What changes is the row model, the sort order (time-first rather than tag-first),
 and the treatment of type conflicts.
 
-!!! note "Why this is feasible"
+!!! success "The hard part already runs in production"
 
-    Skulk already builds its Arrow schema dynamically from arriving rows and
-    back-fills nulls for columns that appear late. That mechanism is more
-    general than a TSDB needs — and it is exactly what a late-bound schema
-    store requires. Trail promotes it from an implementation detail to the
-    central feature.
+    Skulk builds its Arrow schema dynamically from arriving rows and back-fills
+    nulls for columns that appear late. That mechanism is more general than a
+    TSDB needs — and it is exactly what a late-bound schema store requires.
+    Trail promotes it from an implementation detail to the central feature,
+    on top of a durability layer that already survives crash-recovery testing.
 
-## Proposed Milestones
+## One Cluster, Three Data Shapes
 
-Version numbers below are **proposed**, not scheduled. No delivery date exists.
+Logs rarely live alone. You have metrics in one place, relational and vector
+data in another, and events in a third — three clusters to size, three failure
+domains to reason about, three things to scale when traffic moves.
+
+Alopex is built so they do not have to be separate. [Chirps](chirps.md) is the
+shared cluster foundation across the product family: QUIC transport, SWIM
+membership, and Raft consensus, used by every product rather than reimplemented
+in each. Trail is designed to sit on that same foundation.
+
+```mermaid
+graph TB
+    subgraph "Application Layer"
+        DB[Alopex DB<br/>SQL + Vector]
+        SK[Skulk<br/>Time Series]
+        TR[Trail<br/>Logs & Events]
+    end
+
+    subgraph "Foundation Layer"
+        CH[Chirps<br/>QUIC · SWIM · Raft]
+    end
+
+    DB --> CH
+    SK --> CH
+    TR --> CH
+
+    style TR fill:#5FB4C9,color:#000
+    style CH fill:#1E3A5F,color:#fff
+```
+
+The goal is that each product scales out and shrinks back **independently, on
+shared cluster machinery** — add capacity where the load actually is, without
+standing up a separate cluster for every data shape you happen to store.
+
+!!! info "Where this stands"
+
+    Chirps ships today with QUIC transport, SWIM gossip, and Raft storage.
+    Distribution on top of it is staged per product: Alopex DB is
+    cluster-aware but single-node in v0.7, Skulk plans sharding at v0.8 and
+    replication at v0.9, and Trail joins the same track. **Adaptive — from
+    embedded to distributed** is the family's stated goal, and each product
+    reaches it on its own schedule.
+
+## Milestones
+
+Each version is scoped so the one before it is usable on its own. v0.1 already
+gives you durable ingestion with columns that appear on arrival.
 
 | Version | Scope |
 | --- | --- |
@@ -126,20 +173,24 @@ Version numbers below are **proposed**, not scheduled. No delivery date exists.
 | v0.3 | Predicate pushdown, column projection, manifest-driven file pruning |
 | v0.4 | Compaction with sidecar indexes; full-text search evaluated |
 
-## Open Questions
+## Decisions Still Open
 
-These are unresolved and are the reason Trail remains a proposal.
+We publish these rather than settle them quietly, because each one changes what
+you get.
 
-- **Code sharing with Skulk** — a shared crate propagates improvements
-  automatically but risks distorting Skulk's interfaces with immature
-  requirements. The current recommendation is to fork first and re-evaluate later.
-- **Throughput target** — undecided, and it determines whether the row
-  representation borrows from the input buffer or owns its data.
-- **Query interface** — SQL or a search-oriented DSL.
-- **Full-text search** — if required, an inverted index becomes a design
-  premise rather than a later addition.
+- **Code sharing with Skulk** — a shared crate propagates Skulk's improvements
+  to Trail automatically; forking keeps each free to evolve. Current direction
+  is to fork first and re-evaluate once Trail's requirements are proven.
+- **Throughput target** — this determines whether rows borrow from the input
+  buffer or own their data, so it is being set before the row model is fixed.
+- **Query interface** — SQL, or a search-oriented DSL closer to how logs are
+  actually queried.
+- **Full-text search** — if it is in scope, an inverted index belongs in the
+  foundation rather than bolted on later.
+
+Have an opinion on any of these? The design document is the place to weigh in.
 
 ## Learn More
 
-- [Full proposal document](https://github.com/alopex-db/docs/blob/main/design/alopex-trail-proposal.md)
+- [Full design document](https://github.com/alopex-db/docs/blob/main/design/alopex-trail-proposal.md)
 - [Skulk](skulk.md) — the time-series product whose machinery Trail reuses
