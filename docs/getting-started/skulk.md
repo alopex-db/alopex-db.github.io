@@ -14,9 +14,8 @@ daemon, no sidecar — Skulk is a library you link in.
 cargo add alopex-skulk
 ```
 
-Rust 1.82 or later. Production dependencies are pure Rust — there is no `cc`
-step and no `*-sys` crate, so a plain `cargo build` is all you need on any
-target you can already build for.
+Rust 1.82 or later. No `cc` step and no `*-sys` crate in the build, so a plain
+`cargo build` is all you need on any target you can already build for.
 
 ## Write Your First Points
 

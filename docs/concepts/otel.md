@@ -102,10 +102,8 @@ thing.
 
 ### And it isn't a walled garden
 
-Bundling a dashboard doesn't mean locking you into it. Alopex OTel speaks the
-**Prometheus query API**, so Grafana's built-in Prometheus data source connects
-to it directly — no plugin to install, and existing Prometheus dashboards work
-unchanged. See [Grafana compatibility](#grafana-compatibility) for what that requires.
+Bundling a dashboard doesn't mean locking you into it — Grafana connects to the
+same data. See [Two ways to query it](#two-ways-to-query-it).
 
 ---
 
@@ -186,8 +184,11 @@ LEFT JOIN otel.metrics m
 WHERE t.status = 'ERROR';
 ```
 
-Traces and Logs both live in Trail, so most of that join never crosses a
-storage boundary.
+Splitting the storage doesn't split the query. Traces and Logs both live in
+Trail, so most of that join never crosses a storage boundary anyway.
+
+This is the internal language — the one Observe uses, unconstrained by
+anyone else's format. [Grafana gets its own](#two-ways-to-query-it).
 
 ---
 
@@ -289,19 +290,46 @@ The observability platform observes the database it is built on.
 
 ---
 
-## Grafana Compatibility
+## Two Ways to Query It
 
-Point Grafana's built-in Prometheus data source at Alopex OTel and it works.
-No plugin to install, and existing Prometheus dashboards keep working —
-because dashboards name the data source by type:
+Observe reads the storage directly. Grafana connects from outside. Those want
+different things from a query language, so Alopex OTel serves both rather than
+forcing one to compromise.
+
+<div class="grid cards" markdown>
+
+-   :material-view-dashboard:{ .lg .middle } **Observe — the internal language**
+
+    ---
+
+    An aggregation DSL with **joins across signals**, so a trace, the logs from
+    that trace, and the metrics around it come back from one query.
+
+    Nothing constrains it, so it is built for what the storage can do.
+
+-   :material-connection:{ .lg .middle } **Grafana — compatible APIs**
+
+    ---
+
+    **Prometheus query API** for metrics, **TraceQL** and **LogQL** for traces
+    and logs. Grafana's built-in data sources connect with no plugin.
+
+    Everything constrains it, so it matches what Grafana expects.
+
+</div>
+
+Speaking Grafana's APIs matters because dashboards name the data source by
+type:
 
 ```json
 "datasource": { "type": "prometheus", "uid": "$ds" }
 ```
 
-Traces and logs follow through **TraceQL** and **LogQL**, so Grafana's Tempo
-and Loki data sources connect the same way.
+Existing Prometheus dashboards keep working. And the cross-signal join stays
+available on the inside, where nothing has to be compatible with anything.
 
+[:octicons-arrow-right-24: How the two layers fit together](trail.md#two-query-surfaces-not-one)
+·
 [:octicons-arrow-right-24: When each piece arrives](../roadmap.md)
 
 ---

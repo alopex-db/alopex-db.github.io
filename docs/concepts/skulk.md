@@ -8,7 +8,7 @@ description: Embedded append-only time-series storage and ingest core
 [![crates.io](https://img.shields.io/crates/v/alopex-skulk.svg)](https://crates.io/crates/alopex-skulk)
 [![docs.rs](https://docs.rs/alopex-skulk/badge.svg)](https://docs.rs/alopex-skulk)
 
-**A time-series engine small enough to embed. 3.7 MB, pure Rust, no C toolchain.**
+**A time-series engine small enough to embed — and it builds anywhere `cargo` does.**
 
 Alopex Skulk stores wide, multi-field rows in Arrow memory batches and Parquet
 files, keeping acknowledged writes recoverable through a local WAL. It ships as
@@ -78,8 +78,10 @@ Arrow + Parquet columnar stack.
 | Compression | Custom Gorilla | BROTLI q5 (pure Rust) |
 | Durability | WAL + TSM | WAL + Parquet + manifest |
 
-Arrow and Parquet without a query engine on top: that keeps the binary at
-**3.7 MB with zero C dependencies**, small enough to embed.
+Arrow and Parquet without a query engine on top keeps the release binary at
+**3.7 MB**, with no native dependencies in the build — so cross-compiling to
+musl, Windows, or arm is `cargo build --target`, not an afternoon of
+toolchain setup.
 
 Files come out **7.1× smaller** than the v0.2 Gorilla format on repeated-value
 workloads, and **1.6× smaller** on volatile gauges.

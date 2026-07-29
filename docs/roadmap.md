@@ -413,7 +413,7 @@ It has its own repository and version series.
 | v0.2.0 | :white_check_mark: Released (Dec 23, 2025) | Retention/TTL, time partitions, TSM compaction |
 | **v0.3.0** | :white_check_mark: **Released (Jul 28, 2026)** | **Arrow + Parquet wide columnar storage, durability, three ingest decoders** |
 | v0.3.1 | :material-wrench: In progress | Ingest throughput and p99 latency against unchanged targets |
-| v0.4 | :material-calendar: Planned | Query engine — PromQL, SQL-TS, predicate pushdown |
+| v0.4 | :material-calendar: Planned | Query engine — PromQL, SQL-TS, predicate pushdown. Parsers reuse the family's shared parser toolchain, shipped as prebuilt artifacts and gated behind a feature so the core stays dependency-free |
 | v0.5 | :material-calendar: Planned | Downsampling, continuous queries, **Python bindings** |
 | v0.6 | :material-calendar: Planned | HTTP server, Prometheus-compatible endpoints |
 | v0.7 | :material-calendar: Planned | Alerting |
