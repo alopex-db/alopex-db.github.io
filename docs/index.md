@@ -334,31 +334,80 @@ Alopex Chirps is the control plane for distributed Alopex DB clusters.
 
 [![crates.io](https://img.shields.io/crates/v/alopex-skulk.svg)](https://crates.io/crates/alopex-skulk)
 
-Alopex Skulk is the time-series database of the Alopex family — built on Alopex Core for monitoring, IoT, and log analysis workloads.
+Alopex Skulk is the time-series member of the family — an embedded storage and
+ingest core for monitoring, IoT, and observability workloads. **v0.3.0 replaced
+the storage engine with Arrow + Parquet columnar**, in a 3.7 MB pure-Rust binary.
 
 <div class="grid cards" markdown>
 
--   :package:{ .lg .middle } **Gorilla Compression**
+-   :package:{ .lg .middle } **Columnar Compression**
 
     ---
 
-    10:1+ compression ratio with Delta-of-Delta timestamps and XOR-encoded values, stored in a TSM engine on Alopex Core.
+    Parquet with pure-Rust BROTLI — **7.1× smaller** than the previous Gorilla
+    format on repeated-value workloads. No C toolchain, no `*-sys` crate.
 
--   :hourglass_flowing_sand:{ .lg .middle } **Automatic Lifecycle**
-
-    ---
-
-    Time-based TTL and cascading downsampling (1s → 1h → 1d). Data is treated as a consumable with a natural expiry.
-
--   :mag:{ .lg .middle } **PromQL + SQL-TS**
+-   :inbox_tray:{ .lg .middle } **Three Ingest Protocols**
 
     ---
 
-    Prometheus-compatible queries plus SQL extensions: `TIME_BUCKET`, `RATE`, `DELTA`, `FIRST`, `LAST`.
+    InfluxDB Line Protocol, Prometheus Remote Write, and JSON — point your
+    existing agents at it without changing what they emit.
+
+-   :shield:{ .lg .middle } **Durable by Default**
+
+    ---
+
+    Writes are acknowledged only after the WAL. Atomic file publication,
+    torn-tail recovery, hourly partitions, and persisted retention policies.
 
 </div>
 
-[:octicons-arrow-right-24: Learn about Skulk](concepts/skulk.md)
+Query execution (PromQL, SQL-TS) arrives in v0.4; HTTP serving in v0.6.
+
+[:octicons-arrow-right-24: Learn about Skulk](concepts/skulk.md) ·
+[:octicons-arrow-right-24: Quick start](getting-started/skulk.md)
+
+---
+
+## :page_facing_up: Trail — Logs Without a Schema
+
+**Log what you have. Define the schema later — or never.**
+
+Trail is the newest design in the family: an append-only store for logs and
+events whose shape is not known in advance. Columns appear as attributes
+arrive, and a field that changes type mid-stream does not break the pipeline.
+
+<div class="grid cards" markdown>
+
+-   :heavy_plus_sign:{ .lg .middle } **Columns Appear On Arrival**
+
+    ---
+
+    A new attribute creates a column; earlier rows read back as null.
+    No `ALTER TABLE`, no migration, no coordination.
+
+-   :twisted_rightwards_arrows:{ .lg .middle } **Type Changes Don't Stop Ingestion**
+
+    ---
+
+    When `status` goes from `200` to `"upstream_timeout"`, both are stored and
+    reads coalesce them. Your pipeline does not fail at 3am.
+
+-   :building_construction:{ .lg .middle } **Proven Foundation**
+
+    ---
+
+    Reuses the durability machinery already running in Skulk — WAL recovery,
+    atomic publication, manifest rotation, single-writer locking.
+
+</div>
+
+Trail is **being designed in the open**. The API is not frozen, so what you
+need can still change it.
+
+[:octicons-arrow-right-24: See the preview](getting-started/trail.md) ·
+[:octicons-arrow-right-24: Read the concept](concepts/trail.md)
 
 ---
 
