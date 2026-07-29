@@ -411,7 +411,7 @@ It has its own repository and version series.
 | **v0.3.0** | :white_check_mark: **Released (Jul 28, 2026)** | **Arrow + Parquet wide columnar storage, durability, three ingest decoders** |
 | v0.3.1 | :material-wrench: In progress | Ingest throughput and p99 latency against unchanged targets |
 | v0.4 | :material-calendar: Planned | Query engine — PromQL, SQL-TS, predicate pushdown |
-| v0.5 | :material-calendar: Planned | Downsampling, continuous queries |
+| v0.5 | :material-calendar: Planned | Downsampling, continuous queries, **Python bindings** |
 | v0.6 | :material-calendar: Planned | HTTP server, Prometheus-compatible endpoints |
 | v0.7 | :material-calendar: Planned | Alerting |
 | v0.8 | :material-calendar: Planned | Sharding via Chirps membership |
@@ -438,11 +438,35 @@ published design; implementation has not started.
 | v0.1 | :material-lightbulb-outline: Design | Event model, WAL, dynamic column union, Parquet publication, manifest with column summaries, crash recovery |
 | v0.2 | :material-lightbulb-outline: Design | Type shadowing with read-time coalesce, JSON Lines and OTLP decoders, retention |
 | v0.3 | :material-lightbulb-outline: Design | Predicate pushdown, column projection, manifest-driven pruning |
-| v0.4 | :material-lightbulb-outline: Design | Compaction with sidecar indexes; full-text search evaluated |
+| v0.4 | :material-lightbulb-outline: Design | Compaction with sidecar indexes; full-text search evaluated; **Python bindings** |
 
 Trail's WAL and ingest layers reuse code that Skulk v0.3.1 is actively
 changing, so that part of the work follows v0.3.1. The storage, manifest, and
 locking pieces are independent of it.
+
+---
+
+## Python Across the Family { #python-family }
+
+Every engine in the family is reachable from Python, built the same way:
+**PyO3 with abi3 wheels on PyPI**, results handed to pandas or Polars over
+Arrow.
+
+| Package | Engine | Status |
+|:--------|:-------|:-------|
+| [`alopex`](https://pypi.org/project/alopex/) | Alopex DB — SQL, vector, DataFrame | :white_check_mark: **v0.7.6 on PyPI** |
+| `alopex-skulk` | Skulk — time-series | :material-calendar: Skulk v0.5 |
+| `alopex-trail` | Trail — logs and events | :material-lightbulb-outline: Trail v0.4 |
+
+Every engine holds data as Arrow internally, so query results cross into
+pandas or Polars without a conversion step.
+
+!!! tip "Late-bound schema suits Python"
+
+    Trail's columns are discovered at read time rather than declared up front —
+    the same way a DataFrame behaves. Shadowed type variants coalesce into one
+    logical column by default, with `status@str` available when you want a
+    specific physical column.
 
 ---
 

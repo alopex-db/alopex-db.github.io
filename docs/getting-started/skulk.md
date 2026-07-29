@@ -194,3 +194,9 @@ You do not have to configure any of this.
     schema you don't declare up front.
 
 </div>
+
+!!! info "Python from v0.5"
+
+    A PyO3 binding arrives in v0.5, handing query results to pandas or Polars
+    over Arrow. Until then, Skulk is a Rust library.
+    See [Python across the family](../roadmap.md#python-family).

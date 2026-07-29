@@ -88,6 +88,32 @@ Accepted and stamped on arrival, rather than rejected at the door.
 {"stream":"audit","actor":"deploy-bot","action":"rollout"}
 ```
 
+### From Python
+
+Log analysis usually happens in Python, so a binding is planned for v0.4.
+Results cross into pandas or Polars over Arrow — Trail already holds data in
+Arrow internally, so nothing is converted on the way out.
+
+```python
+# Proposed API — not yet implemented
+import alopex_trail as trail
+
+store = trail.open("./trail-data")
+
+store.write("api", {"level": "error", "route": "/orders", "status": 500})
+store.write("api", {"level": "info", "route": "/users", "status": "cached"})
+
+# Columns are discovered, not declared
+store.columns("api")
+# ['level', 'route', 'status@i64', 'status@str']
+
+df = store.query("api").since("1h").to_polars()
+```
+
+A late-bound schema fits the DataFrame model closely: you do not declare
+columns before reading them, and the shadowed type variants collapse into one
+logical column unless you ask for a specific one.
+
 ---
 
 ## Design Questions We Want Answered
@@ -126,6 +152,14 @@ These are genuinely undecided. Your input changes the outcome.
 
     This decides whether rows borrow from the input buffer or own their data —
     a decision that is hard to reverse once the row model is fixed.
+
+-   :material-help-circle:{ .lg .middle } **Is Python where you'd reach for this?**
+
+    ---
+
+    Bindings are planned for v0.4. If Python is your entry point rather than
+    Rust, that changes what gets built first — and whether the ingest side
+    needs to be as ergonomic as the query side.
 
 </div>
 
