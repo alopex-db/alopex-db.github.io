@@ -1,6 +1,6 @@
 ---
 title: Trail
-description: Proposed log and event store with late-bound schema
+description: Log and event store with late-bound schema
 ---
 
 # Trail - Late-Bound Schema Log Store
@@ -38,12 +38,6 @@ want to.
 
 [:material-file-document-outline: Read the design](https://github.com/alopex-db/docs/blob/main/design/alopex-trail-proposal.md){ .md-button .md-button--primary }
 [Skulk, the storage core it builds on](skulk.md){ .md-button }
-
-!!! info "Design stage"
-
-    Trail is a published design, not a released crate. It is on this site so the
-    reasoning is open before the code exists — the same way Skulk's storage
-    decision was published before it was built.
 
 ## The Problem
 
@@ -185,15 +179,6 @@ graph TB
 The goal is that each product scales out and shrinks back **independently, on
 shared cluster machinery** — add capacity where the load actually is, without
 standing up a separate cluster for every data shape you happen to store.
-
-!!! info "Where this stands"
-
-    Chirps ships today with QUIC transport, SWIM gossip, and Raft storage.
-    Distribution on top of it is staged per product: Alopex DB is
-    cluster-aware but single-node in v0.7, Skulk plans sharding at v0.8 and
-    replication at v0.9, and Trail joins the same track. **Adaptive — from
-    embedded to distributed** is the family's stated goal, and each product
-    reaches it on its own schedule.
 
 ## Where Trail Gets Used First
 

@@ -39,7 +39,7 @@ This roadmap outlines the planned development of Alopex DB from the current stat
 
     [Skulk roadmap](#skulk) · [What changed and why](concepts/skulk.md)
 
-!!! info "Alopex Trail — design published, implementation not started"
+!!! info "Alopex Trail — in design, ready to start"
 
     A log and event store with **late-bound schema** — nothing to declare
     before writing, nothing to define afterwards; column types bind at read
@@ -84,8 +84,10 @@ gantt
     v0.8 Sharding on Chirps :2027-01, 2027-03
 
     section Trail
-    Design published        :done, 2026-07, 2026-07
+    Design                  :done, 2026-07, 2026-07
     v0.1 Append path        :2026-09, 2026-11
+    v0.3 Query + DSL        :2026-12, 2027-02
+    v0.6 Joins + TraceQL    :2027-03, 2027-05
 ```
 
 ---
@@ -436,10 +438,12 @@ published design; implementation has not started.
 
 | Version | Status | Features |
 |:--------|:-------|:---------|
-| v0.1 | :material-lightbulb-outline: Design | Event model, WAL, dynamic column union, Parquet publication, manifest with column summaries, crash recovery |
-| v0.2 | :material-lightbulb-outline: Design | Type shadowing with read-time coalesce, JSON Lines and OTLP decoders, retention |
-| v0.3 | :material-lightbulb-outline: Design | Predicate pushdown, column projection, manifest-driven pruning |
-| v0.4 | :material-lightbulb-outline: Design | Compaction with sidecar indexes; full-text search evaluated; **Python bindings** |
+| v0.1 | :material-pencil-ruler: In design | Event model, WAL, dynamic column union, Parquet publication, manifest with column summaries, crash recovery |
+| v0.2 | :material-pencil-ruler: In design | Type shadowing with read-time coalesce, JSON Lines and OTLP decoders, retention |
+| v0.3 | :material-pencil-ruler: In design | Predicate pushdown, column projection, manifest-driven pruning, **the internal aggregation DSL** |
+| v0.4 | :material-pencil-ruler: In design | Compaction with sidecar indexes, retention tiers, full-text search evaluated; **Python bindings** |
+| v0.5 | :material-pencil-ruler: In design | Statistical summaries and sampling with adjusted-count correction |
+| v0.6 | :material-pencil-ruler: In design | **Cross-signal joins**, series arithmetic, **TraceQL / LogQL compatibility** |
 
 Trail's WAL and ingest layers reuse code that Skulk v0.3.1 is actively
 changing, so that part of the work follows v0.3.1. The storage, manifest, and
@@ -453,11 +457,17 @@ Every engine in the family is reachable from Python, built the same way:
 **PyO3 with abi3 wheels on PyPI**, results handed to pandas or Polars over
 Arrow.
 
+`alopex-otel` is the different one: it doesn't just read storage from Python,
+it **embeds the whole observability platform in a Python process** — receiver,
+pipeline, storage, and dashboard — so a desktop app or a notebook can be
+observed without deploying anything.
+
 | Package | Engine | Status |
 |:--------|:-------|:-------|
 | [`alopex`](https://pypi.org/project/alopex/) | Alopex DB — SQL, vector, DataFrame | :white_check_mark: **v0.7.6 on PyPI** |
 | `alopex-skulk` | Skulk — time-series | :material-calendar: Skulk v0.5 |
-| `alopex-trail` | Trail — logs and events | :material-lightbulb-outline: Trail v0.4 |
+| `alopex-trail` | Trail — logs and events | :material-pencil-ruler: Trail v0.4 |
+| `alopex-otel` | **OTel — instrumentation, embedded platform, cross-signal queries** | :material-pencil-ruler: OTel M1 |
 
 Every engine holds data as Arrow internally, so query results cross into
 pandas or Polars without a conversion step.

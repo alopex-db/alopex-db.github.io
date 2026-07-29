@@ -126,7 +126,7 @@ graph TB
 | [**alopex-cli**](https://crates.io/crates/alopex-cli) | Command-line tools (TUI / admin console) | :white_check_mark: v0.7.6 |
 | [**alopex-chirps**](https://crates.io/crates/alopex-chirps) | Gossip-based cluster messaging | :white_check_mark: v0.5.1 |
 | [**alopex-skulk**](https://crates.io/crates/alopex-skulk) | Time-series storage and ingest core (Arrow + Parquet, independent version series) | :white_check_mark: v0.3.0 |
-| [**alopex-trail**](trail.md) | Log and event store with late-bound schema | :material-lightbulb-outline: Design published |
+| [**alopex-trail**](trail.md) | Log and event store with late-bound schema | :material-pencil-ruler: In design |
 | [**alopex-ui**](https://github.com/alopex-db/alopex-ui) | Alopex Data UI — consistent UI model over a DataSource contract ([concept site](https://alopex-db.github.io/alopex-ui-pages/)) | :material-progress-wrench: In development |
 
 ## Data Models

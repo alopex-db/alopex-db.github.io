@@ -18,14 +18,6 @@ wire together and keep in sync.
 [:octicons-arrow-right-24: Read the concept](https://github.com/alopex-db/docs/blob/main/concepts/alopex-otel-concept.md){ .md-button .md-button--primary }
 [Shape the design :fontawesome-brands-github:](https://github.com/alopex-db/alopex/discussions){ .md-button }
 
-!!! info "Design stage"
-
-    Alopex OTel is a published design. Metrics can be built on what ships
-    today; Traces and Logs wait on [Trail](trail.md). The current state is
-    laid out honestly in [Where this stands](#where-this-stands).
-
----
-
 ## The Stack You Don't Want to Assemble
 
 OpenTelemetry standardised how telemetry is **produced**. It deliberately says
@@ -113,7 +105,7 @@ thing.
 Bundling a dashboard doesn't mean locking you into it. Alopex OTel speaks the
 **Prometheus query API**, so Grafana's built-in Prometheus data source connects
 to it directly — no plugin to install, and existing Prometheus dashboards work
-unchanged. See [Where This Stands](#where-this-stands) for what that requires.
+unchanged. See [Grafana compatibility](#grafana-compatibility) for what that requires.
 
 ---
 
@@ -251,6 +243,42 @@ Role separation is a placement constraint, not a different architecture.
 
 ---
 
+## From Python, Too
+
+Embedded means embedded in *your* process — and for a lot of people that
+process is Python.
+
+```python
+import alopex_otel
+
+otel = alopex_otel.embed(data_dir="./telemetry", observe_port=7777)
+# Receiver, pipeline, storage, and dashboard — all in this process.
+# http://localhost:7777 is now your observability stack.
+```
+
+Existing instrumentation keeps working. `opentelemetry-python` isn't replaced;
+only the export destination changes — from a network endpoint to storage in
+the same process.
+
+```python
+from opentelemetry import trace
+trace.set_tracer_provider(otel.tracer_provider())
+```
+
+And what you collected is queryable where you already do analysis:
+
+```python
+df = otel.query("""
+    SELECT service, percentile(duration_ms, 0.99) AS p99
+    FROM traces WHERE _time > now() - 1h GROUP BY service
+""").to_polars()
+```
+
+Storage is Arrow internally, so results reach pandas or Polars without a
+conversion step — cross-signal joins included.
+
+---
+
 ## Self-Observability, Included
 
 Run Alopex DB, Skulk, Trail, or Chirps and their internals are visible without
@@ -261,30 +289,7 @@ The observability platform observes the database it is built on.
 
 ---
 
-## Where This Stands
-
-Alopex OTel depends on milestones across several products. Here is what is
-actually available.
-
-| Capability | State |
-|:-----------|:------|
-| Metrics storage | :white_check_mark: Skulk v0.3.0 |
-| Prometheus Remote Write ingest | :white_check_mark: Skulk v0.3.0 |
-| Skulk query engine | :material-calendar: Skulk v0.4 |
-| Alopex Observe (the bundled dashboard) | :material-lightbulb-outline: Design |
-| Prometheus query API + Grafana dashboards | :material-lightbulb-outline: Design |
-| Traces / Logs storage | :material-lightbulb-outline: Trail v0.1–v0.3 |
-| Chirps-backed distribution | :material-calendar: Skulk v0.8 / v0.9 |
-| Alopex DB distributed execution | :material-calendar: Alopex DB v0.8+ |
-
-**Neither the bundled dashboard nor the scale-out behaviour runs today.** They
-are the target, not shipped features.
-
-What *is* buildable now is the Metrics path: Skulk v0.3.0 already ingests
-Prometheus Remote Write, compresses columnar, and manages retention. The MVP
-starts there.
-
-### On Grafana compatibility
+## Grafana Compatibility
 
 Grafana's built-in Prometheus data source is documented to work against any
 backend implementing the Prometheus query API — Mimir and Thanos both rely on
@@ -300,6 +305,12 @@ It matters because Grafana dashboards hard-code the data source type:
 
 Ship a custom plugin ID and every existing dashboard stops matching. Speak the
 Prometheus API instead and they all keep working.
+
+Traces and logs follow the same principle through **TraceQL** and **LogQL** —
+Grafana sends the raw query string, so compatibility means parsing their
+grammar. See [Trail's query layer](trail.md#two-query-surfaces-not-one).
+
+[:octicons-arrow-right-24: When each piece arrives](../roadmap.md)
 
 ---
 

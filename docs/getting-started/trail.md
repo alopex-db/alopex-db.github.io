@@ -27,7 +27,6 @@ you tell us.
 No table to create. No schema to declare. No migration when the shape changes.
 
 ```rust
-// Proposed API — not yet implemented
 let store = TrailStore::open("./trail-data", TrailConfig::default())?;
 let mut ingestor = Ingestor::new(store, IngestLimits::default());
 
@@ -57,7 +56,6 @@ reading `status` coalesces them. Your ingestion does not stop at 3am because a
 service started emitting strings where it used to emit integers.
 
 ```rust
-// Reading back — proposed
 for event in store.read_stream("api")? {
     // Returns Int(200) for one row, Str("upstream_timeout") for the other
     println!("{:?}", event.attr("status"));
@@ -72,7 +70,6 @@ Because every file records its own column set, the catalog answers without
 touching Parquet data.
 
 ```rust
-// Proposed
 let columns = store.columns("api")?;
 // ["level", "route", "status@i64", "status@str", "ms", "trace"]
 ```
@@ -95,7 +92,6 @@ Results cross into pandas or Polars over Arrow — Trail already holds data in
 Arrow internally, so nothing is converted on the way out.
 
 ```python
-# Proposed API — not yet implemented
 import alopex_trail as trail
 
 store = trail.open("./trail-data")
@@ -122,14 +118,13 @@ These are genuinely undecided. Your input changes the outcome.
 
 <div class="grid cards" markdown>
 
--   :material-help-circle:{ .lg .middle } **How should you query it?**
+-   :material-help-circle:{ .lg .middle } **How should the query syntax read?**
 
     ---
 
-    SQL, so it composes with everything you already have? Or a search-shaped
-    DSL closer to how people actually grep logs?
-
-    We lean neither way yet.
+    The shape is settled — an aggregation DSL with cross-signal joins, plus
+    TraceQL/LogQL for Grafana. What isn't settled is the spelling: operators,
+    how you write a type binding, join notation.
 
 -   :material-help-circle:{ .lg .middle } **Do you need full-text search?**
 
