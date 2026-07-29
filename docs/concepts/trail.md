@@ -5,12 +5,36 @@ description: Proposed log and event store with late-bound schema
 
 # Trail - Late-Bound Schema Log Store
 
-**Log what you have. Define the schema later — or never.**
+**Write first. The schema binds when you read.**
 
 Trail is an append-only store for logs and events whose shape is not known in
 advance. Columns are built from the attributes that actually arrive, and
 persisted columnar in Parquet. A field that changes type mid-stream does not
 break the pipeline; it becomes a column you can still query.
+
+## What "late-bound schema" means
+
+Borrowed from *late binding* in programming languages: the binding happens as
+late as possible. Here, what binds late is **the schema**.
+
+| | Schema-on-write | **Late-bound (Trail)** |
+|:--|:--|:--|
+| Before writing | Declare the schema | Nothing to declare |
+| At write time | Validate against the declaration; reject mismatches | Accept the shape that arrived |
+| **At read time** | Read using the declared types | **Decide the types here** |
+
+There is no schema to define up front and — this is the part that surprises
+people — **no schema to define later either**. There is no `CREATE TABLE`, no
+migration, no `ALTER`. A column exists because an event carrying that
+attribute arrived.
+
+What happens "late" is the *binding*: when you query `status`, that is when
+Trail decides whether to hand you the integers, the strings, or both merged
+into one column. Two people can query the same data and bind it differently.
+
+You can also never think about it at all. The default read merges everything
+into one logical column, so a schema is something you engage with only when you
+want to.
 
 [:material-file-document-outline: Read the design](https://github.com/alopex-db/docs/blob/main/design/alopex-trail-proposal.md){ .md-button .md-button--primary }
 [Skulk, the storage core it builds on](skulk.md){ .md-button }
@@ -90,12 +114,18 @@ attrs: { status: 200 }         →  physical column  status@i64
 attrs: { status: "timeout" }   →  physical column  status@str   (new)
 ```
 
-Reading the logical column `status` coalesces both. Reading `status@str`
-addresses one directly. The Parquet physical schema never conflicts, because
-the conflict is resolved at read time instead of write time.
+The Parquet physical schema never conflicts, because both columns exist side by
+side. What you get back is decided when you query — this is the binding:
 
-This is what "late-bound schema" means in practice: **type mismatch is a read
-concern, not an ingestion error.**
+```sql
+SELECT status      FROM ...  -- both, merged into one column
+SELECT status@i64  FROM ...  -- only the rows that arrived as integers
+SELECT status@str  FROM ...  -- only the rows that arrived as strings
+```
+
+Nothing was decided at write time, and nothing needs to be decided in advance
+of the query. **A type mismatch is a read-time question, not an ingestion
+error.**
 
 Primitives get their own shadow column — `@str`, `@i64`, `@f64`, `@bool`,
 `@bytes` — and anything that doesn't fit, such as a nested map, falls back to

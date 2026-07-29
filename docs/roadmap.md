@@ -41,9 +41,10 @@ This roadmap outlines the planned development of Alopex DB from the current stat
 
 !!! info "Alopex Trail — design published, implementation not started"
 
-    A log and event store with **late-bound schema**, reusing Skulk's
-    append-only machinery. The design is open before the code exists, so the
-    API can still change based on what you need.
+    A log and event store with **late-bound schema** — nothing to declare
+    before writing, nothing to define afterwards; column types bind at read
+    time. Reuses Skulk's append-only machinery. The design is open before the
+    code exists, so the API can still change based on what you need.
 
     [Trail roadmap](#trail) · [Read the concept](concepts/trail.md)
 

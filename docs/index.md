@@ -370,13 +370,17 @@ Query execution (PromQL, SQL-TS) arrives in v0.4; HTTP serving in v0.6.
 
 ---
 
-## :page_facing_up: Trail — Logs Without a Schema
+## :page_facing_up: Trail — Late-Bound Schema for Logs
 
-**Log what you have. Define the schema later — or never.**
+**Write first. The schema binds when you read.**
 
 Trail is the newest design in the family: an append-only store for logs and
 events whose shape is not known in advance. Columns appear as attributes
 arrive, and a field that changes type mid-stream does not break the pipeline.
+
+*Late-bound* here means what it means in programming languages — the binding
+happens as late as possible. There is no schema to declare before writing and
+none to define afterwards; the types are decided at the moment you query.
 
 <div class="grid cards" markdown>
 
