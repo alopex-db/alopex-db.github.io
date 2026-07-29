@@ -248,6 +248,59 @@ The design document records what changed and why.
 
 [:octicons-arrow-right-24: Retention, sampling, and statistics in full](https://github.com/alopex-db/docs/blob/main/design/alopex-trail-proposal.md)
 
+## Two Query Surfaces, Not One
+
+Trail ships with a dashboard. That means the query layer has two faces, and
+conflating them would compromise both.
+
+<div class="grid cards" markdown>
+
+-   :material-code-braces:{ .lg .middle } **Inside: an aggregation DSL**
+
+    ---
+
+    Built for what Trail can do — joins **across signals**, range
+    aggregations, series arithmetic, and explicit type bindings like
+    `status@str`.
+
+    Chosen for expressiveness, because nothing constrains it.
+
+-   :material-connection:{ .lg .middle } **Outside: Grafana-compatible**
+
+    ---
+
+    **TraceQL** for traces, **LogQL** for logs, **Prometheus query API** for
+    metrics — so Grafana's built-in data sources connect with no plugin.
+
+    Chosen for compatibility, because everything constrains it.
+
+</div>
+
+### Why a DSL and not SQL
+
+A search DSL is not a weaker language. TraceQL already has `rate`,
+`quantile_over_time`, `by()` grouping, series arithmetic, and `topk`:
+
+```
+({status=error} | count_over_time()) / ({} | count_over_time())
+```
+
+What TraceQL and LogQL *don't* have is a join across signals — TraceQL's
+structural operators (`>>`, `>`, `~`) never leave a single trace, and SigNoz
+has a join type defined in its IR but marked *not yet supported*.
+
+That gap is where Trail's internal language goes.
+
+### Why the compatible layer is separate
+
+Grafana sends **the raw query string** — `GET /api/search?q={ status=error }`.
+The language is the contract, so compatibility means parsing their grammar,
+not just matching a protocol.
+
+It also means TraceQL can't simply be a subset of the internal language: its
+spanset semantics are a different model from joins. So they are separate front
+ends that lower into one shared logical plan.
+
 ## Milestones
 
 Each version is scoped so the one before it is usable on its own. v0.1 already
@@ -257,8 +310,13 @@ gives you durable ingestion with columns that appear on arrival.
 | --- | --- |
 | v0.1 | Event model, WAL, dynamic column union, Parquet publication, manifest with column summaries, crash recovery |
 | v0.2 | Type shadowing with read-time coalesce, JSON Lines and OTLP log decoders, retention |
-| v0.3 | Predicate pushdown, column projection, manifest-driven file pruning |
-| v0.4 | Compaction with sidecar indexes; full-text search evaluated |
+| v0.3 | Predicate pushdown, column projection, manifest-driven pruning, **the internal DSL** — filters, type bindings, basic aggregation |
+| v0.4 | Compaction with sidecar indexes, **retention tiers**, full-text search evaluated, **Python bindings** |
+| v0.5 | **Statistical summaries** and sampling with adjusted-count correction |
+| v0.6 | **Cross-signal joins**, series arithmetic, **TraceQL / LogQL compatibility** |
+
+The compatible layer comes last on purpose: it lowers into the shared logical
+plan, which has to settle first.
 
 ## Decisions Still Open
 
@@ -270,8 +328,8 @@ you get.
   is to fork first and re-evaluate once Trail's requirements are proven.
 - **Throughput target** — this determines whether rows borrow from the input
   buffer or own their data, so it is being set before the row model is fixed.
-- **Query interface** — SQL, or a search-oriented DSL closer to how logs are
-  actually queried.
+- **Query syntax details** — the shape is settled (see above); the operator
+  spelling, how you write a type binding, and the join notation are not.
 - **Full-text search** — if it is in scope, an inverted index belongs in the
   foundation rather than bolted on later.
 - **Sketches at compaction time** — no existing system does this, so there is
