@@ -166,11 +166,14 @@ standing up a separate cluster for every data shape you happen to store.
 [Alopex OTel](otel.md) — the OpenTelemetry platform built on this family — puts
 **Traces and Logs in Trail**, with Metrics in Skulk.
 
-That is not an arbitrary split. OpenTelemetry attributes are typed `AnyValue`,
-and across SDK versions the same key changes type routinely. A store that
-rejects the conflict stops ingesting; Trail shadows it and keeps going. For an
-observability backend, that difference is the difference between staying up and
-going down during a deploy.
+The split follows one line: metrics arrive on a schedule, spans and logs arrive
+when something happens. Interval-based machinery — partitioning, downsampling,
+gap-filling — is meaningful for the first and meaningless for the second.
+
+Type shadowing then compounds the fit. OpenTelemetry attributes are typed
+`AnyValue`, and across SDK versions the same key changes type routinely. A
+store that rejects the conflict stops ingesting; Trail shadows it and keeps
+going — the difference between staying up and going down during a deploy.
 
 ## Milestones
 

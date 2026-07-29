@@ -51,10 +51,19 @@ Alopex OTel is one system.
 
 ---
 
-## Signals Go Where They Fit
+## Time Series or Events
 
 The design point is not "one database for everything." It is **the right
-storage per signal, presented as one**.
+storage per signal, presented as one** — and the line between them is simple.
+
+> **Time series** arrive on a schedule. You know roughly when the next point
+> comes, give or take.
+>
+> **Events** arrive when something happens. There is no next.
+
+That distinction decides everything else. Fixed-interval partitioning,
+downsampling, and gap-filling are meaningful for the first and meaningless for
+the second.
 
 <div class="grid cards" markdown>
 
@@ -62,22 +71,22 @@ storage per signal, presented as one**.
 
     ---
 
-    Numeric time series with a stable shape. Columnar Parquet compression,
-    hourly partitions, TTL, and downsampling apply directly.
+    **Time series.** A scrape interval defines when the next point arrives.
+    Columnar compression, hourly partitions, TTL, and downsampling all apply.
 
 -   :material-sitemap:{ .lg .middle } **Traces → [Trail](trail.md)**
 
     ---
 
-    A span is a structured event, not a time series. Its attributes are
-    arbitrary and its events nest — exactly what late-bound schema is for.
+    **Events.** A span happens when a request arrives — there is no interval
+    to partition by. Attributes are arbitrary; events and links nest.
 
 -   :material-text-box:{ .lg .middle } **Logs → [Trail](trail.md)**
 
     ---
 
-    Arbitrary body, arbitrary attributes, unreliable timestamps. Accepted as
-    they arrive rather than rejected at the door.
+    **Events.** Something happened, so a line was written. Arbitrary body,
+    arbitrary attributes, unreliable timestamps.
 
 -   :material-database-search:{ .lg .middle } **Index & Metadata → [Alopex DB](../index.md)**
 
@@ -87,6 +96,9 @@ storage per signal, presented as one**.
     rules, RBAC — anything needing high-selectivity search or SQL.
 
 </div>
+
+RED metrics derived from spans land back in Skulk: once you aggregate over a
+window, the result has an interval again.
 
 ### Why this matters at 3am
 
@@ -210,12 +222,12 @@ starts there.
 
 These are undecided, and input changes the outcome.
 
-- **Should traces really live in Trail?** A span is an event — but retention
-  and downsampling are things Skulk's lifecycle does well.
 - **Does Trail need Chirps?** Its roadmap has no distribution story yet. This
   design would require one.
-- **RED metrics from spans** — derive them into Skulk, or aggregate in Trail
-  on demand?
+- **RED metrics from spans** — derive them into Skulk as they arrive, or
+  aggregate from Trail at query time?
+- **Retention for events** — you cannot downsample what has no interval. How
+  should trace and log retention be expressed?
 
 [Weigh in on GitHub :fontawesome-brands-github:](https://github.com/alopex-db/alopex/discussions){ .md-button }
 

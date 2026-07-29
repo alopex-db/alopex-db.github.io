@@ -411,6 +411,49 @@ need can still change it.
 
 ---
 
+## :telescope: Alopex OTel — Observability Without the Stack
+
+**OpenTelemetry from embedded to cluster.**
+
+Observing one application normally means deploying a Collector, Prometheus,
+Tempo, Loki, and Grafana — five systems, three storage engines, three query
+languages. Alopex OTel is one system, and the same binary runs inside your
+application process or across a cluster.
+
+<div class="grid cards" markdown>
+
+-   :material-timeline-clock:{ .lg .middle } **Time Series or Events**
+
+    ---
+
+    Metrics arrive on a schedule, so they go to **Skulk**. Spans and logs
+    arrive when something happens, so they go to **Trail**. The right storage
+    per signal — presented as one database.
+
+-   :material-shield-alert:{ .lg .middle } **Ingestion That Doesn't Break**
+
+    ---
+
+    OTel attributes change type across SDK versions. A strict store stops
+    ingesting; Trail shadows the conflict and keeps going — no outage because
+    a service was deployed.
+
+-   :material-magnify-scan:{ .lg .middle } **One Query Across Signals**
+
+    ---
+
+    Join traces to logs to metrics in a single SQL statement. Traces and logs
+    share a store, so most of that join never crosses a boundary.
+
+</div>
+
+Alopex OTel is a **published design**. The metrics path builds on what Skulk
+ships today; traces and logs follow Trail.
+
+[:octicons-arrow-right-24: Read the concept](concepts/otel.md)
+
+---
+
 ## :art: Alopex Data UI — One Interface for Data Apps
 
 **One interface, wherever the data moves.** Alopex Data UI is the newest member of the family: a consistent UI model for data applications. Adapters translate schema, queries, filters, selections, and editable records into one **DataSource contract**, so forms, grids, charts, graphs, and maps evolve as one coherent system — whether data arrives from Alopex DB, DuckDB, an API, or a file.
