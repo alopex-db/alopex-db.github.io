@@ -97,6 +97,13 @@ the conflict is resolved at read time instead of write time.
 This is what "late-bound schema" means in practice: **type mismatch is a read
 concern, not an ingestion error.**
 
+Primitives get their own shadow column — `@str`, `@i64`, `@f64`, `@bool`,
+`@bytes`. Anything that doesn't fit one, such as a nested map or a
+mixed-type array, falls back to `@json`. That escape hatch is not optional:
+OpenTelemetry's `AnyValue` permits arrays whose elements differ in type, and
+without somewhere to put them, ingestion stops. Tempo solves this the same
+way, with a `ValueUnsupported` column holding JSON.
+
 ## Relationship to Skulk
 
 Trail is not a fork of Skulk's purpose — it is a reuse of Skulk's machinery.
@@ -175,6 +182,48 @@ Type shadowing then compounds the fit. OpenTelemetry attributes are typed
 store that rejects the conflict stops ingesting; Trail shadows it and keeps
 going — the difference between staying up and going down during a deploy.
 
+## Keeping Data Without Keeping It Expensive
+
+Time series get cheaper with age by downsampling. Events cannot — there is no
+interval to downsample. So the question becomes: how do you keep everything
+without paying full price for it?
+
+<div class="grid cards" markdown>
+
+-   :material-harddisk:{ .lg .middle } **Move it, don't rewrite it**
+
+    ---
+
+    Older data moves to cheaper storage in **the same format**. No
+    recompression pass, no second write — the read path is identical, just
+    a network hop further away.
+
+-   :material-chart-box-multiple:{ .lg .middle } **Summaries sit beside data, not instead of it**
+
+    ---
+
+    Compaction builds mergeable sketches — exponential histograms, HLL — as
+    an *additional* resolution. Generating a summary never becomes a reason
+    to delete the original.
+
+-   :material-percent:{ .lg .middle } **Sampling that still counts correctly**
+
+    ---
+
+    Uses OpenTelemetry's **adjusted count** from the W3C tracestate, not a
+    bespoke field. Counts and sums extrapolate back to the population;
+    min and max deliberately do not.
+
+</div>
+
+!!! note "These choices came from reading the implementations"
+
+    An earlier draft proposed recompressing old data at higher BROTLI levels
+    and eventually replacing it with summaries. Grafana Tempo pins compression
+    to snappy and caps how many times a block is rewritten; SigNoz tiers by
+    *storage volume* and never uses ClickHouse's `RECOMPRESS`. Both keep the
+    original data. The design was corrected to match.
+
 ## Milestones
 
 Each version is scoped so the one before it is usable on its own. v0.1 already
@@ -201,6 +250,10 @@ you get.
   actually queried.
 - **Full-text search** — if it is in scope, an inverted index belongs in the
   foundation rather than bolted on later.
+- **Sketches at compaction time** — building mergeable sketches during
+  compaction has no precedent to copy. SigNoz's code says as much in a
+  comment: *"we don't have any aggregated table for sketches (yet)"*. That
+  makes it both an opportunity and a design we have to justify on our own.
 
 Have an opinion on any of these? The design document is the place to weigh in.
 
