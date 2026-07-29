@@ -3,14 +3,17 @@ title: OTel
 description: OpenTelemetry-native observability from an embedded process to a distributed cluster
 ---
 
-# Alopex OTel — Observability Without the Stack
+# Alopex OTel — Storage and Dashboards, One Product
 
 **OpenTelemetry from embedded to cluster.**
 
-Alopex OTel collects, stores, queries, and visualises Metrics, Traces, and Logs
-as one product. No Collector to deploy, no Prometheus to size, no Tempo, no
-Loki, no Grafana to wire together — and the same binary runs inside your
-application process or across a cluster.
+Most observability tools stop at storage and hand you off to something else to
+look at the data. Alopex OTel doesn't. **Ingestion, storage, and the dashboard
+are one product** — and that whole thing runs anywhere from a single embedded
+process to a distributed cluster, with the same screen either way.
+
+No Collector to deploy. No Prometheus to size. No Tempo, no Loki, no Grafana to
+wire together and keep in sync.
 
 [:octicons-arrow-right-24: Read the concept](https://github.com/alopex-db/docs/blob/main/concepts/alopex-otel-concept.md){ .md-button .md-button--primary }
 [Shape the design :fontawesome-brands-github:](https://github.com/alopex-db/alopex/discussions){ .md-button }
@@ -48,6 +51,69 @@ policies — to observe one application. Scaling means scaling each of them
 separately. Shrinking means unwinding each of them separately.
 
 Alopex OTel is one system.
+
+---
+
+## The Dashboard Ships With the Storage
+
+Splitting storage from visualisation has a running cost, and you pay it every
+day.
+
+<div class="grid cards" markdown>
+
+-   :material-server-off:{ .lg .middle } **Nothing to stand up**
+
+    ---
+
+    No second server to deploy, secure, and upgrade. The dashboard is the same
+    process and the same binary as the storage.
+
+-   :material-link-off:{ .lg .middle } **Nothing to point at anything**
+
+    ---
+
+    No data source URLs to configure, no credentials to keep in sync. It reads
+    its own storage.
+
+-   :material-laptop:{ .lg .middle } **Nothing to give up in development**
+
+    ---
+
+    Embedded means the UI comes with it. You don't fall back to reading raw
+    logs because standing up a viewer wasn't worth it.
+
+-   :material-arrow-decision:{ .lg .middle } **Nothing to re-enter between signals**
+
+    ---
+
+    Metric spike → exemplar → trace → the logs from that same trace. Each
+    arrow is a link, not a new tab and a retyped filter.
+
+</div>
+
+### The same screen at every size
+
+```text
+Embedded (in your process)   →  localhost. No extra process.
+Local Server                 →  Same screen. More data.
+Compact Cluster (2–3 nodes)  →  Same screen. Connect to any node, see it all.
+Scale-out Cluster (N nodes)  →  Same screen. Queries fan out transparently.
+```
+
+**The screen, the API, the query language, and the dashboard definitions do not
+change with scale.** A dashboard built on your laptop works on a twenty-node
+cluster, and one from the cluster works on a single edge node.
+
+That is what makes "start small, grow later" more than a slogan — there is no
+migration between the small thing and the big thing, because they are the same
+thing.
+
+### And it isn't a walled garden
+
+Bundling a dashboard doesn't mean locking you into it. Alopex OTel speaks the
+**Prometheus query API**, so Grafana's built-in Prometheus data source connects
+to it directly — no plugin to install, and existing Prometheus dashboards work
+unchanged. See [Where This Stands](#where-this-stands) for what that requires.
 
 ---
 
@@ -205,16 +271,35 @@ actually available.
 | Metrics storage | :white_check_mark: Skulk v0.3.0 |
 | Prometheus Remote Write ingest | :white_check_mark: Skulk v0.3.0 |
 | Skulk query engine | :material-calendar: Skulk v0.4 |
+| Alopex Observe (the bundled dashboard) | :material-lightbulb-outline: Design |
+| Prometheus query API + Grafana dashboards | :material-lightbulb-outline: Design |
 | Traces / Logs storage | :material-lightbulb-outline: Trail v0.1–v0.3 |
 | Chirps-backed distribution | :material-calendar: Skulk v0.8 / v0.9 |
 | Alopex DB distributed execution | :material-calendar: Alopex DB v0.8+ |
 
-**The scale-out and shrink behaviour described above does not run today.** It
-is the target, not a shipped feature.
+**Neither the bundled dashboard nor the scale-out behaviour runs today.** They
+are the target, not shipped features.
 
 What *is* buildable now is the Metrics path: Skulk v0.3.0 already ingests
 Prometheus Remote Write, compresses columnar, and manages retention. The MVP
 starts there.
+
+### On Grafana compatibility
+
+Grafana's built-in Prometheus data source is documented to work against any
+backend implementing the Prometheus query API — Mimir and Thanos both rely on
+this. Notably, Thanos passes as a compatible source without implementing the
+metadata API, exemplars, or native histograms, so the bar is lower than it
+looks.
+
+It matters because Grafana dashboards hard-code the data source type:
+
+```json
+"datasource": { "type": "prometheus", "uid": "$ds" }
+```
+
+Ship a custom plugin ID and every existing dashboard stops matching. Speak the
+Prometheus API instead and they all keep working.
 
 ---
 

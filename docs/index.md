@@ -411,39 +411,46 @@ need can still change it.
 
 ---
 
-## :telescope: Alopex OTel — Observability Without the Stack
+## :telescope: Alopex OTel — Storage and Dashboards, One Product
 
 **OpenTelemetry from embedded to cluster.**
 
 Observing one application normally means deploying a Collector, Prometheus,
 Tempo, Loki, and Grafana — five systems, three storage engines, three query
-languages. Alopex OTel is one system, and the same binary runs inside your
-application process or across a cluster.
+languages. Alopex OTel is one system: **ingestion, storage, and the dashboard
+ship together**, and that whole thing runs from a single embedded process to a
+distributed cluster.
 
 <div class="grid cards" markdown>
+
+-   :material-view-dashboard:{ .lg .middle } **The Dashboard Ships With It**
+
+    ---
+
+    No second server to deploy, no data source to point at anything. It reads
+    its own storage — so even an embedded deployment comes with a UI.
+
+-   :material-resize:{ .lg .middle } **Same Screen at Every Size**
+
+    ---
+
+    A dashboard built on your laptop works on a twenty-node cluster, and the
+    reverse. The screen, API, and query language don't change with scale.
 
 -   :material-timeline-clock:{ .lg .middle } **Time Series or Events**
 
     ---
 
     Metrics arrive on a schedule, so they go to **Skulk**. Spans and logs
-    arrive when something happens, so they go to **Trail**. The right storage
-    per signal — presented as one database.
+    arrive when something happens, so they go to **Trail**. Right storage per
+    signal — presented as one database.
 
--   :material-shield-alert:{ .lg .middle } **Ingestion That Doesn't Break**
-
-    ---
-
-    OTel attributes change type across SDK versions. A strict store stops
-    ingesting; Trail shadows the conflict and keeps going — no outage because
-    a service was deployed.
-
--   :material-magnify-scan:{ .lg .middle } **One Query Across Signals**
+-   :material-open-in-new:{ .lg .middle } **Not a Walled Garden**
 
     ---
 
-    Join traces to logs to metrics in a single SQL statement. Traces and logs
-    share a store, so most of that join never crosses a boundary.
+    Speaks the Prometheus query API, so Grafana's built-in data source
+    connects with no plugin — and existing Prometheus dashboards just work.
 
 </div>
 
