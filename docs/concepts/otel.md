@@ -310,8 +310,6 @@ and Loki data sources connect the same way.
 
 These are undecided, and input changes the outcome.
 
-- **Does Trail need Chirps?** Its roadmap has no distribution story yet. This
-  design would require one.
 - **RED metrics from spans** — derive them into Skulk as they arrive, or
   aggregate from Trail at query time?
 - **Retention for events** — you cannot downsample what has no interval. How
