@@ -161,6 +161,17 @@ standing up a separate cluster for every data shape you happen to store.
     embedded to distributed** is the family's stated goal, and each product
     reaches it on its own schedule.
 
+## Where Trail Gets Used First
+
+[Alopex OTel](otel.md) — the OpenTelemetry platform built on this family — puts
+**Traces and Logs in Trail**, with Metrics in Skulk.
+
+That is not an arbitrary split. OpenTelemetry attributes are typed `AnyValue`,
+and across SDK versions the same key changes type routinely. A store that
+rejects the conflict stops ingesting; Trail shadows it and keeps going. For an
+observability backend, that difference is the difference between staying up and
+going down during a deploy.
+
 ## Milestones
 
 Each version is scoped so the one before it is usable on its own. v0.1 already

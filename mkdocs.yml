@@ -133,6 +133,7 @@ nav:
     - Chirps: concepts/chirps.md
     - Skulk (Time-Series): concepts/skulk.md
     - Trail (Logs & Events): concepts/trail.md
+    - OTel (Observability): concepts/otel.md
     - Vector Search: concepts/vector-search.md
     - Architecture: concepts/architecture.md
   - Guides:
