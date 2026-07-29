@@ -98,11 +98,8 @@ This is what "late-bound schema" means in practice: **type mismatch is a read
 concern, not an ingestion error.**
 
 Primitives get their own shadow column — `@str`, `@i64`, `@f64`, `@bool`,
-`@bytes`. Anything that doesn't fit one, such as a nested map or a
-mixed-type array, falls back to `@json`. That escape hatch is not optional:
-OpenTelemetry's `AnyValue` permits arrays whose elements differ in type, and
-without somewhere to put them, ingestion stops. Tempo solves this the same
-way, with a `ValueUnsupported` column holding JSON.
+`@bytes` — and anything that doesn't fit, such as a nested map, falls back to
+`@json`.
 
 ## Relationship to Skulk
 
@@ -216,13 +213,10 @@ without paying full price for it?
 
 </div>
 
-!!! note "These choices came from reading the implementations"
+These choices were revised after reading how Tempo and SigNoz actually do it.
+The design document records what changed and why.
 
-    An earlier draft proposed recompressing old data at higher BROTLI levels
-    and eventually replacing it with summaries. Grafana Tempo pins compression
-    to snappy and caps how many times a block is rewritten; SigNoz tiers by
-    *storage volume* and never uses ClickHouse's `RECOMPRESS`. Both keep the
-    original data. The design was corrected to match.
+[:octicons-arrow-right-24: Retention, sampling, and statistics in full](https://github.com/alopex-db/docs/blob/main/design/alopex-trail-proposal.md)
 
 ## Milestones
 
@@ -250,10 +244,8 @@ you get.
   actually queried.
 - **Full-text search** — if it is in scope, an inverted index belongs in the
   foundation rather than bolted on later.
-- **Sketches at compaction time** — building mergeable sketches during
-  compaction has no precedent to copy. SigNoz's code says as much in a
-  comment: *"we don't have any aggregated table for sketches (yet)"*. That
-  makes it both an opportunity and a design we have to justify on our own.
+- **Sketches at compaction time** — no existing system does this, so there is
+  nothing to copy and nothing to validate against.
 
 Have an opinion on any of these? The design document is the place to weigh in.
 
