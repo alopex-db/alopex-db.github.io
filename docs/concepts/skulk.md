@@ -78,17 +78,11 @@ Arrow + Parquet columnar stack.
 | Compression | Custom Gorilla | BROTLI q5 (pure Rust) |
 | Durability | WAL + TSM | WAL + Parquet + manifest |
 
-The decision to adopt Arrow and Parquet — and to **not** adopt DataFusion — was
-made after measuring four proof-of-concept rounds. A full FDAP stack produced a
-64 MB binary with 251 dependencies, which is unacceptable for embedded and edge
-deployment. Arrow and Parquet alone deliver the compression benefit at
-**3.7 MB with zero C dependencies**.
+Arrow and Parquet without a query engine on top: that keeps the binary at
+**3.7 MB with zero C dependencies**, small enough to embed.
 
-!!! example "Measured compression"
-
-    Against the v0.2 Gorilla baseline, Parquet with BROTLI q5 produced
-    **7.1× smaller** files on repeated-value workloads and **1.6× smaller**
-    on volatile gauges.
+Files come out **7.1× smaller** than the v0.2 Gorilla format on repeated-value
+workloads, and **1.6× smaller** on volatile gauges.
 
 ## Ingest Protocols
 
@@ -195,4 +189,4 @@ you can see exactly where the engine stands before you adopt it.
 
 - [Skulk on crates.io](https://crates.io/crates/alopex-skulk)
 - [Repository](https://github.com/alopex-db/alopex-skulk)
-- [Trail](trail.md) — a proposed sibling product for logs and events
+- [Trail](trail.md) — the sibling store for logs and events

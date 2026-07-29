@@ -322,14 +322,8 @@ Correlating a trace with the logs and metrics around it is not something
 TraceQL or LogQL can express; their structural operators never leave a single
 trace.
 
-### Why compatibility is a separate layer
-
-Grafana sends **the raw query string**, so speaking its languages means parsing
-their grammars — and TraceQL's spanset semantics are a different model from
-joins, not a subset of them.
-
-So they are separate front ends lowering into one shared logical plan, rather
-than one language stretched to cover both.
+TraceQL and LogQL sit alongside it as separate front ends, not as a subset —
+they answer to Grafana's shape, while the internal language answers to Trail's.
 
 ## Milestones
 

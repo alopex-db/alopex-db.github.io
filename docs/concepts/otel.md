@@ -291,24 +291,16 @@ The observability platform observes the database it is built on.
 
 ## Grafana Compatibility
 
-Grafana's built-in Prometheus data source is documented to work against any
-backend implementing the Prometheus query API — Mimir and Thanos both rely on
-this. Notably, Thanos passes as a compatible source without implementing the
-metadata API, exemplars, or native histograms, so the bar is lower than it
-looks.
-
-It matters because Grafana dashboards hard-code the data source type:
+Point Grafana's built-in Prometheus data source at Alopex OTel and it works.
+No plugin to install, and existing Prometheus dashboards keep working —
+because dashboards name the data source by type:
 
 ```json
 "datasource": { "type": "prometheus", "uid": "$ds" }
 ```
 
-Ship a custom plugin ID and every existing dashboard stops matching. Speak the
-Prometheus API instead and they all keep working.
-
-Traces and logs follow the same principle through **TraceQL** and **LogQL** —
-Grafana sends the raw query string, so compatibility means parsing their
-grammar. See [Trail's query layer](trail.md#two-query-surfaces-not-one).
+Traces and logs follow through **TraceQL** and **LogQL**, so Grafana's Tempo
+and Loki data sources connect the same way.
 
 [:octicons-arrow-right-24: When each piece arrives](../roadmap.md)
 
