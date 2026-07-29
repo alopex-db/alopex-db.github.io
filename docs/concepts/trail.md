@@ -32,35 +32,45 @@ None of that is malformed. That is just what production emits.
 
 ## Why not the stores you already have
 
-Alopex already has two places to put data. Neither one fits this.
+Alopex already has two places to put data. The difference that matters is
+**what you do to a row after you write it.**
 
 <div class="grid cards" markdown>
 
--   :material-database:{ .lg .middle } **Alopex DB** — schema first
+-   :material-database-edit:{ .lg .middle } **Alopex DB** — transactional
 
     ---
 
-    Relational, with SQL and vector search. You define columns and types, and
-    it holds you to them.
+    ACID transactions, MVCC, updates and deletes, SQL and vector search. Rows
+    are **state**: you change them, and the engine keeps that consistent.
 
-    That is exactly right for data you model deliberately. It means a
-    `CREATE TABLE` before the first write and an `ALTER` for every new field —
-    which is a migration per deployment when the shape drifts on its own.
+    Enforcing types is part of how it does that. Which is correct for a user
+    record — and means a `CREATE TABLE` up front and an `ALTER` every time a
+    log line grows a field.
 
--   :material-chart-line:{ .lg .middle } **[Skulk](skulk.md)** — shape known up front
+-   :material-chart-line:{ .lg .middle } **[Skulk](skulk.md)** — append-only, fixed shape
 
     ---
 
-    Time series: a metric name, its tags, its numeric fields, on a schedule.
+    Also append-only, so no schema wrangling for updates. But it is built for
+    **numeric series on a schedule**: a metric, its tags, its fields.
 
-    A series identity has to be stable, so `status` cannot be an integer today
-    and a string tomorrow. And every point needs a timestamp — that audit line
+    Series identity has to stay stable, so `status` can't be an integer today
+    and a string tomorrow. And every point needs a timestamp — the audit line
     above has none.
 
 </div>
 
-Between "declare everything first" and "shape is fixed and numeric" there is a
-gap, and logs live in it. **That gap is what Trail is for.**
+Logs are neither. Nobody updates a log line — it records what happened, and
+what happened doesn't change. So the machinery a transactional store spends on
+consistency buys you nothing here, while its schema discipline costs you a
+migration per deployment.
+
+And they aren't numeric series either: arbitrary attributes, arbitrary shapes,
+unreliable timestamps.
+
+**Append-only like Skulk, unconstrained in shape — that is the gap Trail
+fills.**
 
 ## How Trail handles those four lines
 

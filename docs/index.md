@@ -379,9 +379,10 @@ when something happens. They arrive with fields nobody declared, sometimes
 without a usable timestamp, and occasionally with a field that was an integer
 last week and a string today.
 
-Alopex DB wants a schema first; Skulk wants a shape that stays fixed and
-numeric. Logs sit in the gap between them, and **that gap is what Trail is
-for** — the newest design in the family.
+Nobody updates a log line. Alopex DB is transactional — built for rows you
+change, and strict about types because of it. Skulk is append-only like Trail,
+but built for numeric series on a schedule. Logs are neither, and **that gap is
+what Trail is for** — the newest design in the family.
 
 <div class="grid cards" markdown>
 
