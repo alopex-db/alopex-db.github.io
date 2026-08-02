@@ -390,9 +390,18 @@ Alopex Chirps (cluster messaging layer) has its own development track:
 | v0.4 | :white_check_mark: Complete | Raft-ready transport, QoS streams |
 | v0.5 | :white_check_mark: Complete | Raft Consensus API, WalRaftStorage |
 | v0.5.1 | :white_check_mark: Complete | File Transfer API |
-| v0.6 | :material-calendar: Planned | Multi-Raft, TSO, Observability |
-| v0.7 | :material-calendar: Planned | IggyBackend, Durable profile |
-| v0.8+ | :material-calendar: Planned | Federation profile, cross-cluster mTLS |
+| v0.5.2 | :material-calendar: Planned | File Transfer contract remediation and a 1 Gbps performance gate ([Issue #1](https://github.com/alopex-db/alopex-chirps/issues/1)) |
+| v0.6 | :material-calendar: Planned | Multi-Raft, TSO, Observability; deterministic network and disk-backed Raft/SWIM resilience P0 ([Issue #2](https://github.com/alopex-db/alopex-chirps/issues/2)) |
+| v0.7 | :material-calendar: Planned | IggyBackend, Durable profile; durable-message and disk-fault conformance ([Issue #2](https://github.com/alopex-db/alopex-chirps/issues/2)) |
+| v0.8+ | :material-calendar: Planned | Federation profile, cross-cluster mTLS; mixed-version, rolling-upgrade, and churn validation ([Issue #2](https://github.com/alopex-db/alopex-chirps/issues/2)) |
+
+!!! note "Deterministic resilience validation"
+
+    [Issue #2](https://github.com/alopex-db/alopex-chirps/issues/2) is a
+    cross-release verification programme. It uses seed-persisted network faults,
+    disk-backed crash/recovery fixtures, and external safety oracles. File
+    Transfer-specific correctness remains a v0.5.2 responsibility in Issue #1;
+    the broader harness starts with Multi-Raft/SWIM P0 scenarios in v0.6.
 
 !!! note "Durable profile"
 
