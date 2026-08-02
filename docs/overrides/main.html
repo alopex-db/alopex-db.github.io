@@ -19,6 +19,16 @@
         event.preventDefault();
         if (window.AsopiConsentBanner) window.AsopiConsentBanner.showSettings();
       });
+
+      document.addEventListener('click', function (event) {
+        var cta = event.target.closest('[data-analytics-event]');
+        if (cta && typeof window.gtag === 'function') {
+          window.gtag('event', cta.dataset.analyticsEvent, {
+            link_url: cta.href,
+            link_text: cta.textContent.trim()
+          });
+        }
+      });
     });
   </script>
 {% endblock %}
