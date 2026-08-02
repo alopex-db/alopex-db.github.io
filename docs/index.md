@@ -23,9 +23,52 @@ The unified database engine that scales from a single embedded file to a globall
 **Native SQL, Vector Search, and HNSW indexing** in one Rust-based engine.
 
 [Get Started](getting-started/quickstart.md){ .md-button .md-button--primary }
+[Explore Alopex Enterprise](https://asopi.tech/en/services/alopex-enterprise?utm_source=alopex_db_docs&utm_medium=referral&utm_campaign=enterprise&utm_content=hero_enterprise){ .md-button data-analytics-event="docs_enterprise_cta_click" }
+[Sponsor for Early Access](https://github.com/sponsors/asopitech?metadata_source=asopi_tech&metadata_campaign=sponsor_early_access&metadata_content=docs_hero_sponsor){ .md-button data-gtm="docs_sponsor_hero_click" }
 [View on GitHub :fontawesome-brands-github:](https://github.com/alopex-db/alopex){ .md-button }
 
 </div>
+
+---
+
+## :office: Alopex Enterprise — Commercial Middleware for Production
+
+Alopex Enterprise is a commercial middleware layer built on the Alopex OSS foundation.
+
+It is designed for teams that need stronger security, unified data access, SRE-oriented operations, and distributed infrastructure around their production data systems.
+
+Alopex Enterprise is currently in architecture design and technical validation. It is not generally available yet.
+
+### What is being designed?
+
+- **Security Suite** — Storage encryption, logical data protection, JWT, OIDC, and RBAC
+- **Unified Query Model** — A common execution model for SQL, AQL, PromQL, search, and aggregation
+- **Observe for SRE** — SLOs, error budgets, burn-rate analysis, and operational actions
+- **Infrastructure Packages** — Distributed configuration, service discovery, and internal DNS
+
+[Explore Alopex Enterprise](https://asopi.tech/en/services/alopex-enterprise?utm_source=alopex_db_docs&utm_medium=referral&utm_campaign=enterprise&utm_content=enterprise_section){ .md-button .md-button--primary data-analytics-event="docs_enterprise_cta_click" }
+
+---
+
+## :handshake: Sponsor Alopex DB — Get Pre-Public Technical Access
+
+Sponsoring Alopex DB helps fund continued open-source development.
+
+At eligible GitHub Sponsors tiers, sponsors can access technical work before it becomes public, including:
+
+- Pre-public architecture and design documents
+- Internal technical notes and research
+- Experiments and prototypes
+- Ongoing Alopex Enterprise design and validation
+- Private Enterprise repositories and related documentation
+
+This is intended for engineers, platform teams, and companies that want to follow the technical direction of Alopex before public release.
+
+[View Sponsor Tiers](https://github.com/sponsors/asopitech?metadata_source=asopi_tech&metadata_campaign=sponsor_early_access&metadata_content=docs_sponsor_section){ .md-button .md-button--primary data-gtm="docs_sponsor_section_click" }
+
+Access is granted through GitHub to eligible, active sponsor tiers. Benefits and access scope may change as development progresses.
+
+Sponsorship does not guarantee a product release date, Enterprise license, SLA, or commercial support agreement.
 
 ---
 
@@ -475,19 +518,6 @@ Currently in early development — the concept and component model are published
 
 [Visit Alopex Data UI :octicons-arrow-up-right-24:](https://alopex-db.github.io/alopex-ui-pages/){ .md-button .md-button--primary }
 [View on GitHub :fontawesome-brands-github:](https://github.com/alopex-db/alopex-ui){ .md-button }
-
----
-
-## :office: Alopex Enterprise — Beyond OSS
-
-The Alopex platform is not OSS-only. **Alopex Enterprise** — commercial middleware built on the Alopex OSS foundation — is currently in design:
-
-- :lock: **Security Suite** — physical & logical storage encryption (AES-GCM, XChaCha20), identity with JWT / OIDC / RBAC
-- :mag_right: **Unified Query Model** — one engine for SQL / AQL / PromQL, with Enterprise Search (full-text, vector, aggregation)
-- :chart_with_upwards_trend: **Observe (SRE)** — SLO engine, error budgets, and automated actions
-- :gear: **Infrastructure Packages** — distributed config store (etcd/ZK compatible), service discovery + internal DNS
-
-Design phase — no fixed delivery dates yet. Interested in early conversations? [Get in touch](https://asopi.tech/contact).
 
 ---
 

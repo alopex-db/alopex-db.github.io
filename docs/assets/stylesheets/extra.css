@@ -106,6 +106,10 @@
     margin-bottom: 1.5rem !important;
 }
 
+.hero .md-button {
+    margin: 0.25rem 0.15rem;
+}
+
 /* ===== Grid Cards ===== */
 .grid.cards {
     display: grid;
@@ -241,6 +245,12 @@
 
     .grid.cards {
         grid-template-columns: 1fr;
+    }
+
+    .hero .md-button {
+        display: block;
+        margin: 0.5rem 0;
+        width: 100%;
     }
 }
 

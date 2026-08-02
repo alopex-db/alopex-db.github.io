@@ -122,6 +122,8 @@ plugins:
 
 nav:
   - Home: index.md
+  - Enterprise: https://asopi.tech/en/services/alopex-enterprise?utm_source=alopex_db_docs&utm_medium=referral&utm_campaign=enterprise&utm_content=nav_enterprise
+  - Sponsor Early Access: https://github.com/sponsors/asopitech?metadata_source=asopi_tech&metadata_campaign=sponsor_early_access&metadata_content=docs_nav_sponsor
   - Getting Started:
     - Quick Start: getting-started/quickstart.md
     - Installation: getting-started/installation.md

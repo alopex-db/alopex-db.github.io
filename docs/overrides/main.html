@@ -19,6 +19,28 @@
         event.preventDefault();
         if (window.AsopiConsentBanner) window.AsopiConsentBanner.showSettings();
       });
+
+      document.querySelectorAll(
+        'a[href*="github.com/sponsors/asopitech"][href*="metadata_content=docs_nav_sponsor"]'
+      ).forEach(function (sponsorNavLink) {
+        sponsorNavLink.dataset.gtm = 'docs_sponsor_nav_click';
+      });
+
+      document.addEventListener('click', function (event) {
+        var cta = event.target.closest('[data-analytics-event], [data-gtm]');
+        if (!cta || typeof window.gtag !== 'function') return;
+
+        var eventParameters = {
+            link_url: cta.href,
+            link_text: cta.textContent.trim()
+        };
+        var eventName = cta.dataset.gtm || cta.dataset.analyticsEvent;
+        window.gtag('event', eventName, eventParameters);
+
+        if (cta.dataset.gtm) {
+          window.gtag('event', 'github_sponsor_click', eventParameters);
+        }
+      });
     });
   </script>
 {% endblock %}
