@@ -23,8 +23,8 @@ The unified database engine that scales from a single embedded file to a globall
 **Native SQL, Vector Search, and HNSW indexing** in one Rust-based engine.
 
 [Get Started](getting-started/quickstart.md){ .md-button .md-button--primary }
-[Explore Alopex Enterprise](https://asopi.tech/en/services/alopex-enterprise){ .md-button data-analytics-event="docs_enterprise_cta_click" }
-[Sponsor for Early Access](https://github.com/sponsors/asopitech){ .md-button data-analytics-event="docs_sponsor_early_access_click" }
+[Explore Alopex Enterprise](https://asopi.tech/en/services/alopex-enterprise?utm_source=alopex_db_docs&utm_medium=referral&utm_campaign=enterprise&utm_content=hero_enterprise){ .md-button data-analytics-event="docs_enterprise_cta_click" }
+[Sponsor for Early Access](https://github.com/sponsors/asopitech?metadata_source=asopi_tech&metadata_campaign=sponsor_early_access&metadata_content=docs_hero_sponsor){ .md-button data-gtm="docs_sponsor_hero_click" }
 [View on GitHub :fontawesome-brands-github:](https://github.com/alopex-db/alopex){ .md-button }
 
 </div>
@@ -46,7 +46,7 @@ Alopex Enterprise is currently in architecture design and technical validation. 
 - **Observe for SRE** — SLOs, error budgets, burn-rate analysis, and operational actions
 - **Infrastructure Packages** — Distributed configuration, service discovery, and internal DNS
 
-[Explore Alopex Enterprise](https://asopi.tech/en/services/alopex-enterprise){ .md-button .md-button--primary data-analytics-event="docs_enterprise_cta_click" }
+[Explore Alopex Enterprise](https://asopi.tech/en/services/alopex-enterprise?utm_source=alopex_db_docs&utm_medium=referral&utm_campaign=enterprise&utm_content=enterprise_section){ .md-button .md-button--primary data-analytics-event="docs_enterprise_cta_click" }
 
 ---
 
@@ -64,7 +64,7 @@ At eligible GitHub Sponsors tiers, sponsors can access technical work before it 
 
 This is intended for engineers, platform teams, and companies that want to follow the technical direction of Alopex before public release.
 
-[View Sponsor Tiers](https://github.com/sponsors/asopitech){ .md-button .md-button--primary data-analytics-event="docs_sponsor_early_access_click" }
+[View Sponsor Tiers](https://github.com/sponsors/asopitech?metadata_source=asopi_tech&metadata_campaign=sponsor_early_access&metadata_content=docs_sponsor_section){ .md-button .md-button--primary data-gtm="docs_sponsor_section_click" }
 
 Access is granted through GitHub to eligible, active sponsor tiers. Benefits and access scope may change as development progresses.
 
