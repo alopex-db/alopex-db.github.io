@@ -23,52 +23,9 @@ The unified database engine that scales from a single embedded file to a globall
 **Native SQL, Vector Search, and HNSW indexing** in one Rust-based engine.
 
 [Get Started](getting-started/quickstart.md){ .md-button .md-button--primary }
-[Explore Alopex Enterprise](https://asopi.tech/en/services/alopex-enterprise?utm_source=alopex_db_docs&utm_medium=documentation&utm_campaign=enterprise_package_20260804&utm_content=docs_home_en){ .md-button data-analytics-event="docs_enterprise_cta_click" }
 [View on GitHub :fontawesome-brands-github:](https://github.com/alopex-db/alopex){ .md-button }
 
 </div>
-
----
-
-<a id="alopex-enterprise"></a>
-
-## Alopex Enterprise — Commercial Feature Package
-
-Alopex Enterprise is a commercial feature package built on the Alopex DB OSS foundation.
-
-It is not a support tier or a support add-on. It adds enterprise capabilities in four areas:
-
-- **Security Suite** — data protection, identity, policy, classification, revocation, and re-encryption
-- **Unified Query Model & Enterprise Search** — SQL, AQL, PromQL, full-text, structured, vector, and aggregation workloads
-- **Observe** — SLOs, error budgets, burn rates, operational decisions, and automation
-- **Unified Infrastructure** — configuration, service discovery, internal DNS, and higher-level platform services
-
-The package is currently in architecture design and technical validation. It is not generally available.
-
-[Discuss an Enterprise use case](https://asopi.tech/en/services/alopex-enterprise?utm_source=alopex_db_docs&utm_medium=documentation&utm_campaign=enterprise_package_20260804&utm_content=docs_enterprise_section_en){ .md-button .md-button--primary data-analytics-event="docs_enterprise_cta_click" }
-[Sponsor early access](https://github.com/sponsors/asopitech?metadata_source=alopex_db_docs&metadata_campaign=enterprise_early_access&metadata_content=docs_enterprise_section_en){ .md-button data-analytics-event="docs_sponsor_early_access_click" }
-
----
-
-## :handshake: Sponsor Alopex DB — Get Pre-Public Technical Access
-
-Sponsoring Alopex DB helps fund continued open-source development.
-
-At eligible GitHub Sponsors tiers, sponsors can access technical work before it becomes public, including:
-
-- Pre-public architecture and design documents
-- Internal technical notes and research
-- Experiments and prototypes
-- Ongoing Alopex Enterprise design and validation
-- Private Enterprise repositories and related documentation
-
-This is intended for engineers, platform teams, and companies that want to follow the technical direction of Alopex before public release.
-
-[View Sponsor Tiers](https://github.com/sponsors/asopitech){ .md-button .md-button--primary data-analytics-event="docs_sponsor_early_access_click" }
-
-Access is granted through GitHub to eligible, active sponsor tiers. Benefits and access scope may change as development progresses.
-
-Sponsorship does not guarantee a product release date, Enterprise license, SLA, or commercial support agreement.
 
 ---
 
@@ -193,6 +150,25 @@ Start small, scale infinitely—without changing your data model or application 
 | :earth_americas: **Distributed** | Large-Scale Production | Multi-Raft Cluster (Range Sharding) |
 
 [:octicons-arrow-right-24: Learn more about deployment modes](concepts/modes.md)
+
+---
+
+<a id="alopex-enterprise"></a>
+
+## Alopex Enterprise — Commercial Feature Package
+
+Alopex Enterprise is a commercial feature package built on the Alopex DB OSS foundation.
+
+It is not a support tier or a support add-on. It adds enterprise capabilities in four areas:
+
+- **Security Suite** — data protection, identity, policy, classification, revocation, and re-encryption
+- **Unified Query Model & Enterprise Search** — SQL, AQL, PromQL, full-text, structured, vector, and aggregation workloads
+- **Observe** — SLOs, error budgets, burn rates, operational decisions, and automation
+- **Unified Infrastructure** — configuration, service discovery, internal DNS, and higher-level platform services
+
+The package is currently in architecture design and technical validation. It is not generally available.
+
+[Discuss an Enterprise use case](https://asopi.tech/en/services/alopex-enterprise?utm_source=alopex_db_docs&utm_medium=documentation&utm_campaign=enterprise_package_20260804&utm_content=docs_enterprise_section_en){ .md-button .md-button--primary data-analytics-event="docs_enterprise_cta_click" }
 
 ---
 
@@ -529,6 +505,22 @@ We welcome contributions from engineers passionate about Rust, Distributed Syste
 
 [Contributing Guide](contributing.md){ .md-button }
 [GitHub Discussions :fontawesome-brands-github:](https://github.com/alopex-db/alopex/discussions){ .md-button }
+
+---
+
+<a id="sponsor-early-access"></a>
+
+## :handshake: Sponsor Alopex OSS — Follow the Work Earlier
+
+GitHub Sponsors funds continued open-source development across AlopexDB, jv-lang, GraphRAG, and related tools. Higher tiers also let sponsors follow selected work before it becomes public.
+
+- **$3 / month — OSS Support** — support ongoing development, updates, and future releases
+- **$12 / month — Early Access** — see experiments, design drafts, internal notes, and prototypes for AlopexDB, jv-lang, GraphRAG, and more long before public release
+- **$99 / month — Enterprise-focused Early Access** — follow enterprise-focused enhancements across the asopitech ecosystem and explore pre-release capabilities aimed at security and deployment
+
+Sponsorship does not include an Alopex Enterprise product license, SLA, or commercial support. The current benefits and eligibility rules are defined on GitHub Sponsors and may change as the work progresses.
+
+[Compare sponsor tiers](https://github.com/sponsors/asopitech?metadata_source=alopex_db_docs&metadata_campaign=sponsor_early_access&metadata_content=docs_sponsor_section_en){ .md-button .md-button--primary data-analytics-event="docs_sponsor_early_access_click" }
 
 ---
 

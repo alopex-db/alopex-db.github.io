@@ -122,8 +122,6 @@ plugins:
 
 nav:
   - Home: index.md
-  - Enterprise package (in design): /#alopex-enterprise
-  - Sponsor Early Access: https://github.com/sponsors/asopitech
   - Getting Started:
     - Quick Start: getting-started/quickstart.md
     - Installation: getting-started/installation.md
@@ -145,3 +143,5 @@ nav:
     - Skulk Ingest: guides/skulk-ingest.md
   - Roadmap: roadmap.md
   - Contributing: contributing.md
+  - Enterprise package (in design): /#alopex-enterprise
+  - Sponsor early access: /#sponsor-early-access
