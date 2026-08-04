@@ -23,30 +23,30 @@ The unified database engine that scales from a single embedded file to a globall
 **Native SQL, Vector Search, and HNSW indexing** in one Rust-based engine.
 
 [Get Started](getting-started/quickstart.md){ .md-button .md-button--primary }
-[Explore Alopex Enterprise](https://asopi.tech/en/services/alopex-enterprise){ .md-button data-analytics-event="docs_enterprise_cta_click" }
-[Sponsor for Early Access](https://github.com/sponsors/asopitech){ .md-button data-analytics-event="docs_sponsor_early_access_click" }
+[Explore Alopex Enterprise](https://asopi.tech/en/services/alopex-enterprise?utm_source=alopex_db_docs&utm_medium=documentation&utm_campaign=enterprise_package_20260804&utm_content=docs_home_en){ .md-button data-analytics-event="docs_enterprise_cta_click" }
 [View on GitHub :fontawesome-brands-github:](https://github.com/alopex-db/alopex){ .md-button }
 
 </div>
 
 ---
 
-## :office: Alopex Enterprise — Commercial Middleware for Production
+<a id="alopex-enterprise"></a>
 
-Alopex Enterprise is a commercial middleware layer built on the Alopex OSS foundation.
+## Alopex Enterprise — Commercial Feature Package
 
-It is designed for teams that need stronger security, unified data access, SRE-oriented operations, and distributed infrastructure around their production data systems.
+Alopex Enterprise is a commercial feature package built on the Alopex DB OSS foundation.
 
-Alopex Enterprise is currently in architecture design and technical validation. It is not generally available yet.
+It is not a support tier or a support add-on. It adds enterprise capabilities in four areas:
 
-### What is being designed?
+- **Security Suite** — data protection, identity, policy, classification, revocation, and re-encryption
+- **Unified Query Model & Enterprise Search** — SQL, AQL, PromQL, full-text, structured, vector, and aggregation workloads
+- **Observe** — SLOs, error budgets, burn rates, operational decisions, and automation
+- **Unified Infrastructure** — configuration, service discovery, internal DNS, and higher-level platform services
 
-- **Security Suite** — Storage encryption, logical data protection, JWT, OIDC, and RBAC
-- **Unified Query Model** — A common execution model for SQL, AQL, PromQL, search, and aggregation
-- **Observe for SRE** — SLOs, error budgets, burn-rate analysis, and operational actions
-- **Infrastructure Packages** — Distributed configuration, service discovery, and internal DNS
+The package is currently in architecture design and technical validation. It is not generally available.
 
-[Explore Alopex Enterprise](https://asopi.tech/en/services/alopex-enterprise){ .md-button .md-button--primary data-analytics-event="docs_enterprise_cta_click" }
+[Discuss an Enterprise use case](https://asopi.tech/en/services/alopex-enterprise?utm_source=alopex_db_docs&utm_medium=documentation&utm_campaign=enterprise_package_20260804&utm_content=docs_enterprise_section_en){ .md-button .md-button--primary data-analytics-event="docs_enterprise_cta_click" }
+[Sponsor early access](https://github.com/sponsors/asopitech?metadata_source=alopex_db_docs&metadata_campaign=enterprise_early_access&metadata_content=docs_enterprise_section_en){ .md-button data-analytics-event="docs_sponsor_early_access_click" }
 
 ---
 
