@@ -395,13 +395,15 @@ impl RaftTransport for ChirpsRaftTransport {
 
 ## Version Compatibility
 
-Chirps ships today at **v0.5.1**, with QUIC transport, SWIM gossip, and Raft
-storage. Profile availability is staged across releases:
+Chirps ships today at **v0.6.1**, with QUIC transport, SWIM gossip,
+OpenRaft-compatible WAL storage, `RaftNode` and transport APIs, observability,
+and hardened resumable file transfer. Profile availability is staged across
+releases:
 
 | Alopex Version | Chirps Version | Profiles | Status |
 |:---------------|:---------------|:---------|:-------|
-| v0.7.x | v0.5.1 | Control, Ephemeral + Priority Streams | Shipping |
-| v0.8 | v0.6 | Control, Ephemeral + Multi-Raft/TSO | Planned |
+| v0.7.x | v0.5.1 | Control, Ephemeral + Priority Streams | Supported |
+| v0.8.x | v0.6.1 | Control, Ephemeral + Raft APIs | Shipping |
 | v0.9+ | v0.7+ | Control, Ephemeral, **Durable** | Planned |
 
 !!! note "Durable profile is planned, not yet available"

@@ -40,9 +40,9 @@ input, right-bottom status/preview) with `h/l` focus switching.
 
 ## :rocket: Current Status
 
-!!! success "v0.7.6 Released — Cluster-Aware + gRPC Cluster Administration (July 2026)"
+!!! success "v0.8.3 Released — Cluster-Aware Streaming + SQL Correctness (August 2026)"
 
-    Alopex DB **v0.7.6** is out! The v0.6/v0.7 series delivered **SQL JOIN & subqueries** on a new Nim FFI SQL parser, the **alopex-cluster** crate, a mode-parity verification suite, and **gRPC cluster administration**. Every release ships prebuilt CLI binaries (Linux / macOS / Windows) and Python wheels.
+    Alopex DB **v0.8.3** is out! The v0.8 series adds **multi-statement and streaming SQL**, bounded DataFrame streaming, sync/async Python APIs, PromQL and SQL-TS parser contracts, and a broad SQL correctness pass. Single-node behavior remains the default; remote execution and distributed transactions are not yet supported.
 
     ```bash
     # Rust
@@ -58,6 +58,7 @@ input, right-bottom status/preview) with `h/l` focus switching.
     [:simple-rust: alopex-cluster](https://crates.io/crates/alopex-cluster){ .md-button }
     [:simple-rust: alopex-chirps](https://crates.io/crates/alopex-chirps){ .md-button }
     [:material-download: CLI Binaries](https://github.com/alopex-db/alopex/releases){ .md-button }
+    [:material-history: Family Release History](releases.md){ .md-button }
 
 ---
 

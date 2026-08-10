@@ -26,8 +26,8 @@ Add Alopex to your Rust project:
 
     ```toml
     [dependencies]
-    alopex-embedded = "0.7"
-    alopex-sql = "0.7"
+    alopex-embedded = "0.8"
+    alopex-sql = "0.8"
     ```
 
 === "Cargo CLI"
@@ -102,8 +102,8 @@ tree, right detail input, right-bottom status/preview) with `h/l` focus switchin
 
 ```toml
 [dependencies]
-alopex-embedded = { version = "0.7", features = ["hnsw", "metrics"] }
-alopex-sql = "0.7"
+alopex-embedded = { version = "0.8", features = ["hnsw", "metrics"] }
+alopex-sql = "0.8"
 ```
 
 ## Platform-Specific Notes

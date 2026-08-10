@@ -5,7 +5,7 @@ description: Get started with Alopex DB in minutes
 
 # Quick Start
 
-Get up and running with Alopex DB in just a few minutes. Alopex DB **v0.7.6** is available on **crates.io** and **PyPI** with full SQL support (JOIN & subqueries), HNSW indexing, and prebuilt CLI binaries on [GitHub Releases](https://github.com/alopex-db/alopex/releases).
+Get up and running with Alopex DB in just a few minutes. Alopex DB **v0.8.3** is available on **crates.io** and **PyPI** with SQL JOINs and subqueries, HNSW indexing, streaming interfaces, and prebuilt CLI binaries on [GitHub Releases](https://github.com/alopex-db/alopex/releases).
 
 [![crates.io](https://img.shields.io/crates/v/alopex-embedded.svg)](https://crates.io/crates/alopex-embedded)
 [![crates.io](https://img.shields.io/crates/v/alopex-sql.svg)](https://crates.io/crates/alopex-sql)
@@ -38,8 +38,8 @@ Or add manually to `Cargo.toml`:
 
 ```toml
 [dependencies]
-alopex-embedded = "0.3"
-alopex-sql = "0.3"
+alopex-embedded = "0.8"
+alopex-sql = "0.8"
 ```
 
 ### From Source
