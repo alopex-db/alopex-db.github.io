@@ -52,28 +52,29 @@ Note the shape of that line: one measurement, one tag set, and **two fields of
 different types** — a float and a string. That is the wide row model. Adding a
 third field later does not create a new series.
 
-## Read It Back
+## Query It
 
 ```rust
-let store = RecoveryStore::open("./skulk-data", RecoveryConfig::default())?;
-let rows = store.read_measurement("weather")?;
+use alopex_skulk::query::QueryEngine;
 
-for row in &rows {
-    println!(
-        "{} temperature={:?} host={:?}",
-        row.row().timestamp(),
-        row.row().field("temperature"),
-        row.row().series().tags().get("host"),
-    );
+let store = RecoveryStore::open("./skulk-data", RecoveryConfig::default())?;
+let engine = QueryEngine::new(&store);
+let result = engine.query_promql_instant(
+    r#"weather{host="edge",__field__="temperature"}"#,
+    now,
+)?;
+
+for batch in result.batches() {
+    println!("{batch:?}");
 }
 ```
 
-!!! note "v0.3 read scope"
+!!! note "v0.4 embedded query scope"
 
-    `read_measurement` returns every row for a measurement. Predicate pushdown,
-    column projection, and a query language arrive in
-    [v0.4](../roadmap.md#skulk) — the v0.3 reader exists to verify writes, not
-    to serve queries.
+    `QueryEngine` supports documented PromQL and SQL-TS subsets and returns
+    Arrow batches without an HTTP server. PromQL uses the `value` field by
+    default; select another wide field with the reserved `__field__` matcher.
+    HTTP endpoints arrive in v0.6.
 
 ## Ingest From Existing Tooling
 
@@ -182,7 +183,7 @@ You do not have to configure any of this.
 
     ---
 
-    Query engine at v0.4, downsampling at v0.5, HTTP serving at v0.6,
+    Query engine shipped in v0.4; downsampling is planned for v0.5, HTTP serving for v0.6,
     distribution on Chirps at v0.8.
 
 -   :material-console:{ .lg .middle } **[Trail](../concepts/trail.md)**

@@ -197,21 +197,26 @@ as a linked library and grows into a cluster member, sharing machinery with the
 relational, vector, and event engines beside it instead of forcing a separate
 cluster for every data shape.
 
-## What Comes Next
+## Current Query Scope and What Comes Next
 
-v0.3 is the storage and ingest foundation. Query, downsampling, and serving
-build on top of it in later releases — they are not in the current crate.
+Skulk **v0.4.0** adds the embedded `QueryEngine`: PromQL instant/range queries,
+SQL-TS, pre-built logical plans, bounded metadata enumeration, Arrow result
+streams, predicate pushdown, and column projection. It operates directly on a
+`StorageReader`, so no HTTP server is required. The v0.3 WAL, manifest, and
+Parquet formats remain readable.
 
 | Capability | Milestone |
 | --- | --- |
-| Query execution (PromQL / SQL-TS) | v0.4 |
-| Predicate pushdown, column projection | v0.4 |
+| Query execution (PromQL / SQL-TS) | v0.4 — shipped |
+| Predicate pushdown, column projection | v0.4 — shipped |
 | Downsampling, continuous queries | v0.5 |
 | HTTP server, Prometheus-compatible endpoints | v0.6 |
 | Alerts | v0.7 |
 | Distribution, replication | v0.8+ |
 
-The v0.3 reader is the minimum needed to verify writes. It is not a query engine.
+HTTP endpoints are not included in v0.4; Prometheus-compatible serving remains
+planned for v0.6. Unsupported PromQL and SQL-TS semantics return explicit
+errors rather than silently changing the query.
 
 ## Learn More
 

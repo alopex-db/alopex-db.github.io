@@ -142,6 +142,7 @@ nav:
     - DataFrame API: guides/dataframe.md
     - Skulk Ingest: guides/skulk-ingest.md
   - Roadmap: roadmap.md
+  - Release History: releases.md
   - Contributing: contributing.md
   - Enterprise package (in design): /#alopex-enterprise
   - Sponsor early access: /#sponsor-early-access
