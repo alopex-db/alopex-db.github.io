@@ -40,9 +40,12 @@ input, right-bottom status/preview) with `h/l` focus switching.
 
 ## :rocket: Current Status
 
-!!! success "v0.8.3 Released — Cluster-Aware Streaming + SQL Correctness (August 2026)"
+!!! success "v0.8.6 Released — Single-Node SQL Correctness (August 2026)"
 
-    Alopex DB **v0.8.3** is out! The v0.8 series adds **multi-statement and streaming SQL**, bounded DataFrame streaming, sync/async Python APIs, PromQL and SQL-TS parser contracts, and a broad SQL correctness pass. Single-node behavior remains the default; remote execution and distributed transactions are not yet supported.
+    Alopex DB **v0.8.6** is out. It adds projection-alias resolution, `REAL`,
+    `CASE`, set operations, non-recursive CTEs, and basic windows to the v0.8
+    streaming and Python surfaces. The v0.8.7–v0.8.11 compatibility train is
+    active; v0.9 development is frozen until that train is published and verified.
 
     ```bash
     # Rust
@@ -249,7 +252,8 @@ gantt
     section Distributed
     v0.6 SQL JOIN + Nim Parser :done, 2026-07, 2026-07
     v0.7 Cluster-aware      :done, 2026-07, 2026-07
-    v0.8 Metadata Raft      :2026-10, 2026-12
+    v0.8.0-v0.8.6 Streaming + SQL :done, 2026-07, 2026-08
+    v0.8.7-v0.8.11 SQL closure :active, 2026-08, 2027-01
     v1.0 GA                 :milestone, 2027-03, 0d
 ```
 
@@ -264,15 +268,16 @@ gantt
 | **v0.5.0** | GROUP BY/Aggregation, DataFrame P1 (JOIN/sort/null) | :white_check_mark: **crates.io Published** |
 | **v0.6.0** | SQL JOIN & Subqueries, Nim FFI SQL Parser | :white_check_mark: **crates.io Published** |
 | **v0.7.x** | alopex-cluster, Mode-Parity Suite, gRPC Cluster Admin | :white_check_mark: **v0.7.6 Published** |
+| **v0.8.0–v0.8.6** | Streaming surfaces, parser contracts, SQL correctness | :white_check_mark: **v0.8.6 Published** |
 | **Chirps v0.5** | Gossip, SWIM, Membership, Raft Consensus API | :white_check_mark: Complete |
 
 ### What's Next
 
-| Version | Features | Target |
+| Version | Features | Status |
 |:--------|:---------|:-------|
-| **v0.8** | Metadata Raft, MultiRaftManager Integration | Q4 2026 |
-| **v0.9** | Multi-Raft (Range Partitioning), CRDT | Q1 2027 |
-| **v1.0** | General Availability | 2027 |
+| **v0.8.7–v0.8.11** | Portable single-node SQL compatibility closure | Active, strict sequence |
+| **v0.9** | Distributed capability classification and parity | Frozen until v0.8.11 ships |
+| **v1.0** | Federation, optimizer, general availability | Planned |
 
 [:octicons-arrow-right-24: View detailed roadmap](roadmap.md)
 

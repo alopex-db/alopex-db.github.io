@@ -7,7 +7,7 @@ description: Using Alopex DB with Python (alopex-py)
 
 !!! success "Available Now"
 
-    Python bindings (alopex-py) are published on [PyPI](https://pypi.org/project/alopex/) — currently **v0.8.3**, released in lockstep with the Rust workspace. v0.8 includes synchronous and asynchronous local APIs, SQL streams, transactions, local scans, and DataFrame bindings. Install with `pip install alopex`.
+    Python bindings (alopex-py) are published on [PyPI](https://pypi.org/project/alopex/) — currently **v0.8.6**, released in lockstep with the Rust workspace. v0.8 includes synchronous and asynchronous local APIs, SQL streams, transactions, local scans, and DataFrame bindings. Install with `pip install alopex`.
 
 ## Overview
 

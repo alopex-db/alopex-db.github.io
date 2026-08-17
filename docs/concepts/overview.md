@@ -116,15 +116,15 @@ graph TB
 
 | Component | Description | Status |
 |:----------|:------------|:-------|
-| [**alopex-core**](https://crates.io/crates/alopex-core) | Core storage engine with LSM-Tree, Vector, Columnar | :white_check_mark: v0.8.3 |
-| [**alopex-sql**](https://crates.io/crates/alopex-sql) | SQL parser (Nim FFI), planner, and executor | :white_check_mark: v0.8.3 |
-| [**alopex-embedded**](https://crates.io/crates/alopex-embedded) | Embedded mode library API | :white_check_mark: v0.8.3 |
-| [**alopex-dataframe**](https://crates.io/crates/alopex-dataframe) | Polars-compatible DataFrame API | :white_check_mark: v0.8.3 |
-| [**alopex-py**](https://pypi.org/project/alopex/) | Python bindings via PyO3 | :white_check_mark: v0.8.3 (PyPI) |
-| [**alopex-server**](https://crates.io/crates/alopex-server) | Single-node server with HTTP/gRPC | :white_check_mark: v0.8.3 |
-| [**alopex-cluster**](https://crates.io/crates/alopex-cluster) | Cluster-aware metadata and routing foundation | :white_check_mark: v0.8.3 |
-| [**alopex-cli**](https://crates.io/crates/alopex-cli) | Command-line tools (TUI / admin console) | :white_check_mark: v0.8.3 |
-| [**alopex-chirps**](https://crates.io/crates/alopex-chirps) | Gossip, QUIC, Raft, and file transfer | :white_check_mark: v0.6.1 |
+| [**alopex-core**](https://crates.io/crates/alopex-core) | Core storage engine with LSM-Tree, Vector, Columnar | :white_check_mark: v0.8.6 |
+| [**alopex-sql**](https://crates.io/crates/alopex-sql) | SQL parser (Nim FFI), planner, and executor | :white_check_mark: v0.8.6 |
+| [**alopex-embedded**](https://crates.io/crates/alopex-embedded) | Embedded mode library API | :white_check_mark: v0.8.6 |
+| [**alopex-dataframe**](https://crates.io/crates/alopex-dataframe) | Polars-compatible DataFrame API | :white_check_mark: v0.8.6 |
+| [**alopex-py**](https://pypi.org/project/alopex/) | Python bindings via PyO3 | :white_check_mark: v0.8.6 (PyPI) |
+| [**alopex-server**](https://crates.io/crates/alopex-server) | Single-node server with HTTP/gRPC | :white_check_mark: v0.8.6 |
+| [**alopex-cluster**](https://crates.io/crates/alopex-cluster) | Cluster-aware metadata and routing foundation | :white_check_mark: v0.8.6 |
+| [**alopex-cli**](https://crates.io/crates/alopex-cli) | Command-line tools (TUI / admin console) | :white_check_mark: v0.8.6 |
+| [**alopex-chirps**](https://crates.io/crates/alopex-chirps) | Gossip, QUIC, Raft, and file transfer | :white_check_mark: v0.6.3 |
 | [**alopex-skulk**](https://crates.io/crates/alopex-skulk) | Embedded time-series ingest and query engine | :white_check_mark: v0.4.0 |
 | [**alopex-skulk**](https://crates.io/crates/alopex-skulk) | Time-series storage and ingest core (Arrow + Parquet, independent version series) | :white_check_mark: v0.3.0 |
 | [**alopex-trail**](trail.md) | Log and event store with late-bound schema | :material-pencil-ruler: In design |

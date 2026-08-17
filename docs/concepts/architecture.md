@@ -208,7 +208,10 @@ sequenceDiagram
 
 ### SQL Parser
 
-Built on `sqlparser-rs` with extensions for vectors:
+Implemented by the versioned **Nim FFI parser** and transferred to Rust as a
+MessagePack AST. The parser source and native assets ship with the same Alopex
+release; its contract version identifies wire/ABI compatibility and is not an
+independent product version. The grammar includes vector extensions:
 
 ```sql
 -- Extended grammar
