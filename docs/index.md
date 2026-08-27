@@ -40,12 +40,14 @@ input, right-bottom status/preview) with `h/l` focus switching.
 
 ## :rocket: Current Status
 
-!!! success "v0.8.6 Released — Single-Node SQL Correctness (August 2026)"
+[:octicons-tag-24: ![Latest Alopex DB release](https://img.shields.io/github/v/release/alopex-db/alopex?sort=semver&label=latest)](https://github.com/alopex-db/alopex/releases/latest)
 
-    Alopex DB **v0.8.6** is out. It adds projection-alias resolution, `REAL`,
-    `CASE`, set operations, non-recursive CTEs, and basic windows to the v0.8
-    streaming and Python surfaces. The v0.8.7–v0.8.11 compatibility train is
-    active; v0.9 development is frozen until that train is published and verified.
+!!! success "Latest release published on crates.io, PyPI, and GitHub"
+
+    The current Alopex DB release includes portable SQL functions, bounded
+    byte-glob/regex KV key search, embedded and server APIs, and matching
+    Rust/Python surfaces. The badge above reads the latest GitHub release
+    automatically; see the linked release for its exact version and notes.
 
     ```bash
     # Rust
@@ -252,8 +254,8 @@ gantt
     section Distributed
     v0.6 SQL JOIN + Nim Parser :done, 2026-07, 2026-07
     v0.7 Cluster-aware      :done, 2026-07, 2026-07
-    v0.8.0-v0.8.6 Streaming + SQL :done, 2026-07, 2026-08
-    v0.8.7-v0.8.11 SQL closure :active, 2026-08, 2027-01
+    v0.8.0-v0.8.9 Streaming + SQL :done, 2026-07, 2026-08
+    v0.8.10-v0.8.11 SQL closure :active, 2026-09, 2027-01
     v1.0 GA                 :milestone, 2027-03, 0d
 ```
 
@@ -269,13 +271,14 @@ gantt
 | **v0.6.0** | SQL JOIN & Subqueries, Nim FFI SQL Parser | :white_check_mark: **crates.io Published** |
 | **v0.7.x** | alopex-cluster, Mode-Parity Suite, gRPC Cluster Admin | :white_check_mark: **v0.7.6 Published** |
 | **v0.8.0–v0.8.6** | Streaming surfaces, parser contracts, SQL correctness | :white_check_mark: **v0.8.6 Published** |
+| **v0.8.7–v0.8.9** | Window/CTE closure, portable relational grammar and functions, KV glob/regex search | :white_check_mark: **v0.8.9 Published** |
 | **Chirps v0.5** | Gossip, SWIM, Membership, Raft Consensus API | :white_check_mark: Complete |
 
 ### What's Next
 
 | Version | Features | Status |
 |:--------|:---------|:-------|
-| **v0.8.7–v0.8.11** | Portable single-node SQL compatibility closure | Active, strict sequence |
+| **v0.8.10–v0.8.11** | Remaining portable single-node SQL compatibility closure | Active, strict sequence |
 | **v0.9** | Distributed capability classification and parity | Frozen until v0.8.11 ships |
 | **v1.0** | Federation, optimizer, general availability | Planned |
 

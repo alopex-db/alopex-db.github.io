@@ -7,7 +7,7 @@ description: Polars-compatible DataFrame operations with Alopex DB
 
 !!! success "Available Now"
 
-    The DataFrame API (alopex-dataframe) is published on [crates.io](https://crates.io/crates/alopex-dataframe) — currently **v0.8.6**, versioned with the workspace. DF-0/DF-1 features plus bounded CSV/Parquet streaming are available today; sections below marked *Planned* are not yet released.
+    The DataFrame API (alopex-dataframe) is published on [crates.io](https://crates.io/crates/alopex-dataframe) and versioned with the workspace. DF-0/DF-1 features plus bounded CSV/Parquet streaming are available today; sections below marked *Planned* are not yet released.
 
 ## Overview
 

@@ -9,13 +9,14 @@ This roadmap outlines the planned development of Alopex DB from the current stat
 
 ## Current Status
 
-!!! success "v0.8.6 Released — Single-Node SQL Correctness (August 17, 2026)"
+[:octicons-tag-24: ![Latest Alopex DB release](https://img.shields.io/github/v/release/alopex-db/alopex?sort=semver&label=latest)](https://github.com/alopex-db/alopex/releases/latest)
 
-    **Alopex DB v0.8.6** is the latest release. It adds projection-alias
-    resolution, `REAL`, `CASE`, set operations, non-recursive CTEs, and basic
-    aggregate/ranking windows on top of the v0.8 cluster-aware streaming
-    surfaces. All public Rust crates and the Python package are aligned at
-    **v0.8.6**.
+!!! success "Latest Alopex DB release published and verified"
+
+    The current release includes portable SQL functions, bounded byte-glob and
+    byte-regex KV key search, and matching embedded/server behavior across the
+    published Rust and Python packages. The badge above reads the latest GitHub
+    release automatically; use its release notes for the exact version scope.
 
     ```bash
     # Rust
@@ -29,8 +30,8 @@ This roadmap outlines the planned development of Alopex DB from the current stat
 
 !!! warning "v0.8 release train active; v0.9 frozen"
 
-    Development and publication proceed strictly through **v0.8.7 → v0.8.8 →
-    v0.8.9 → v0.8.10 → v0.8.11**. v0.9 development and release operations are
+    v0.8.7 through v0.8.9 are published. Development and publication continue
+    through **v0.8.10 → v0.8.11**. v0.9 development and release operations are
     frozen until every release in that train is published and verified. The
     Nim parser contract number is ABI metadata, not a separate release series.
 
@@ -76,8 +77,8 @@ gantt
 
     section Distributed
     v0.7 Cluster-aware      :done, 2026-07, 2026-07
-    v0.8.0-v0.8.6 Streaming + SQL :done, 2026-07, 2026-08
-    v0.8.7-v0.8.11 SQL closure :active, 2026-08, 2027-01
+    v0.8.0-v0.8.9 Streaming + SQL :done, 2026-07, 2026-08
+    v0.8.10-v0.8.11 SQL closure :active, 2026-09, 2027-01
     v0.9 Distributed parity (frozen) :2027-01, 2027-02
     v1.0 GA                 :milestone, 2027-03, 0d
 
@@ -108,13 +109,13 @@ The following crates are available on **crates.io**:
 
 | Crate | Version | Description |
 |:------|:--------|:------------|
-| [![alopex-embedded](https://img.shields.io/crates/v/alopex-embedded.svg)](https://crates.io/crates/alopex-embedded) | v0.8.6 | Embedded database API |
-| [![alopex-sql](https://img.shields.io/crates/v/alopex-sql.svg)](https://crates.io/crates/alopex-sql) | v0.8.6 | SQL parser, planner, executor |
-| [![alopex-core](https://img.shields.io/crates/v/alopex-core.svg)](https://crates.io/crates/alopex-core) | v0.8.6 | Core storage engine |
-| [![alopex-server](https://img.shields.io/crates/v/alopex-server.svg)](https://crates.io/crates/alopex-server) | v0.8.6 | HTTP/gRPC server |
-| [![alopex-dataframe](https://img.shields.io/crates/v/alopex-dataframe.svg)](https://crates.io/crates/alopex-dataframe) | v0.8.6 | Polars-compatible DataFrame API |
-| [![alopex-cluster](https://img.shields.io/crates/v/alopex-cluster.svg)](https://crates.io/crates/alopex-cluster) | v0.8.6 | Cluster-aware distributed mode |
-| [![alopex-cli](https://img.shields.io/crates/v/alopex-cli.svg)](https://crates.io/crates/alopex-cli) | v0.8.6 | CLI with TUI / admin console |
+| [![alopex-embedded](https://img.shields.io/crates/v/alopex-embedded.svg)](https://crates.io/crates/alopex-embedded) | latest | Embedded database API |
+| [![alopex-sql](https://img.shields.io/crates/v/alopex-sql.svg)](https://crates.io/crates/alopex-sql) | latest | SQL parser, planner, executor |
+| [![alopex-core](https://img.shields.io/crates/v/alopex-core.svg)](https://crates.io/crates/alopex-core) | latest | Core storage engine |
+| [![alopex-server](https://img.shields.io/crates/v/alopex-server.svg)](https://crates.io/crates/alopex-server) | latest | HTTP/gRPC server |
+| [![alopex-dataframe](https://img.shields.io/crates/v/alopex-dataframe.svg)](https://crates.io/crates/alopex-dataframe) | latest | Polars-compatible DataFrame API |
+| [![alopex-cluster](https://img.shields.io/crates/v/alopex-cluster.svg)](https://crates.io/crates/alopex-cluster) | latest | Cluster-aware distributed mode |
+| [![alopex-cli](https://img.shields.io/crates/v/alopex-cli.svg)](https://crates.io/crates/alopex-cli) | latest | CLI with TUI / admin console |
 | [![alopex-chirps](https://img.shields.io/crates/v/alopex-chirps.svg)](https://crates.io/crates/alopex-chirps) | v0.6.3 | Cluster messaging layer |
 | [![alopex-skulk](https://img.shields.io/crates/v/alopex-skulk.svg)](https://crates.io/crates/alopex-skulk) | v0.4.0 | Time-series storage and ingest core |
 
@@ -122,7 +123,7 @@ The following crates are available on **crates.io**:
 
     [Skulk](concepts/skulk.md) and [Chirps](concepts/chirps.md) are separate
     repositories with their own release cadence. They do not track the Alopex DB
-    version number — Skulk is at v0.4.0 while Alopex DB is at v0.8.6.
+    version number. Their badges above resolve each latest release independently.
 
 ---
 
@@ -138,6 +139,7 @@ The following crates are available on **crates.io**:
 | **v0.6.0** | **v0.6.0** | **v0.6.0** | **v0.6.0** | **v0.6.0** | **v0.6.0** | v0.5.1 |
 | **v0.7.6** | **v0.7.6** | **v0.7.6** | **v0.7.6** | **v0.7.6** | **v0.7.6** | v0.5.1 |
 | **v0.8.6** | **v0.8.6** | **v0.8.6** | **v0.8.6** | **v0.8.6** | **v0.8.6** | **v0.5.2** |
+| **v0.8.9** | **v0.8.9** | **v0.8.9** | **v0.8.9** | **v0.8.9** | **v0.8.9** | **v0.5.2** |
 | v1.0 | v1.0 | v1.0 | v1.0 | v1.0 | v1.0 | v0.9 |
 
 !!! note "Aligned Versioning Since v0.6.0"
@@ -344,8 +346,8 @@ WASM/web runtime support is deferred and will be re-evaluated after v1.0 based o
 
 ### v0.8 — Single-Node Compatibility Closure { #v08 }
 
-**Status**: :material-progress-wrench: Active — **v0.8.6 published; v0.8.7–v0.8.11 in sequence**
-**Released so far**: July 23–August 17, 2026
+**Status**: :material-progress-wrench: Active — **v0.8.9 published; v0.8.10–v0.8.11 remain**
+**Released so far**: July 23–August 26, 2026
 **Uses**: Chirps v0.5.2 (the standalone Chirps release series is currently v0.6.3)
 
 - [x] Cluster metadata, lifecycle, routing diagnostics, and authenticated distributed-read contracts
@@ -356,7 +358,10 @@ WASM/web runtime support is deferred and will be re-evaluated after v1.0 based o
 - [x] SQL correctness and name-resolution hardening (v0.8.2–v0.8.3)
 - [x] Parser contract 0.4.0 and release-asset hardening (v0.8.4–v0.8.5)
 - [x] Alias, `REAL`, `CASE`, set operations, CTE, and basic window contracts (v0.8.6)
-- [ ] Portable single-node SQL compatibility closure (v0.8.7–v0.8.11)
+- [x] Recursive CTE and window correctness closure (v0.8.7)
+- [x] Portable relational grammar, single-file convergence, and Python server client (v0.8.8)
+- [x] Portable SQL functions and bounded KV glob/regex search (v0.8.9)
+- [ ] Remaining portable single-node SQL compatibility closure (v0.8.10–v0.8.11)
 
 Remote execution, distributed transactions, and client/connection-pool APIs remain outside the v0.8 supported scope.
 
@@ -484,7 +489,7 @@ observed without deploying anything.
 
 | Package | Engine | Status |
 |:--------|:-------|:-------|
-| [`alopex`](https://pypi.org/project/alopex/) | Alopex DB — SQL, vector, DataFrame | :white_check_mark: **v0.8.6 on PyPI** |
+| [`alopex`](https://pypi.org/project/alopex/) | Alopex DB — SQL, vector, DataFrame | ![PyPI](https://img.shields.io/pypi/v/alopex.svg) |
 | `alopex-skulk` | Skulk — time-series | :material-calendar: Skulk v0.5 |
 | `alopex-trail` | Trail — logs and events | :material-pencil-ruler: Trail v0.4 |
 | `alopex-otel` | **OTel — instrumentation, embedded platform, cross-signal queries** | :material-pencil-ruler: OTel M1 |
@@ -503,7 +508,7 @@ pandas or Polars without a conversion step.
 
 ## alopex-dataframe Roadmap { #dataframe }
 
-Polars-compatible DataFrame engine in pure Rust. Since v0.6.0 the crate is versioned with the workspace (currently **v0.8.6**); the remaining feature phases below are tracked by phase name.
+Polars-compatible DataFrame engine in pure Rust. Since v0.6.0 the crate is versioned with the workspace; the remaining feature phases below are tracked by phase name.
 
 | Phase | Features | Status |
 |:------|:---------|:-------|
@@ -517,14 +522,14 @@ Polars-compatible DataFrame engine in pure Rust. Since v0.6.0 the crate is versi
 
 ## alopex-py Roadmap { #python }
 
-Python bindings with NumPy and DataFrame support. Up to v0.4.0 alopex-py followed its own versioning scheme; since **v0.6.0** it is released in lockstep with the Rust workspace (currently **v0.8.6** on PyPI, wheels attached to every release).
+Python bindings with NumPy and DataFrame support. Up to v0.4.0 alopex-py followed its own versioning scheme; since **v0.6.0** it is released in lockstep with the Rust workspace, with wheels attached to every release.
 
 | Version | Phase | Features | Status |
 |:--------|:------|:---------|:-------|
 | **v0.3.3** | Phase 1 | Database/Transaction/SQL basic API | :white_check_mark: PyPI Published |
 | **v0.3.5** | Phase 1+ | NumPy integration (zero-copy arrays + GIL release) | :white_check_mark: PyPI Published |
 | **v0.4.0** | Phase 1+ | Catalog API (Polars Unity Catalog compatible) | :white_check_mark: PyPI Published |
-| **v0.6.0–v0.8.6** | Aligned | Workspace-aligned releases (SQL JOIN/subquery, cluster-aware streaming, SQL correctness) | :white_check_mark: PyPI Published |
+| **v0.6.0–v0.8.9** | Aligned | Workspace-aligned releases (SQL, cluster-aware streaming, vectors, DataFrame, server client) | :white_check_mark: PyPI Published |
 | Phase 2 | — | DataFrame API MVP via alopex-dataframe | :material-calendar: Planned |
 | Phase 3 | — | DataFrame namespaces (str/dt/list) | :material-calendar: Planned |
 | GA | v1.0 | Polars-compatible DataFrame + API stabilization | :material-calendar: Planned |
@@ -552,6 +557,9 @@ We welcome contributions! Priority areas:
 
 ### Recent Updates
 
+- **2026-08-26**: **Alopex DB v0.8.9 released** — portable SQL functions and bounded KV byte-glob/regex key search
+- **2026-08-26**: **Alopex DB v0.8.8 released** — portable relational grammar, single-file convergence, process locking, and Python server client
+- **2026-08-18**: **Alopex DB v0.8.7 released** — recursive CTEs and window correctness closure
 - **2026-08-17**: **Alopex DB v0.8.6 released** — alias resolution, `REAL`, `CASE`, set operations, CTEs, and basic window functions
 - **2026-08-15**: **Alopex DB v0.8.5 released** — public-surface, security, package-parity, and release-verifier hardening
 - **2026-08-10**: **Alopex DB v0.8.4 released** — parser contract `0.4.0` and target-qualified native parser assets

@@ -8,14 +8,14 @@ description: Recent releases across Alopex DB, Skulk, and Chirps
 The top-level Alopex DB, Skulk, and Chirps repositories use independent version
 series. Within Alopex DB, all public Rust crates and the Python package use one
 aligned version. This page records the latest published releases as verified
-from each repository on **August 18, 2026**.
+from each repository on **August 27, 2026**.
 Follow the linked release and changelog for the complete compatibility notes.
 
 ## Current Releases
 
 | Project | Latest | Published | Highlights |
 |:--------|:-------|:----------|:-----------|
-| Alopex DB | [v0.8.6](https://github.com/alopex-db/alopex/releases/tag/v0.8.6) | Aug 17, 2026 | Alias resolution, `REAL`, `CASE`, set operations, CTEs, and basic window functions |
+| Alopex DB | [![Latest Alopex DB release](https://img.shields.io/github/v/release/alopex-db/alopex?sort=semver&label=latest)](https://github.com/alopex-db/alopex/releases/latest) | See release | See release notes and changelog |
 | Skulk | [v0.4.0](https://github.com/alopex-db/alopex-skulk/releases/tag/alopex-skulk-v0.4.0) | Jul 31, 2026 | Embedded PromQL and SQL-TS query engine, Arrow result streams, pruning, and out-of-order policy |
 | Chirps | [v0.6.3](https://github.com/alopex-db/alopex-chirps/releases/tag/chirps-v0.6.3) | Aug 11, 2026 | Memory-contract and mTLS conformance on the bounded QUIC transport |
 
@@ -23,9 +23,31 @@ Follow the linked release and changelog for the complete compatibility notes.
 
 !!! warning "v0.9 is frozen"
 
-    The active publication order is v0.8.7 through v0.8.11. v0.9 development
+    v0.8.7 through v0.8.9 are published. The active publication order continues
+    with v0.8.10 and v0.8.11. v0.9 development
     and release operations resume only after that entire train is published
     and post-publication verification succeeds.
+
+### v0.8.9 — Portable SQL and KV functions
+
+- Added portable UTC timestamp, math, string, regex, statistics, regression,
+  value, bitwise, and boolean aggregate functions.
+- Added bounded byte-glob and byte-regex KV key search across embedded, async,
+  HTTP, and CLI surfaces.
+- Updated the Nim parser wire contract to `0.15.0`.
+
+### v0.8.8 — Portable relational grammar and durability fixes
+
+- Added portable relational grammar including LATERAL, grouping sets,
+  aggregate filters, `DISTINCT ON`, standard pagination, and `TRY_CAST`.
+- Added the Python server client and verified mode parity from published packages.
+- Added single-file convergence and rejected concurrent opens of one data directory.
+
+### v0.8.7 — CTE and window correctness
+
+- Added recursive CTEs, CTE column-name lists, `LAG`/`LEAD`, explicit window
+  frames, and grouped-window composition.
+- Mapped bounded execution exhaustion to stable public error code `ALOPEX-E003`.
 
 ### v0.8.6 — Single-node SQL correctness
 
