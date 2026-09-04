@@ -13,10 +13,13 @@ This roadmap outlines the planned development of Alopex DB from the current stat
 
 !!! success "Latest Alopex DB release published and verified"
 
-    The current release includes portable SQL functions, bounded byte-glob and
-    byte-regex KV key search, and matching embedded/server behavior across the
-    published Rust and Python packages. The badge above reads the latest GitHub
-    release automatically; use its release notes for the exact version scope.
+    The current release adds exact `DECIMAL`/`NUMERIC`, native
+    `DATE`/`TIME`/`INTERVAL`, `JSON`/`JSONB`, nested `ARRAY`/`MAP`/`STRUCT`
+    values, and deterministic full-text search on top of the portable SQL
+    function set and bounded KV key search, with matching embedded/server
+    behavior across the published Rust and Python packages. The badge above
+    reads the latest GitHub release automatically; use its release notes for
+    the exact version scope.
 
     ```bash
     # Rust
@@ -30,8 +33,8 @@ This roadmap outlines the planned development of Alopex DB from the current stat
 
 !!! warning "v0.8 release train active; v0.9 frozen"
 
-    v0.8.7 through v0.8.9 are published. Development and publication continue
-    through **v0.8.10 → v0.8.11**. v0.9 development and release operations are
+    v0.8.7 through v0.8.10 are published. Development and publication continue
+    through **v0.8.11**. v0.9 development and release operations are
     frozen until every release in that train is published and verified. The
     Nim parser contract number is ABI metadata, not a separate release series.
 
@@ -77,8 +80,8 @@ gantt
 
     section Distributed
     v0.7 Cluster-aware      :done, 2026-07, 2026-07
-    v0.8.0-v0.8.9 Streaming + SQL :done, 2026-07, 2026-08
-    v0.8.10-v0.8.11 SQL closure :active, 2026-09, 2027-01
+    v0.8.0-v0.8.10 Streaming + SQL :done, 2026-07, 2026-08
+    v0.8.11 Transactions + vectors :active, 2026-09, 2027-01
     v0.9 Distributed parity (frozen) :2027-01, 2027-02
     v1.0 GA                 :milestone, 2027-03, 0d
 
@@ -140,6 +143,7 @@ The following crates are available on **crates.io**:
 | **v0.7.6** | **v0.7.6** | **v0.7.6** | **v0.7.6** | **v0.7.6** | **v0.7.6** | v0.5.1 |
 | **v0.8.6** | **v0.8.6** | **v0.8.6** | **v0.8.6** | **v0.8.6** | **v0.8.6** | **v0.5.2** |
 | **v0.8.9** | **v0.8.9** | **v0.8.9** | **v0.8.9** | **v0.8.9** | **v0.8.9** | **v0.5.2** |
+| **v0.8.10** | **v0.8.10** | **v0.8.10** | **v0.8.10** | **v0.8.10** | **v0.8.10** | **v0.5.2** |
 | v1.0 | v1.0 | v1.0 | v1.0 | v1.0 | v1.0 | v0.9 |
 
 !!! note "Aligned Versioning Since v0.6.0"
@@ -346,8 +350,8 @@ WASM/web runtime support is deferred and will be re-evaluated after v1.0 based o
 
 ### v0.8 — Single-Node Compatibility Closure { #v08 }
 
-**Status**: :material-progress-wrench: Active — **v0.8.9 published; v0.8.10–v0.8.11 remain**
-**Released so far**: July 23–August 26, 2026
+**Status**: :material-progress-wrench: Active — **v0.8.10 published; v0.8.11 remains**
+**Released so far**: July 23–August 28, 2026
 **Uses**: Chirps v0.5.2 (the standalone Chirps release series is currently v0.6.3)
 
 - [x] Cluster metadata, lifecycle, routing diagnostics, and authenticated distributed-read contracts
@@ -361,7 +365,9 @@ WASM/web runtime support is deferred and will be re-evaluated after v1.0 based o
 - [x] Recursive CTE and window correctness closure (v0.8.7)
 - [x] Portable relational grammar, single-file convergence, and Python server client (v0.8.8)
 - [x] Portable SQL functions and bounded KV glob/regex search (v0.8.9)
-- [ ] Remaining portable single-node SQL compatibility closure (v0.8.10–v0.8.11)
+- [x] Exact `DECIMAL`, native temporal, `JSON`/`JSONB`, nested, and full-text types (v0.8.10)
+- [ ] SQL application and administration surface — transaction control, parameters, introspection, schema evolution, constraints, advanced DML, `COPY`, and identity/sequences (v0.8.11)
+- [ ] HNSW correctness, recall, and latency closure with published conformance evidence (v0.8.11)
 
 Remote execution, distributed transactions, and client/connection-pool APIs remain outside the v0.8 supported scope.
 
@@ -529,7 +535,7 @@ Python bindings with NumPy and DataFrame support. Up to v0.4.0 alopex-py followe
 | **v0.3.3** | Phase 1 | Database/Transaction/SQL basic API | :white_check_mark: PyPI Published |
 | **v0.3.5** | Phase 1+ | NumPy integration (zero-copy arrays + GIL release) | :white_check_mark: PyPI Published |
 | **v0.4.0** | Phase 1+ | Catalog API (Polars Unity Catalog compatible) | :white_check_mark: PyPI Published |
-| **v0.6.0–v0.8.9** | Aligned | Workspace-aligned releases (SQL, cluster-aware streaming, vectors, DataFrame, server client) | :white_check_mark: PyPI Published |
+| **v0.6.0–v0.8.10** | Aligned | Workspace-aligned releases (SQL, cluster-aware streaming, vectors, DataFrame, server client) | :white_check_mark: PyPI Published |
 | Phase 2 | — | DataFrame API MVP via alopex-dataframe | :material-calendar: Planned |
 | Phase 3 | — | DataFrame namespaces (str/dt/list) | :material-calendar: Planned |
 | GA | v1.0 | Polars-compatible DataFrame + API stabilization | :material-calendar: Planned |
@@ -557,6 +563,7 @@ We welcome contributions! Priority areas:
 
 ### Recent Updates
 
+- **2026-08-28**: **Alopex DB v0.8.10 released** — exact `DECIMAL`/`NUMERIC`, native `DATE`/`TIME`/`INTERVAL`, `JSON`/`JSONB`, nested `ARRAY`/`MAP`/`STRUCT`, and deterministic full-text search
 - **2026-08-26**: **Alopex DB v0.8.9 released** — portable SQL functions and bounded KV byte-glob/regex key search
 - **2026-08-26**: **Alopex DB v0.8.8 released** — portable relational grammar, single-file convergence, process locking, and Python server client
 - **2026-08-18**: **Alopex DB v0.8.7 released** — recursive CTEs and window correctness closure

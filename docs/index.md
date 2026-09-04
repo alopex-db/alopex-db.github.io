@@ -44,10 +44,12 @@ input, right-bottom status/preview) with `h/l` focus switching.
 
 !!! success "Latest release published on crates.io, PyPI, and GitHub"
 
-    The current Alopex DB release includes portable SQL functions, bounded
-    byte-glob/regex KV key search, embedded and server APIs, and matching
-    Rust/Python surfaces. The badge above reads the latest GitHub release
-    automatically; see the linked release for its exact version and notes.
+    The current Alopex DB release adds exact `DECIMAL`/`NUMERIC`, native
+    `DATE`/`TIME`/`INTERVAL`, `JSON`/`JSONB`, nested `ARRAY`/`MAP`/`STRUCT`
+    values, and local full-text search on top of the portable SQL function set,
+    bounded KV key search, and matching embedded, server, Rust, and Python
+    surfaces. The badge above reads the latest GitHub release automatically;
+    see the linked release for its exact version and notes.
 
     ```bash
     # Rust
@@ -139,6 +141,12 @@ Modern AI applications require multiple database technologies—creating complex
 
     QUIC-based cluster communication with SWIM protocol for membership. Raft-ready transport with priority streams.
 
+-   :material-code-json:{ .lg .middle } **More Than Scalars**
+
+    ---
+
+    Exact `DECIMAL`, native `DATE`/`TIME`/`INTERVAL`, `JSON`/`JSONB` with path operators, nested `ARRAY`/`MAP`/`STRUCT`, and deterministic full-text search — one engine, no extra service.
+
 </div>
 
 ---
@@ -213,6 +221,27 @@ The package is currently in architecture design and technical validation. It is 
     LIMIT 10;
     ```
 
+=== "JSON + Full-Text"
+
+    ```sql
+    -- Native JSON with path operators
+    CREATE TABLE documents (
+        id INTEGER PRIMARY KEY,
+        body JSONB,
+        text_body TEXT
+    );
+
+    SELECT body -> 'author' ->> 'name' AS author,
+           body #>> '{tags,0}'         AS first_tag
+    FROM documents;
+
+    -- Deterministic full-text search, index optional
+    CREATE INDEX documents_fts ON documents(text_body) USING FTS;
+
+    SELECT row_id, rank, headline
+    FROM FTS_SEARCH('documents', 'text_body', 'vector search');
+    ```
+
 === "Embedded Rust API"
 
     ```rust
@@ -254,8 +283,8 @@ gantt
     section Distributed
     v0.6 SQL JOIN + Nim Parser :done, 2026-07, 2026-07
     v0.7 Cluster-aware      :done, 2026-07, 2026-07
-    v0.8.0-v0.8.9 Streaming + SQL :done, 2026-07, 2026-08
-    v0.8.10-v0.8.11 SQL closure :active, 2026-09, 2027-01
+    v0.8.0-v0.8.10 Streaming + SQL :done, 2026-07, 2026-08
+    v0.8.11 Transactions + vectors :active, 2026-09, 2027-01
     v1.0 GA                 :milestone, 2027-03, 0d
 ```
 
@@ -272,13 +301,14 @@ gantt
 | **v0.7.x** | alopex-cluster, Mode-Parity Suite, gRPC Cluster Admin | :white_check_mark: **v0.7.6 Published** |
 | **v0.8.0–v0.8.6** | Streaming surfaces, parser contracts, SQL correctness | :white_check_mark: **v0.8.6 Published** |
 | **v0.8.7–v0.8.9** | Window/CTE closure, portable relational grammar and functions, KV glob/regex search | :white_check_mark: **v0.8.9 Published** |
+| **v0.8.10** | DECIMAL/NUMERIC, DATE/TIME/INTERVAL, JSON/JSONB, ARRAY/MAP/STRUCT, full-text search | :white_check_mark: **v0.8.10 Published** |
 | **Chirps v0.5** | Gossip, SWIM, Membership, Raft Consensus API | :white_check_mark: Complete |
 
 ### What's Next
 
 | Version | Features | Status |
 |:--------|:---------|:-------|
-| **v0.8.10–v0.8.11** | Remaining portable single-node SQL compatibility closure | Active, strict sequence |
+| **v0.8.11** | Transaction control, introspection, schema evolution, constraints, advanced DML, and HNSW correctness | Active, strict sequence |
 | **v0.9** | Distributed capability classification and parity | Frozen until v0.8.11 ships |
 | **v1.0** | Federation, optimizer, general availability | Planned |
 
@@ -363,8 +393,10 @@ Alopex Chirps is the control plane for distributed Alopex DB clusters.
 [![crates.io](https://img.shields.io/crates/v/alopex-skulk.svg)](https://crates.io/crates/alopex-skulk)
 
 Alopex Skulk is the time-series member of the family — an embedded storage and
-ingest core for monitoring, IoT, and observability workloads. **v0.3.0 replaced
-the storage engine with Arrow + Parquet columnar**, in a 3.7 MB pure-Rust binary.
+ingest core for monitoring, IoT, and observability workloads. v0.3.0 replaced
+the storage engine with Arrow + Parquet columnar in a 3.7 MB pure-Rust binary,
+and **v0.4.0 added an embedded PromQL and SQL-TS query engine** that runs
+without an HTTP server.
 
 <div class="grid cards" markdown>
 
@@ -391,7 +423,8 @@ the storage engine with Arrow + Parquet columnar**, in a 3.7 MB pure-Rust binary
 
 </div>
 
-Query execution (PromQL, SQL-TS) arrives in v0.4; HTTP serving in v0.6.
+Query execution (PromQL, SQL-TS) shipped in v0.4.0 with Arrow result streams
+and predicate pruning; HTTP query serving is planned for v0.6.
 
 [:octicons-arrow-right-24: Learn about Skulk](concepts/skulk.md) ·
 [:octicons-arrow-right-24: Quick start](getting-started/skulk.md)

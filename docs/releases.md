@@ -8,7 +8,7 @@ description: Recent releases across Alopex DB, Skulk, and Chirps
 The top-level Alopex DB, Skulk, and Chirps repositories use independent version
 series. Within Alopex DB, all public Rust crates and the Python package use one
 aligned version. This page records the latest published releases as verified
-from each repository on **August 27, 2026**.
+from each repository on **September 4, 2026**.
 Follow the linked release and changelog for the complete compatibility notes.
 
 ## Current Releases
@@ -23,10 +23,35 @@ Follow the linked release and changelog for the complete compatibility notes.
 
 !!! warning "v0.9 is frozen"
 
-    v0.8.7 through v0.8.9 are published. The active publication order continues
-    with v0.8.10 and v0.8.11. v0.9 development
+    v0.8.7 through v0.8.10 are published. The active publication order
+    continues with v0.8.11. v0.9 development
     and release operations resume only after that entire train is published
     and post-publication verification succeeds.
+
+### v0.8.10 — Types, nested values, and full-text search
+
+- Added exact `DECIMAL`/`NUMERIC` with up to 38 digits, stored as a signed
+  128-bit coefficient and a scale, and carried through Arrow/Parquet
+  `Decimal128`, Python `decimal.Decimal`, and decimal CLI output.
+- Added native `DATE`, `TIME`, and `INTERVAL` values with month/day/microsecond
+  components kept separate, plus `MAKE_*`, `AGE`, `DATE_ADD`, `DATE_SUB`, and
+  timestamp `GENERATE_SERIES`. The existing `TIMESTAMP` representation is
+  unchanged.
+- Added a native `JSON` type (`JSONB` is a dialect alias) with `->`, `->>`,
+  `#>`, `#>>`, `JSONB_SET`/`JSONB_INSERT`, the `JSONB_BUILD_*` constructors, and
+  `JSONB_AGG`/`JSONB_OBJECT_AGG`. The earlier SQLite-compatible JSON-on-`TEXT`
+  functions remain compatible.
+- Added nested `ARRAY`/`LIST`, `MAP`, and `STRUCT` values with subscripts,
+  slices, `UNNEST … WITH ORDINALITY`, the `ARRAY_*` scalar catalog, and
+  `ARRAY_AGG`.
+- Added deterministic local full-text search: `TO_TSVECTOR`, `TO_TSQUERY`,
+  `PLAINTO_TSQUERY`, `WEBSEARCH_TO_TSQUERY`, `TS_RANK`, `TS_HEADLINE`, and
+  `FTS_SEARCH`, with transactional `USING FTS` indexes that do not change
+  result semantics.
+- The v0.8 type capability gate records every v0.8.10 family as complete. The
+  distributed execution catalog keeps non-portable JSON, temporal, nested, and
+  full-text functions local-only.
+- Updated the Nim parser wire contract to `0.19.0`.
 
 ### v0.8.9 — Portable SQL and KV functions
 

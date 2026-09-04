@@ -125,8 +125,7 @@ graph TB
 | [**alopex-cluster**](https://crates.io/crates/alopex-cluster) | Cluster-aware metadata and routing foundation | ![crates.io](https://img.shields.io/crates/v/alopex-cluster.svg) |
 | [**alopex-cli**](https://crates.io/crates/alopex-cli) | Command-line tools (TUI / admin console) | ![crates.io](https://img.shields.io/crates/v/alopex-cli.svg) |
 | [**alopex-chirps**](https://crates.io/crates/alopex-chirps) | Gossip, QUIC, Raft, and file transfer | :white_check_mark: v0.6.3 |
-| [**alopex-skulk**](https://crates.io/crates/alopex-skulk) | Embedded time-series ingest and query engine | :white_check_mark: v0.4.0 |
-| [**alopex-skulk**](https://crates.io/crates/alopex-skulk) | Time-series storage and ingest core (Arrow + Parquet, independent version series) | :white_check_mark: v0.3.0 |
+| [**alopex-skulk**](https://crates.io/crates/alopex-skulk) | Embedded time-series ingest and query engine (Arrow + Parquet, independent version series) | :white_check_mark: v0.4.0 |
 | [**alopex-trail**](trail.md) | Log and event store with late-bound schema | :material-pencil-ruler: In design |
 | [**alopex-ui**](https://github.com/alopex-db/alopex-ui) | Alopex Data UI — consistent UI model over a DataSource contract ([concept site](https://alopex-db.github.io/alopex-ui-pages/)) | :material-progress-wrench: In development |
 
@@ -147,6 +146,13 @@ CREATE TABLE users (
 INSERT INTO users (id, name, email) VALUES (1, 'Alice', 'alice@example.com');
 SELECT * FROM users WHERE id = 1;
 ```
+
+Beyond the scalar types, the SQL surface carries exact `DECIMAL`/`NUMERIC`,
+native `DATE`/`TIME`/`INTERVAL`, `JSON`/`JSONB` with path operators, and nested
+`ARRAY`/`MAP`/`STRUCT` values, along with deterministic full-text search over
+`TEXT`. These are local single-node capabilities: the distributed execution
+catalog classifies the non-portable JSON, temporal, nested, and full-text
+functions as local-only.
 
 ### Vector with HNSW
 
