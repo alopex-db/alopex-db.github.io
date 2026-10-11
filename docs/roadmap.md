@@ -31,12 +31,11 @@ This roadmap outlines the planned development of Alopex DB from the current stat
 
     Prebuilt CLI binaries for Linux / macOS (x86_64, aarch64) / Windows are attached to every [GitHub Release](https://github.com/alopex-db/alopex/releases).
 
-!!! warning "v0.8 release train active; v0.9 frozen"
+!!! info "Current stable release: v0.8.15"
 
-    v0.8.7 through v0.8.10 are published. Development and publication continue
-    through **v0.8.11**. v0.9 development and release operations are
-    frozen until every release in that train is published and verified. The
-    Nim parser contract number is ABI metadata, not a separate release series.
+    v0.8.7 through v0.8.15 are published. The Nim parser contract number is
+    ABI metadata, not a separate release series. GitHub milestones and issues
+    remain the source of truth for active implementation scope.
 
 !!! success "v0.6.0 Released — SQL JOIN/Subquery + Nim FFI Parser (July 7, 2026)"
 
@@ -80,9 +79,8 @@ gantt
 
     section Distributed
     v0.7 Cluster-aware      :done, 2026-07, 2026-07
-    v0.8.0-v0.8.10 Streaming + SQL :done, 2026-07, 2026-08
-    v0.8.11 Transactions + vectors :active, 2026-09, 2027-01
-    v0.9 Distributed parity (frozen) :2027-01, 2027-02
+    v0.8.0-v0.8.15 Streaming + SQL :done, 2026-07, 2026-10
+    v0.9 Distributed parity :2027-01, 2027-02
     v1.0 GA                 :milestone, 2027-03, 0d
 
     section Chirps
@@ -144,6 +142,7 @@ The following crates are available on **crates.io**:
 | **v0.8.6** | **v0.8.6** | **v0.8.6** | **v0.8.6** | **v0.8.6** | **v0.8.6** | **v0.5.2** |
 | **v0.8.9** | **v0.8.9** | **v0.8.9** | **v0.8.9** | **v0.8.9** | **v0.8.9** | **v0.5.2** |
 | **v0.8.10** | **v0.8.10** | **v0.8.10** | **v0.8.10** | **v0.8.10** | **v0.8.10** | **v0.5.2** |
+| **v0.8.15** | **v0.8.15** | **v0.8.15** | **v0.8.15** | **v0.8.15** | **v0.8.15** | **v0.5.2** |
 | v1.0 | v1.0 | v1.0 | v1.0 | v1.0 | v1.0 | v0.9 |
 
 !!! note "Aligned Versioning Since v0.6.0"
@@ -373,7 +372,7 @@ Remote execution, distributed transactions, and client/connection-pool APIs rema
 
 ### v0.9 — Distributed Capability and Parity { #v09 }
 
-**Status**: :material-snowflake: Frozen until v0.8.11 is published and verified
+**Status**: :material-calendar: Planned
 **Depends on**: Chirps v0.7
 
 - [ ] Multi-Raft (range partitioning)
@@ -406,6 +405,28 @@ Remote execution, distributed transactions, and client/connection-pool APIs rema
 - [ ] Complete documentation
 - [ ] API/ABI compatibility tests
 - [ ] Federation support
+
+---
+
+## v1.x Graph / Lake-Link Track { #graph-lake-link }
+
+**Status**: :material-calendar: Planned, implemented in parallel with the storage and distributed tracks
+**Tracker**: [alopex#596](https://github.com/alopex-db/alopex/issues/596)
+
+Alopex will keep relational tables as the source of truth and layer a Property Graph catalog plus a transactional adjacency index on top. Rust is the core typed API. SQL, Python, HTTP/gRPC, and the CLI will share the same catalog, planner, executor, mapping format, and job lifecycle.
+
+| Phase | Goal | Acceptance boundary |
+|:------|:-----|:--------------------|
+| G1 | Contract and APIs | Property Graph, mapping, job, generation, and benchmark contracts work across Rust, SQL, Python, server, and CLI |
+| G2 | Catalog and adjacency | Commit, rollback, restart, corruption detection, and snapshot visibility preserve graph consistency |
+| G3 | SQL/PGQ query MVP | `CREATE PROPERTY GRAPH`, `GRAPH_TABLE`, fixed paths, and bounded variable paths |
+| G4 | Local Graph ETL | CSV, Parquet, Arrow, and DataFrame mapping with dry-run, rejects, and atomic generation publish |
+| G5 | GraphRAG and incremental ETL | HNSW seed, bounded traversal/filter/rerank, append/upsert/delete, idempotency, and provenance |
+| G6 | S3 Lake-Link and tiering | Resumable external Parquet ingest, export, rehydrate, and generation switching |
+
+IVF remains an independent future vector-index option; it is not a prerequisite for Graph. S3 source ingestion is also separate from using S3 as the database artifact backend. v2.0 is the joint storage/distributed acceptance gate, not the start of Graph implementation.
+
+Performance claims will require reproducible artifacts: dataset, configuration, hardware, load time, storage size, p50/p95/p99 latency, throughput, memory, recall where applicable, and incremental-update cost. The current competitive baseline and catalog specifications are documented in the [graph database feature and performance report](https://github.com/alopex-db/alopex/blob/main/docs/graph-database-feature-performance-research.md).
 
 ---
 
@@ -563,6 +584,7 @@ We welcome contributions! Priority areas:
 
 ### Recent Updates
 
+- **2026-10-11**: v1.x Graph / Lake-Link track defined across SQL, Rust, Python, server, CLI, ETL, GraphRAG, and reproducible performance gates; current stable release is v0.8.15
 - **2026-08-28**: **Alopex DB v0.8.10 released** — exact `DECIMAL`/`NUMERIC`, native `DATE`/`TIME`/`INTERVAL`, `JSON`/`JSONB`, nested `ARRAY`/`MAP`/`STRUCT`, and deterministic full-text search
 - **2026-08-26**: **Alopex DB v0.8.9 released** — portable SQL functions and bounded KV byte-glob/regex key search
 - **2026-08-26**: **Alopex DB v0.8.8 released** — portable relational grammar, single-file convergence, process locking, and Python server client
