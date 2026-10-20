@@ -1,0 +1,446 @@
+{
+  "canvas": {
+    "width": 2688,
+    "height": 5344
+  },
+  "bbox_convention": "half-open: [x, y, x+w, y+h]",
+  "design_decisions": [
+    "Use one fox instead of parent + child to retain a clear small-size silhouette.",
+    "Use flat approved fills and transparent eye apertures; mono is one ink.",
+    "Canvas widened to 2688px to contain native 2560px tiles with 64px margins.",
+    "Submarks share the fox silhouette and add large functional symbols; tuned for light backgrounds.",
+    "Favicon proof contains actual 16/32/48/64px rasterizations; labels are outside its bbox.",
+    "Transparent dark variants must be previewed on a dark background; no matte is baked in.",
+    "Favicon and avatar plates use deep blue #1E3A5F: snow contrast and a visible plate against both light and dark chrome.",
+    "Avatar fox is optically centered and contained inside a centered 85%-diameter circle; plate bleeds to all corners."
+  ],
+  "palette": {
+    "deep": "#1E3A5F",
+    "blue-light": "#2E5077",
+    "blue-dark": "#152C4A",
+    "ice": "#5FB4C9",
+    "aurora": "#7EC8E3",
+    "frost": "#B8D4E3",
+    "silver": "#C0C5CE",
+    "silver-light": "#DFE1E8",
+    "night": "#0B1929",
+    "panel": "#0F2137",
+    "snow": "#F8FAFC",
+    "text": "#E8EEF2"
+  },
+  "fonts": {
+    "brand": {
+      "path": "/System/Library/Fonts/Supplemental/Futura.ttc",
+      "index": 0
+    },
+    "body": {
+      "path": "/System/Library/Fonts/SFNS.ttf",
+      "index": 0
+    }
+  },
+  "export_size_convention": "integer = square edge; [width, height] = rectangle; empty export = proof only",
+  "tiles": [
+    {
+      "name": "mark-dark",
+      "x": 64,
+      "y": 160,
+      "w": 512,
+      "h": 512,
+      "background": "transparent",
+      "purpose": "Engine icon for dark backgrounds",
+      "export": [
+        {
+          "path": "mark-dark.png",
+          "size": 512
+        },
+        {
+          "path": "mark-dark-256.png",
+          "size": 256
+        },
+        {
+          "path": "mark-dark-64.png",
+          "size": 64
+        },
+        {
+          "path": "mark-dark-32.png",
+          "size": 32
+        },
+        {
+          "path": "mark-dark-16.png",
+          "size": 16
+        }
+      ]
+    },
+    {
+      "name": "mark-light",
+      "x": 640,
+      "y": 160,
+      "w": 512,
+      "h": 512,
+      "background": "transparent",
+      "purpose": "Engine icon for light backgrounds",
+      "export": [
+        {
+          "path": "mark-light.png",
+          "size": 512
+        },
+        {
+          "path": "mark-light-256.png",
+          "size": 256
+        },
+        {
+          "path": "mark-light-64.png",
+          "size": 64
+        },
+        {
+          "path": "mark-light-32.png",
+          "size": 32
+        },
+        {
+          "path": "mark-light-16.png",
+          "size": 16
+        }
+      ]
+    },
+    {
+      "name": "mark-mono",
+      "x": 1216,
+      "y": 160,
+      "w": 512,
+      "h": 512,
+      "background": "transparent",
+      "purpose": "Single-ink silhouette with transparent eye cuts",
+      "export": [
+        {
+          "path": "mark-mono.png",
+          "size": 512
+        },
+        {
+          "path": "mark-mono-64.png",
+          "size": 64
+        },
+        {
+          "path": "mark-mono-32.png",
+          "size": 32
+        },
+        {
+          "path": "mark-mono-16.png",
+          "size": 16
+        }
+      ]
+    },
+    {
+      "name": "lockup-horizontal-dark",
+      "x": 64,
+      "y": 768,
+      "w": 1536,
+      "h": 384,
+      "background": "transparent",
+      "purpose": "README picture source for dark backgrounds",
+      "export": [
+        {
+          "path": "lockup-horizontal-dark.png",
+          "size": [
+            1536,
+            384
+          ]
+        },
+        {
+          "path": "lockup-horizontal-dark-800.png",
+          "size": [
+            800,
+            200
+          ]
+        },
+        {
+          "path": "lockup-horizontal-dark-400.png",
+          "size": [
+            400,
+            100
+          ]
+        }
+      ]
+    },
+    {
+      "name": "lockup-horizontal-light",
+      "x": 64,
+      "y": 1248,
+      "w": 1536,
+      "h": 384,
+      "background": "transparent",
+      "purpose": "README picture source for light backgrounds",
+      "export": [
+        {
+          "path": "lockup-horizontal-light.png",
+          "size": [
+            1536,
+            384
+          ]
+        },
+        {
+          "path": "lockup-horizontal-light-800.png",
+          "size": [
+            800,
+            200
+          ]
+        },
+        {
+          "path": "lockup-horizontal-light-400.png",
+          "size": [
+            400,
+            100
+          ]
+        }
+      ]
+    },
+    {
+      "name": "lockup-stacked-dark",
+      "x": 64,
+      "y": 1728,
+      "w": 1024,
+      "h": 768,
+      "background": "transparent",
+      "purpose": "Centered engine signature with tagline for dark backgrounds",
+      "export": [
+        {
+          "path": "lockup-stacked-dark.png",
+          "size": [
+            1024,
+            768
+          ]
+        },
+        {
+          "path": "lockup-stacked-dark-512.png",
+          "size": [
+            512,
+            384
+          ]
+        }
+      ]
+    },
+    {
+      "name": "submark-skulk",
+      "x": 1216,
+      "y": 1728,
+      "w": 384,
+      "h": 384,
+      "background": "transparent",
+      "purpose": "Skulk: shared fox with time-series signal; light backgrounds",
+      "export": [
+        {
+          "path": "submark-skulk.png",
+          "size": 384
+        },
+        {
+          "path": "submark-skulk-192.png",
+          "size": 192
+        },
+        {
+          "path": "submark-skulk-96.png",
+          "size": 96
+        }
+      ]
+    },
+    {
+      "name": "submark-chirps",
+      "x": 1664,
+      "y": 1728,
+      "w": 384,
+      "h": 384,
+      "background": "transparent",
+      "purpose": "Chirps: shared fox with connected mesh; light backgrounds",
+      "export": [
+        {
+          "path": "submark-chirps.png",
+          "size": 384
+        },
+        {
+          "path": "submark-chirps-192.png",
+          "size": 192
+        },
+        {
+          "path": "submark-chirps-96.png",
+          "size": 96
+        }
+      ]
+    },
+    {
+      "name": "submark-trail",
+      "x": 1216,
+      "y": 2176,
+      "w": 384,
+      "h": 384,
+      "background": "transparent",
+      "purpose": "Trail: shared fox with ordered event tracks; in design; light backgrounds",
+      "export": [
+        {
+          "path": "submark-trail.png",
+          "size": 384
+        },
+        {
+          "path": "submark-trail-192.png",
+          "size": 192
+        },
+        {
+          "path": "submark-trail-96.png",
+          "size": 96
+        }
+      ]
+    },
+    {
+      "name": "submark-dataui",
+      "x": 1664,
+      "y": 2176,
+      "w": 384,
+      "h": 384,
+      "background": "transparent",
+      "purpose": "Alopex Data UI: shared fox with interface panes; early dev; light backgrounds",
+      "export": [
+        {
+          "path": "submark-dataui.png",
+          "size": 384
+        },
+        {
+          "path": "submark-dataui-192.png",
+          "size": 192
+        },
+        {
+          "path": "submark-dataui-96.png",
+          "size": 96
+        }
+      ]
+    },
+    {
+      "name": "social-preview",
+      "x": 64,
+      "y": 2656,
+      "w": 2560,
+      "h": 1280,
+      "background": "#0B1929",
+      "purpose": "Full-bleed social card with safe inset copy",
+      "export": [
+        {
+          "path": "social-preview.png",
+          "size": [
+            2560,
+            1280
+          ]
+        },
+        {
+          "path": "social-preview-1280.png",
+          "size": [
+            1280,
+            640
+          ]
+        }
+      ]
+    },
+    {
+      "name": "readme-banner",
+      "x": 64,
+      "y": 4032,
+      "w": 2560,
+      "h": 640,
+      "background": "#0B1929",
+      "purpose": "Full-bleed README hero with positioning statement",
+      "export": [
+        {
+          "path": "readme-banner.png",
+          "size": [
+            2560,
+            640
+          ]
+        },
+        {
+          "path": "readme-banner-1280.png",
+          "size": [
+            1280,
+            320
+          ]
+        }
+      ]
+    },
+    {
+      "name": "palette-strip",
+      "x": 64,
+      "y": 4768,
+      "w": 1536,
+      "h": 256,
+      "background": "#F8FAFC",
+      "purpose": "All twelve approved palette colors with hex values",
+      "export": [
+        {
+          "path": "palette-strip.png",
+          "size": [
+            1536,
+            256
+          ]
+        }
+      ]
+    },
+    {
+      "name": "favicon-proof",
+      "x": 64,
+      "y": 5120,
+      "w": 512,
+      "h": 128,
+      "background": "transparent",
+      "purpose": "Proof only: native 16 / 32 / 48 / 64 px dark-ink marks; no export",
+      "export": []
+    },
+    {
+      "name": "favicon-plate",
+      "x": 2112,
+      "y": 768,
+      "w": 512,
+      "h": 512,
+      "background": "#1E3A5F",
+      "purpose": "Opaque snow fox on deep blue for light and dark browser chrome",
+      "export": [
+        {
+          "path": "favicon-plate.png",
+          "size": 512
+        },
+        {
+          "path": "favicon-plate-180.png",
+          "size": 180
+        },
+        {
+          "path": "favicon-plate-48.png",
+          "size": 48
+        },
+        {
+          "path": "favicon-plate-32.png",
+          "size": 32
+        },
+        {
+          "path": "favicon-plate-16.png",
+          "size": 16
+        }
+      ]
+    },
+    {
+      "name": "avatar-org",
+      "x": 2112,
+      "y": 1344,
+      "w": 512,
+      "h": 512,
+      "background": "#1E3A5F",
+      "purpose": "Opaque organization avatar; fox inside centered 85% circle",
+      "export": [
+        {
+          "path": "avatar-org.png",
+          "size": 512
+        },
+        {
+          "path": "avatar-org-256.png",
+          "size": 256
+        },
+        {
+          "path": "avatar-org-96.png",
+          "size": 96
+        }
+      ]
+    }
+  ]
+}
