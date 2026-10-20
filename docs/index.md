@@ -282,8 +282,8 @@ gantt
     section Distributed
     v0.6 SQL JOIN + Nim Parser :done, 2026-07, 2026-07
     v0.7 Cluster-aware      :done, 2026-07, 2026-07
-    v0.8.0-v0.8.10 Streaming + SQL :done, 2026-07, 2026-08
-    v0.8.11 Transactions + vectors :active, 2026-09, 2027-01
+    v0.8.0-v0.8.16 Streaming + SQL :done, 2026-07, 2026-10
+    v0.9 Distributed parity :2027-01, 2027-02
     v1.0 GA                 :milestone, 2027-03, 0d
 ```
 
@@ -301,15 +301,18 @@ gantt
 | **v0.8.0–v0.8.6** | Streaming surfaces, parser contracts, SQL correctness | :white_check_mark: **v0.8.6 Published** |
 | **v0.8.7–v0.8.9** | Window/CTE closure, portable relational grammar and functions, KV glob/regex search | :white_check_mark: **v0.8.9 Published** |
 | **v0.8.10** | DECIMAL/NUMERIC, DATE/TIME/INTERVAL, JSON/JSONB, ARRAY/MAP/STRUCT, full-text search | :white_check_mark: **v0.8.10 Published** |
+| **v0.8.11** | Transaction control, prepared statements and positional parameters, `SHOW`/`DESCRIBE`/`information_schema`, views and schema evolution, constraints, advanced DML, `COPY`, sequences, `EXPLAIN` | :white_check_mark: **v0.8.11 Published** |
+| **v0.8.12–v0.8.16** | Reproducible HNSW diagnostics, atomic batch ingestion, cost-based kNN plan selection, typed `ef_search` parameters, HNSW graph reuse in transactions, resumable Python KV paging | :white_check_mark: **v0.8.16 Published** |
 | **Chirps v0.5** | Gossip, SWIM, Membership, Raft Consensus API | :white_check_mark: Complete |
 
 ### What's Next
 
 | Version | Features | Status |
 |:--------|:---------|:-------|
-| **v0.8.11** | Transaction control, introspection, schema evolution, constraints, advanced DML, and HNSW correctness | Active, strict sequence |
-| **v0.9** | Distributed capability classification and parity | Frozen until v0.8.11 ships |
+| **v0.8.x** | Remaining v0.8 hardening and the published conformance evidence that closes the train | Active |
+| **v0.9** | Distributed capability classification and parity | Planned |
 | **v1.0** | Federation, optimizer, general availability | Planned |
+| **v1.x** | [Graph / Lake-Link track](roadmap.md#graph-lake-link) — Property Graph catalog, SQL/PGQ, Graph ETL, GraphRAG, S3 tiering | Planned, in parallel |
 
 [:octicons-arrow-right-24: View detailed roadmap](roadmap.md)
 
