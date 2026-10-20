@@ -28,7 +28,9 @@ geometry source, so they cannot drift apart.
 | Open Graph / Twitter card for the docs site | `social-preview.png` (wired in `docs/overrides/main.html`) |
 | Slide or banner header | `readme-banner-1280.png` |
 | Single-ink print, stickers, stamps | `mark-mono.png` |
-| Family project icons | `submark-skulk.png`, `submark-chirps.png`, `submark-trail.png`, `submark-dataui.png` |
+| Family project icons, light background | `submark-skulk.png`, `submark-chirps.png`, `submark-trail.png`, `submark-dataui.png` |
+| Family project icons, dark background | the same names with `-dark` |
+| Skulk / Chirps repo hero | `lockup-skulk-{light,dark}-800.png`, `lockup-chirps-{light,dark}-800.png` |
 
 Transparent variants carry no matte: preview a `*-dark` file on a dark
 background and a `*-light` file on a light one. The `favicon-plate` and

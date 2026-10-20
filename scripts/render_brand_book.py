@@ -10,7 +10,7 @@ from PIL import Image, ImageDraw, ImageFont
 
 ROOT = Path(__file__).resolve().parents[1]
 OUT = ROOT / 'docs/assets/images/brand'
-CANVAS = {'width': 2688, 'height': 5344}
+CANVAS = {'width': 2688, 'height': 7840}
 P = {
     'deep': '#1E3A5F', 'blue-light': '#2E5077', 'blue-dark': '#152C4A',
     'ice': '#5FB4C9', 'aurora': '#7EC8E3', 'frost': '#B8D4E3',
@@ -61,6 +61,17 @@ TILES = [
     tile('avatar-org', 2112, 1344, 512, 512, 'Opaque organization avatar; fox inside centered 85% circle',
          [('', 512), ('-256', 256), ('-96', 96)], P['deep']),
 ]
+
+# Append the family collection without moving any approved tile.
+for family, x in zip(('skulk', 'chirps', 'trail', 'dataui'), (64, 640, 1216, 1792)):
+    TILES.append(tile(f'submark-{family}-dark', x, 5440, 384, 384,
+                      f'{family}: shared fox and functional symbol for dark backgrounds',
+                      [('', 384), ('-192', 192), ('-96', 96)]))
+for family, mode, y in (('skulk', 'dark', 5920), ('skulk', 'light', 6400),
+                        ('chirps', 'dark', 6880), ('chirps', 'light', 7360)):
+    TILES.append(tile(f'lockup-{family}-{mode}', 64, y, 1536, 384,
+                      f'Alopex {family.title()} README signature for {mode} backgrounds',
+                      [('', [1536, 384]), ('-800', [800, 200]), ('-400', [400, 100])]))
 
 FONT_CANDIDATES = {
     'brand': [('/System/Library/Fonts/Supplemental/Futura.ttc', 0),
@@ -145,6 +156,14 @@ def render(t):
         # Center the actual silhouette, not its nominal square. The ear tips
         # stay within radius 217.6px even when GitHub applies a circular crop.
         mark(64, 60, 384)
+    elif name.startswith(('lockup-skulk-', 'lockup-chirps-')):
+        _, family, mode = name.split('-')
+        sibling_name = f'submark-{family}' + ('-dark' if mode == 'dark' else '')
+        sibling = render(dict(name=sibling_name, w=384, h=384, background='transparent'))
+        im.alpha_composite(sibling.resize((328*scale, 328*scale), Image.Resampling.LANCZOS),
+                           (24*scale, 28*scale))
+        label(408, 124, f'Alopex {family.title()}', 144,
+              P['snow'] if mode == 'dark' else P['deep'], 'brand')
     elif name.startswith('lockup-horizontal'):
         mode = name.rsplit('-', 1)[1]
         mark(24, 28, 328, mode)
@@ -154,24 +173,26 @@ def render(t):
         label(512, 495, 'Alopex DB', 114, P['snow'], 'brand', True)
         label(512, 650, 'Silent. Adaptive. Unbreakable.', 38, P['frost'], center=True)
     elif name.startswith('submark-'):
-        mark(58, 0, 268, 'light')
-        ink, accent = P['deep'], P['ice']
-        if name == 'submark-skulk':
+        dark = name.endswith('-dark')
+        family = name.split('-')[1]
+        mark(58, 0, 268, 'dark' if dark else 'light')
+        ink, accent = P['snow'] if dark else P['deep'], P['ice']
+        if family == 'skulk':
             line([(96, 334), (128, 334), (152, 290), (184, 350),
                   (216, 306), (240, 322), (288, 322)], ink, 12)
-        elif name == 'submark-chirps':
+        elif family == 'chirps':
             nodes = [(112, 332), (192, 286), (272, 332)]
             line([nodes[0], nodes[1], nodes[2], nodes[0]], ink, 10)
             for x, y in nodes:
                 d.ellipse(((x-14)*scale, (y-14)*scale, (x+14)*scale, (y+14)*scale), fill=accent)
-        elif name == 'submark-trail':
+        elif family == 'trail':
             for y, end in [(290, 282), (318, 238), (346, 260)]:
                 rect((104, y, 116, y+12), accent)
                 rect((138, y, end, y+12), ink)
         else:
             rect((100, 284, 284, 356), ink)
             rect((112, 296, 144, 344), accent)
-            rect((156, 296, 272, 312), P['snow'])
+            rect((156, 296, 272, 312), P['deep'] if dark else P['snow'])
             rect((156, 324, 200, 344), P['frost'])
             rect((212, 324, 272, 344), P['ice'])
     elif name in ('social-preview', 'readme-banner'):
@@ -250,7 +271,8 @@ def main():
             'Use one fox instead of parent + child to retain a clear small-size silhouette.',
             'Use flat approved fills and transparent eye apertures; mono is one ink.',
             'Canvas widened to 2688px to contain native 2560px tiles with 64px margins.',
-            'Submarks share the fox silhouette and add large functional symbols; tuned for light backgrounds.',
+            'Submarks share the fox silhouette and functional symbols; light uses deep blue, dark uses snow with ice accents.',
+            'Skulk and Chirps README lockups reuse the corresponding submarks and the engine wordmark typeface treatment.',
             'Favicon proof contains actual 16/32/48/64px rasterizations; labels are outside its bbox.',
             'Transparent dark variants must be previewed on a dark background; no matte is baked in.',
             'Favicon and avatar plates use deep blue #1E3A5F: snow contrast and a visible plate against both light and dark chrome.',

@@ -1,14 +1,15 @@
 {
   "canvas": {
     "width": 2688,
-    "height": 5344
+    "height": 7840
   },
   "bbox_convention": "half-open: [x, y, x+w, y+h]",
   "design_decisions": [
     "Use one fox instead of parent + child to retain a clear small-size silhouette.",
     "Use flat approved fills and transparent eye apertures; mono is one ink.",
     "Canvas widened to 2688px to contain native 2560px tiles with 64px margins.",
-    "Submarks share the fox silhouette and add large functional symbols; tuned for light backgrounds.",
+    "Submarks share the fox silhouette and functional symbols; light uses deep blue, dark uses snow with ice accents.",
+    "Skulk and Chirps README lockups reuse the corresponding submarks and the engine wordmark typeface treatment.",
     "Favicon proof contains actual 16/32/48/64px rasterizations; labels are outside its bbox.",
     "Transparent dark variants must be previewed on a dark background; no matte is baked in.",
     "Favicon and avatar plates use deep blue #1E3A5F: snow contrast and a visible plate against both light and dark chrome.",
@@ -439,6 +440,226 @@
         {
           "path": "avatar-org-96.png",
           "size": 96
+        }
+      ]
+    },
+    {
+      "name": "submark-skulk-dark",
+      "x": 64,
+      "y": 5440,
+      "w": 384,
+      "h": 384,
+      "background": "transparent",
+      "purpose": "skulk: shared fox and functional symbol for dark backgrounds",
+      "export": [
+        {
+          "path": "submark-skulk-dark.png",
+          "size": 384
+        },
+        {
+          "path": "submark-skulk-dark-192.png",
+          "size": 192
+        },
+        {
+          "path": "submark-skulk-dark-96.png",
+          "size": 96
+        }
+      ]
+    },
+    {
+      "name": "submark-chirps-dark",
+      "x": 640,
+      "y": 5440,
+      "w": 384,
+      "h": 384,
+      "background": "transparent",
+      "purpose": "chirps: shared fox and functional symbol for dark backgrounds",
+      "export": [
+        {
+          "path": "submark-chirps-dark.png",
+          "size": 384
+        },
+        {
+          "path": "submark-chirps-dark-192.png",
+          "size": 192
+        },
+        {
+          "path": "submark-chirps-dark-96.png",
+          "size": 96
+        }
+      ]
+    },
+    {
+      "name": "submark-trail-dark",
+      "x": 1216,
+      "y": 5440,
+      "w": 384,
+      "h": 384,
+      "background": "transparent",
+      "purpose": "trail: shared fox and functional symbol for dark backgrounds",
+      "export": [
+        {
+          "path": "submark-trail-dark.png",
+          "size": 384
+        },
+        {
+          "path": "submark-trail-dark-192.png",
+          "size": 192
+        },
+        {
+          "path": "submark-trail-dark-96.png",
+          "size": 96
+        }
+      ]
+    },
+    {
+      "name": "submark-dataui-dark",
+      "x": 1792,
+      "y": 5440,
+      "w": 384,
+      "h": 384,
+      "background": "transparent",
+      "purpose": "dataui: shared fox and functional symbol for dark backgrounds",
+      "export": [
+        {
+          "path": "submark-dataui-dark.png",
+          "size": 384
+        },
+        {
+          "path": "submark-dataui-dark-192.png",
+          "size": 192
+        },
+        {
+          "path": "submark-dataui-dark-96.png",
+          "size": 96
+        }
+      ]
+    },
+    {
+      "name": "lockup-skulk-dark",
+      "x": 64,
+      "y": 5920,
+      "w": 1536,
+      "h": 384,
+      "background": "transparent",
+      "purpose": "Alopex Skulk README signature for dark backgrounds",
+      "export": [
+        {
+          "path": "lockup-skulk-dark.png",
+          "size": [
+            1536,
+            384
+          ]
+        },
+        {
+          "path": "lockup-skulk-dark-800.png",
+          "size": [
+            800,
+            200
+          ]
+        },
+        {
+          "path": "lockup-skulk-dark-400.png",
+          "size": [
+            400,
+            100
+          ]
+        }
+      ]
+    },
+    {
+      "name": "lockup-skulk-light",
+      "x": 64,
+      "y": 6400,
+      "w": 1536,
+      "h": 384,
+      "background": "transparent",
+      "purpose": "Alopex Skulk README signature for light backgrounds",
+      "export": [
+        {
+          "path": "lockup-skulk-light.png",
+          "size": [
+            1536,
+            384
+          ]
+        },
+        {
+          "path": "lockup-skulk-light-800.png",
+          "size": [
+            800,
+            200
+          ]
+        },
+        {
+          "path": "lockup-skulk-light-400.png",
+          "size": [
+            400,
+            100
+          ]
+        }
+      ]
+    },
+    {
+      "name": "lockup-chirps-dark",
+      "x": 64,
+      "y": 6880,
+      "w": 1536,
+      "h": 384,
+      "background": "transparent",
+      "purpose": "Alopex Chirps README signature for dark backgrounds",
+      "export": [
+        {
+          "path": "lockup-chirps-dark.png",
+          "size": [
+            1536,
+            384
+          ]
+        },
+        {
+          "path": "lockup-chirps-dark-800.png",
+          "size": [
+            800,
+            200
+          ]
+        },
+        {
+          "path": "lockup-chirps-dark-400.png",
+          "size": [
+            400,
+            100
+          ]
+        }
+      ]
+    },
+    {
+      "name": "lockup-chirps-light",
+      "x": 64,
+      "y": 7360,
+      "w": 1536,
+      "h": 384,
+      "background": "transparent",
+      "purpose": "Alopex Chirps README signature for light backgrounds",
+      "export": [
+        {
+          "path": "lockup-chirps-light.png",
+          "size": [
+            1536,
+            384
+          ]
+        },
+        {
+          "path": "lockup-chirps-light-800.png",
+          "size": [
+            800,
+            200
+          ]
+        },
+        {
+          "path": "lockup-chirps-light-400.png",
+          "size": [
+            400,
+            100
+          ]
         }
       ]
     }
