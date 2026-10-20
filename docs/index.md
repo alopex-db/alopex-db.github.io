@@ -6,15 +6,12 @@ hide:
   - toc
 ---
 
-<style>
-.md-typeset h1 {
-  display: none;
-}
-</style>
-
 <div class="hero" markdown>
 
-# :fox_face: Alopex DB { .hero-title }
+![Alopex DB](assets/images/brand/mark-light-256.png#only-light){ .hero-mark }
+![Alopex DB](assets/images/brand/mark-dark-256.png#only-dark){ .hero-mark }
+
+# Alopex DB { .hero-title }
 
 ## **Silent. Adaptive. Unbreakable.** { .hero-tagline }
 
@@ -42,14 +39,16 @@ input, right-bottom status/preview) with `h/l` focus switching.
 
 [:octicons-tag-24: ![Latest Alopex DB release](https://img.shields.io/github/v/release/alopex-db/alopex?sort=semver&label=latest)](https://github.com/alopex-db/alopex/releases/latest)
 
-!!! success "Latest release published on crates.io, PyPI, and GitHub"
+!!! success "Published on crates.io, PyPI, and GitHub"
 
-    The current Alopex DB release adds exact `DECIMAL`/`NUMERIC`, native
-    `DATE`/`TIME`/`INTERVAL`, `JSON`/`JSONB`, nested `ARRAY`/`MAP`/`STRUCT`
-    values, and local full-text search on top of the portable SQL function set,
-    bounded KV key search, and matching embedded, server, Rust, and Python
-    surfaces. The badge above reads the latest GitHub release automatically;
-    see the linked release for its exact version and notes.
+    Every public Rust crate and the Python package move as one aligned version,
+    and the badge above reads the latest GitHub release automatically. The v0.8
+    train has shipped the portable SQL surface (types, nested values,
+    full-text search, metadata and introspection, transactions, constraints,
+    advanced DML, `COPY` and sequences), `EXPLAIN` / `EXPLAIN ANALYZE`,
+    prepared statements and positional parameters, and HNSW correctness,
+    batch ingestion, and query-local `ef_search`. See the linked release for
+    its exact version, compatibility notes, and migration steps.
 
     ```bash
     # Rust

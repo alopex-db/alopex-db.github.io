@@ -1,6 +1,6 @@
 site_name: Alopex DB
 site_url: https://alopex-db.github.io
-site_description: The unified database engine that scales from embedded to distributed. Native SQL, Vector Search, and Graph capabilities in one Rust-based engine.
+site_description: The unified database engine that scales from an embedded file to a distributed cluster. Native SQL, vector search (HNSW), and columnar storage in one Rust-based engine.
 site_author: Alopex DB Team
 
 repo_name: alopex-db/alopex
@@ -35,8 +35,8 @@ theme:
     text: Inter
     code: JetBrains Mono
 
-  logo: assets/images/logo.svg
-  favicon: assets/images/favicon.png
+  logo: assets/images/brand/mark-dark-256.png
+  favicon: assets/images/brand/favicon.png
 
   icon:
     repo: fontawesome/brands/github
@@ -64,12 +64,29 @@ extra:
     - icon: fontawesome/brands/github
       link: https://github.com/alopex-db
       name: Alopex DB on GitHub
+    - icon: fontawesome/brands/x-twitter
+      link: https://x.com/asopitech_iot
+      name: asopitech on X
+    - icon: simple/rust
+      link: https://crates.io/crates/alopex-embedded
+      name: alopex-embedded on crates.io
+    - icon: simple/pypi
+      link: https://pypi.org/project/alopex/
+      name: alopex on PyPI
+    - icon: fontawesome/solid/heart
+      link: https://github.com/sponsors/asopitech
+      name: Sponsor the project on GitHub Sponsors
 
   generator: false
 
   status:
     new: Recently added
     deprecated: Deprecated
+
+# Generated brand assets ship with a usage note beside them; it is reference
+# material for maintainers, not a page of the documentation site.
+exclude_docs: |
+  assets/images/brand/BRAND.md
 
 extra_css:
   - assets/stylesheets/extra.css

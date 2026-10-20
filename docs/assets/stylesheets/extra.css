@@ -82,6 +82,21 @@
     margin-bottom: 2rem;
 }
 
+/* The brand mark above the hero title. Light and dark variants are selected by
+   Material's #only-light / #only-dark image suffixes. */
+.md-typeset .hero-mark {
+    width: 128px;
+    height: auto;
+    margin: 0 auto 0.75rem;
+    display: block;
+}
+
+/* The hero supplies the page's only H1; its permalink anchor would otherwise
+   print a stray pilcrow next to the product name. */
+.hero .headerlink {
+    display: none;
+}
+
 .hero-title {
     font-size: 3.5rem !important;
     font-weight: 700 !important;
@@ -241,6 +256,10 @@
 @media screen and (max-width: 44.9375em) {
     .hero-title {
         font-size: 2rem !important;
+    }
+
+    .md-typeset .hero-mark {
+        width: 96px;
     }
 
     .grid.cards {

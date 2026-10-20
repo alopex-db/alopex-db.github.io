@@ -33,9 +33,10 @@ This roadmap outlines the planned development of Alopex DB from the current stat
 
 !!! info "Current stable release: v0.8.15"
 
-    v0.8.7 through v0.8.15 are published. The Nim parser contract number is
-    ABI metadata, not a separate release series. GitHub milestones and issues
-    remain the source of truth for active implementation scope.
+    v0.8.7 through **v0.8.16** are published, and all public Rust crates plus
+    the Python package carry that aligned version. The Nim parser contract
+    number is ABI metadata, not a separate release series. GitHub milestones
+    and issues remain the source of truth for active implementation scope.
 
 !!! success "v0.6.0 Released — SQL JOIN/Subquery + Nim FFI Parser (July 7, 2026)"
 
@@ -143,6 +144,7 @@ The following crates are available on **crates.io**:
 | **v0.8.9** | **v0.8.9** | **v0.8.9** | **v0.8.9** | **v0.8.9** | **v0.8.9** | **v0.5.2** |
 | **v0.8.10** | **v0.8.10** | **v0.8.10** | **v0.8.10** | **v0.8.10** | **v0.8.10** | **v0.5.2** |
 | **v0.8.15** | **v0.8.15** | **v0.8.15** | **v0.8.15** | **v0.8.15** | **v0.8.15** | **v0.5.2** |
+| **v0.8.16** | **v0.8.16** | **v0.8.16** | **v0.8.16** | **v0.8.16** | **v0.8.16** | **v0.5.2** |
 | v1.0 | v1.0 | v1.0 | v1.0 | v1.0 | v1.0 | v0.9 |
 
 !!! note "Aligned Versioning Since v0.6.0"
@@ -349,8 +351,8 @@ WASM/web runtime support is deferred and will be re-evaluated after v1.0 based o
 
 ### v0.8 — Single-Node Compatibility Closure { #v08 }
 
-**Status**: :material-progress-wrench: Active — **v0.8.10 published; v0.8.11 remains**
-**Released so far**: July 23–August 28, 2026
+**Status**: :material-progress-wrench: Active — **v0.8.16 published**
+**Released so far**: July 23, 2026 – October 19, 2026
 **Uses**: Chirps v0.5.2 (the standalone Chirps release series is currently v0.6.3)
 
 - [x] Cluster metadata, lifecycle, routing diagnostics, and authenticated distributed-read contracts
@@ -365,8 +367,12 @@ WASM/web runtime support is deferred and will be re-evaluated after v1.0 based o
 - [x] Portable relational grammar, single-file convergence, and Python server client (v0.8.8)
 - [x] Portable SQL functions and bounded KV glob/regex search (v0.8.9)
 - [x] Exact `DECIMAL`, native temporal, `JSON`/`JSONB`, nested, and full-text types (v0.8.10)
-- [ ] SQL application and administration surface — transaction control, parameters, introspection, schema evolution, constraints, advanced DML, `COPY`, and identity/sequences (v0.8.11)
-- [ ] HNSW correctness, recall, and latency closure with published conformance evidence (v0.8.11)
+- [x] SQL application and administration surface — transaction control, positional parameters and prepared statements, `SHOW`/`DESCRIBE`/`information_schema`, views and schema evolution, constraints, advanced DML, `COPY`, and identity/sequences (v0.8.11)
+- [x] `EXPLAIN`, `EXPLAIN ANALYZE`, and `EXPLAIN (FORMAT JSON)` with versioned, secret-free plan output (v0.8.11)
+- [x] HNSW correctness closure and reproducible diagnostic artifacts for the fixed 10k/50k scale cases (v0.8.11–v0.8.12)
+- [x] HNSW atomic batch ingestion, vector-upsert cost independence, and cost-based kNN plan selection visible in `EXPLAIN` (v0.8.14)
+- [x] B-tree fallback visibility in `EXPLAIN`, typed bound parameters for query-local `ef_search`, HNSW graph reuse inside explicit transactions, and resumable Python KV paging (v0.8.16)
+- [ ] Remaining v0.8 hardening and the published conformance evidence that closes the train
 
 Remote execution, distributed transactions, and client/connection-pool APIs remain outside the v0.8 supported scope.
 
