@@ -1,0 +1,1083 @@
+{
+  "canvas": {
+    "width": 2944,
+    "height": 4960,
+    "mode": "RGBA"
+  },
+  "bbox_convention": "Half-open [x,y,x+w,y+h]. Minimum 48px separation; labels outside all artwork crops.",
+  "palette": {
+    "deep": "#1E3A5F",
+    "blue-light": "#2E5077",
+    "blue-dark": "#152C4A",
+    "ice": "#5FB4C9",
+    "aurora": "#7EC8E3",
+    "frost": "#B8D4E3",
+    "silver": "#C0C5CE",
+    "snow": "#F8FAFC",
+    "night": "#0B1929"
+  },
+  "warm_accent": null,
+  "palette_decision": "Dark rounded nose; ice inner ears; low-opacity ice blush. No pink anywhere.",
+  "concept": {
+    "words": [
+      "Silent",
+      "Adaptive",
+      "Unbreakable"
+    ],
+    "interpretation": "The fox stays composed and comfortable while its scene changes. Unbreakable already means survives in every scene.",
+    "prohibited_trait": "No stretching, growing or shrinking trait. Ordinary uniform scaling is only used for scene layout and raster proofs.",
+    "scene_count": 4,
+    "wrapping_directions": [
+      "muff",
+      "rime",
+      "cache",
+      "gale"
+    ]
+  },
+  "geometry": {
+    "head_width": 348,
+    "head_height": 220,
+    "eye_diameter": 68,
+    "eye_to_head_width": 0.19540229885057472,
+    "wind_ruff_width": 376,
+    "eye_to_wind_ruff_width": 0.18085106382978725,
+    "eye_y": 137,
+    "head_midline_y": 110,
+    "eye_pair_outer_span": 178,
+    "eye_pair_span_ratio": 0.5114942528735632,
+    "catchlight_diameter": 17,
+    "catchlight_to_eye": 0.25,
+    "nose_width": 22,
+    "nose_to_eye": 0.3235294117647059,
+    "muzzle_depth": 61,
+    "muzzle_to_head_width": 0.1752873563218391,
+    "total_baby_body_height_without_tail": 406,
+    "body_height_to_head_height": 1.8454545454545455,
+    "ears": "Wide-based, lateral and short; explicit species correction supersedes the previous tall-ear height rule.",
+    "ear_height_above_skull": 41,
+    "ear_base_width": 133,
+    "ear_tip_radius": 16,
+    "inner_ear": "#5FB4C9",
+    "tail_filled_area_px": 119650,
+    "head_plus_body_filled_area_px": 100599,
+    "tail_to_head_and_body_area": 1.189,
+    "geometry_note": "Pose crouching and tail enclosure reduce visible height; infant head/body relation remains approximately two heads tall, with head allowed larger.",
+    "ruff": "Six irregular overlapping rounded cheek lobes; no whisker dots.",
+    "tail": "A continuous rear plume and return sweep, built from overlapping elliptical fur lobes; no smooth thin kitten tail.",
+    "roundness": "Ear polygons are dilated with circular caps >=8% of their smaller dimension; all other shapes use ellipses, rounded rectangles or round-ended arcs."
+  },
+  "rendering": "Pillow only; 2560px masters. Every 96/64/32/16px proof and 192px thumb is LANCZOS-downsampled from unchanged master art. Silhouettes use unchanged full-art alpha and one snow ink.",
+  "directions": [
+    {
+      "name": "muff",
+      "idea": "Tail over nose, eyes closed, comfortable asleep while snow settles on the fur.",
+      "principle": "Unbreakable: a snow-covered sleeper remains comfortable without a shelter.",
+      "extreme_scene": true,
+      "wrapping": true,
+      "cute": "YES: tucked cheeks, soft sleeping eyelids and a tail duvet keep the pose cozy.",
+      "fox": "YES: short outward ears, a rough fur ruff and an immense lobed tail folded over the muzzle carry the winter-fox reading.",
+      "tiny": "16px: ear nubs and a huge curled tail remain; the sleepy face is lost. Not a self-explanatory species icon.",
+      "cuteness_review": {
+        "answer": "yes",
+        "reason": "YES: tucked cheeks, soft sleeping eyelids and a tail duvet keep the pose cozy.",
+        "size": 192
+      },
+      "species_review": {
+        "answer": "yes",
+        "reason": "YES: short outward ears, a rough fur ruff and an immense lobed tail folded over the muzzle carry the winter-fox reading.",
+        "size": 256,
+        "method": "Full-art flat single-colour silhouette, including any scene marks; imagine the caption cat."
+      },
+      "limitations": "The yes judgement applies to the large silhouette, not guaranteed species recognition at 16px."
+    },
+    {
+      "name": "rime",
+      "idea": "Snow piles on the head and short ears; the big-eyed fox remains perfectly composed.",
+      "principle": "Unbreakable: accumulating snow changes the scene, not the fox posture or comfort.",
+      "extreme_scene": true,
+      "wrapping": true,
+      "cute": "YES: low sparkling eyes beneath a snow hat and small cool cheeks make an unbothered little companion.",
+      "fox": "YES: low side ears and the outsize scalloped tail wrapping a tiny body dominate over the round face.",
+      "tiny": "16px: a fluffy face above a broad tail; snow cap merges with the white coat. Eyes remain, story is weak.",
+      "cuteness_review": {
+        "answer": "yes",
+        "reason": "YES: low sparkling eyes beneath a snow hat and small cool cheeks make an unbothered little companion.",
+        "size": 192
+      },
+      "species_review": {
+        "answer": "yes",
+        "reason": "YES: low side ears and the outsize scalloped tail wrapping a tiny body dominate over the round face.",
+        "size": 256,
+        "method": "Full-art flat single-colour silhouette, including any scene marks; imagine the caption cat."
+      },
+      "limitations": "The yes judgement applies to the large silhouette, not guaranteed species recognition at 16px."
+    },
+    {
+      "name": "cache",
+      "idea": "A continuous tail curl encloses a small group of slabs; chin and paws rest on the upper layers.",
+      "principle": "Silent + Adaptive: at home on the stored data, enclosed by its own winter tail.",
+      "extreme_scene": false,
+      "wrapping": true,
+      "cute": "YES: big eyes over the chin-on-paws gesture and an enormous fluffy wrap make the store look like a nest.",
+      "fox": "YES: a low-eared ruff above a thick, furred tail crescent; exposed muzzle bridge and tiny paws avoid a kitten posture.",
+      "tiny": "16px: a wide-eyed fox nest with a blue centre; separate slabs disappear. Keep this as a character composition.",
+      "cuteness_review": {
+        "answer": "yes",
+        "reason": "YES: big eyes over the chin-on-paws gesture and an enormous fluffy wrap make the store look like a nest.",
+        "size": 192
+      },
+      "species_review": {
+        "answer": "yes",
+        "reason": "YES: a low-eared ruff above a thick, furred tail crescent; exposed muzzle bridge and tiny paws avoid a kitten posture.",
+        "size": 256,
+        "method": "Full-art flat single-colour silhouette, including any scene marks; imagine the caption cat."
+      },
+      "limitations": "The yes judgement applies to the large silhouette, not guaranteed species recognition at 16px."
+    },
+    {
+      "name": "gale",
+      "idea": "Rounded fur streams sideways in a whiteout; the fox sits still inside its tail.",
+      "principle": "Silent + Unbreakable: wind moves, the serene character does not brace or fight it.",
+      "extreme_scene": true,
+      "wrapping": true,
+      "cute": "YES: huge calm eyes and tucked paws stay inviting while soft cheek tufts blow sideways.",
+      "fox": "YES: the sideways ruff and a full-body-scale lobed tail, with short outward ears, read as winter fox fur rather than a smooth cat outline.",
+      "tiny": "16px: a broad fluffy sitter; wind strokes become specks. The face remains clearer than the weather.",
+      "cuteness_review": {
+        "answer": "yes",
+        "reason": "YES: huge calm eyes and tucked paws stay inviting while soft cheek tufts blow sideways.",
+        "size": 192
+      },
+      "species_review": {
+        "answer": "yes",
+        "reason": "YES: the sideways ruff and a full-body-scale lobed tail, with short outward ears, read as winter fox fur rather than a smooth cat outline.",
+        "size": 256,
+        "method": "Full-art flat single-colour silhouette, including any scene marks; imagine the caption cat."
+      },
+      "limitations": "The yes judgement applies to the large silhouette, not guaranteed species recognition at 16px."
+    },
+    {
+      "name": "listen",
+      "idea": "Ears attend to something beneath the snow; a tilted face and tiny paws look down quietly.",
+      "principle": "Silent + native search: composed attention reaches below the visible surface.",
+      "extreme_scene": false,
+      "wrapping": false,
+      "cute": "YES: a tilted baby face and two little paws give the listening gesture a curious, gentle quality.",
+      "fox": "YES: a thick descending tail with irregular fur lobes outweighs the body, behind short side ears and a cheek ruff.",
+      "tiny": "16px: a tilted dark-eyed head joined to a very large plume; the listening action is lost.",
+      "cuteness_review": {
+        "answer": "yes",
+        "reason": "YES: a tilted baby face and two little paws give the listening gesture a curious, gentle quality.",
+        "size": 192
+      },
+      "species_review": {
+        "answer": "yes",
+        "reason": "YES: a thick descending tail with irregular fur lobes outweighs the body, behind short side ears and a cheek ruff.",
+        "size": 256,
+        "method": "Full-art flat single-colour silhouette, including any scene marks; imagine the caption cat."
+      },
+      "limitations": "The yes judgement applies to the large silhouette, not guaranteed species recognition at 16px."
+    },
+    {
+      "name": "pounce",
+      "idea": "A delighted snow dive, nose entering powder first; rear and enormous furred tail remain lifted.",
+      "principle": "Native search: the fox enters the hidden layer; calm curiosity rather than a fierce attack.",
+      "extreme_scene": false,
+      "wrapping": false,
+      "cute": "YES: the oversized tilted face, stubby reaching paws and soft tail turn the dive into a playful tumble.",
+      "fox": "YES: the very thick, lobed tail rises above the tiny rump, paired with a short-eared fur ruff; it is a snow-pouncing fox silhouette.",
+      "tiny": "16px: diagonal face, lifted tail and powder merge into a pale cluster. Pose requires 96px or more.",
+      "cuteness_review": {
+        "answer": "yes",
+        "reason": "YES: the oversized tilted face, stubby reaching paws and soft tail turn the dive into a playful tumble.",
+        "size": 192
+      },
+      "species_review": {
+        "answer": "yes",
+        "reason": "YES: the very thick, lobed tail rises above the tiny rump, paired with a short-eared fur ruff; it is a snow-pouncing fox silhouette.",
+        "size": 256,
+        "method": "Full-art flat single-colour silhouette, including any scene marks; imagine the caption cat."
+      },
+      "limitations": "The yes judgement applies to the large silhouette, not guaranteed species recognition at 16px."
+    },
+    {
+      "name": "boreal",
+      "idea": "A small fox stands calmly on a snowy shelf under polar-night aurora ribbons.",
+      "principle": "Adaptive + Unbreakable: darkness and ice are simply another scene for the same companion.",
+      "extreme_scene": true,
+      "wrapping": false,
+      "cute": "YES: a small wide-eyed face and mitten paws remain warm in character despite the cool night scene.",
+      "fox": "YES: the character has short side-set ears, a cheek ruff and a tail at least as large as the head and body combined; aurora stays separate.",
+      "tiny": "16px: aurora becomes a faint mark above a fluffy sitter. The character stays visible, but night is not legible without context.",
+      "cuteness_review": {
+        "answer": "yes",
+        "reason": "YES: a small wide-eyed face and mitten paws remain warm in character despite the cool night scene.",
+        "size": 192
+      },
+      "species_review": {
+        "answer": "yes",
+        "reason": "YES: the character has short side-set ears, a cheek ruff and a tail at least as large as the head and body combined; aurora stays separate.",
+        "size": 256,
+        "method": "Full-art flat single-colour silhouette, including any scene marks; imagine the caption cat."
+      },
+      "limitations": "The yes judgement applies to the large silhouette, not guaranteed species recognition at 16px."
+    },
+    {
+      "name": "chirps",
+      "idea": "Two low-eared, enormous-tailed foxes lean toward each other, exchanging small call arcs.",
+      "principle": "Silent + ecosystem continuity: quiet local calls keep the group connected; no shouting or speech bubbles.",
+      "extreme_scene": false,
+      "wrapping": false,
+      "cute": "YES: shared eye contact, small dark noses and two fluffy tail blankets make a tender pair.",
+      "fox": "YES: each little face belongs to a disproportionately large furred tail, with short wide ears and an irregular ruff; neither has a smooth kitten tail.",
+      "tiny": "16px: a pair of tiny pale curls; faces and calls no longer separate reliably. This is a larger Chirps illustration.",
+      "cuteness_review": {
+        "answer": "yes",
+        "reason": "YES: shared eye contact, small dark noses and two fluffy tail blankets make a tender pair.",
+        "size": 192
+      },
+      "species_review": {
+        "answer": "yes",
+        "reason": "YES: each little face belongs to a disproportionately large furred tail, with short wide ears and an irregular ruff; neither has a smooth kitten tail.",
+        "size": 256,
+        "method": "Full-art flat single-colour silhouette, including any scene marks; imagine the caption cat."
+      },
+      "limitations": "The yes judgement applies to the large silhouette, not guaranteed species recognition at 16px."
+    }
+  ],
+  "recommendation": {
+    "ranking": [
+      "rime",
+      "cache",
+      "muff",
+      "gale",
+      "listen",
+      "boreal",
+      "chirps",
+      "pounce"
+    ],
+    "reasons": {
+      "rime": "Best combination of huge tail, short side ears, affectionate gaze and an unmistakable adverse scene.",
+      "cache": "Strong wrapping composition; chin and paws connect the cute character to the enclosed data.",
+      "muff": "Most species-specific resting behaviour; enormous tail covers the nose in snow.",
+      "gale": "Direct performance of Silent and Unbreakable; weather adds some noise.",
+      "listen": "Quiet curiosity with a clear search metaphor; scene is less extreme.",
+      "boreal": "A calm continuation of the same animal in darkness; aurora costs pixels.",
+      "chirps": "Affectionate ecosystem illustration; two animals need more space.",
+      "pounce": "Cute and fox-specific activity, but the angled pose is least clear at tiny sizes."
+    },
+    "owner_shortlist": [
+      "rime",
+      "cache",
+      "muff",
+      "gale"
+    ],
+    "discard": [],
+    "favicon": "No production favicon selected: all scene meanings and some species details weaken at 16px."
+  },
+  "fonts": {
+    "catalog": "/System/Library/Fonts/Supplemental/Arial.ttf"
+  },
+  "tiles": [
+    {
+      "name": "fox-muff-hero",
+      "x": 64,
+      "y": 272,
+      "w": 640,
+      "h": 640,
+      "bbox": [
+        64,
+        272,
+        704,
+        912
+      ],
+      "background": "transparent"
+    },
+    {
+      "name": "fox-muff-sizes",
+      "x": 752,
+      "y": 272,
+      "w": 512,
+      "h": 128,
+      "bbox": [
+        752,
+        272,
+        1264,
+        400
+      ],
+      "background": "transparent",
+      "samples": [
+        {
+          "size": 96,
+          "bbox": [
+            16,
+            16,
+            112,
+            112
+          ]
+        },
+        {
+          "size": 64,
+          "bbox": [
+            160,
+            32,
+            224,
+            96
+          ]
+        },
+        {
+          "size": 32,
+          "bbox": [
+            304,
+            48,
+            336,
+            80
+          ]
+        },
+        {
+          "size": 16,
+          "bbox": [
+            440,
+            56,
+            456,
+            72
+          ]
+        }
+      ]
+    },
+    {
+      "name": "fox-muff-thumb",
+      "x": 752,
+      "y": 512,
+      "w": 192,
+      "h": 192,
+      "bbox": [
+        752,
+        512,
+        944,
+        704
+      ],
+      "background": "transparent"
+    },
+    {
+      "name": "fox-rime-hero",
+      "x": 1536,
+      "y": 272,
+      "w": 640,
+      "h": 640,
+      "bbox": [
+        1536,
+        272,
+        2176,
+        912
+      ],
+      "background": "transparent"
+    },
+    {
+      "name": "fox-rime-sizes",
+      "x": 2224,
+      "y": 272,
+      "w": 512,
+      "h": 128,
+      "bbox": [
+        2224,
+        272,
+        2736,
+        400
+      ],
+      "background": "transparent",
+      "samples": [
+        {
+          "size": 96,
+          "bbox": [
+            16,
+            16,
+            112,
+            112
+          ]
+        },
+        {
+          "size": 64,
+          "bbox": [
+            160,
+            32,
+            224,
+            96
+          ]
+        },
+        {
+          "size": 32,
+          "bbox": [
+            304,
+            48,
+            336,
+            80
+          ]
+        },
+        {
+          "size": 16,
+          "bbox": [
+            440,
+            56,
+            456,
+            72
+          ]
+        }
+      ]
+    },
+    {
+      "name": "fox-rime-thumb",
+      "x": 2224,
+      "y": 512,
+      "w": 192,
+      "h": 192,
+      "bbox": [
+        2224,
+        512,
+        2416,
+        704
+      ],
+      "background": "transparent"
+    },
+    {
+      "name": "fox-cache-hero",
+      "x": 64,
+      "y": 1088,
+      "w": 640,
+      "h": 640,
+      "bbox": [
+        64,
+        1088,
+        704,
+        1728
+      ],
+      "background": "transparent"
+    },
+    {
+      "name": "fox-cache-sizes",
+      "x": 752,
+      "y": 1088,
+      "w": 512,
+      "h": 128,
+      "bbox": [
+        752,
+        1088,
+        1264,
+        1216
+      ],
+      "background": "transparent",
+      "samples": [
+        {
+          "size": 96,
+          "bbox": [
+            16,
+            16,
+            112,
+            112
+          ]
+        },
+        {
+          "size": 64,
+          "bbox": [
+            160,
+            32,
+            224,
+            96
+          ]
+        },
+        {
+          "size": 32,
+          "bbox": [
+            304,
+            48,
+            336,
+            80
+          ]
+        },
+        {
+          "size": 16,
+          "bbox": [
+            440,
+            56,
+            456,
+            72
+          ]
+        }
+      ]
+    },
+    {
+      "name": "fox-cache-thumb",
+      "x": 752,
+      "y": 1328,
+      "w": 192,
+      "h": 192,
+      "bbox": [
+        752,
+        1328,
+        944,
+        1520
+      ],
+      "background": "transparent"
+    },
+    {
+      "name": "fox-gale-hero",
+      "x": 1536,
+      "y": 1088,
+      "w": 640,
+      "h": 640,
+      "bbox": [
+        1536,
+        1088,
+        2176,
+        1728
+      ],
+      "background": "transparent"
+    },
+    {
+      "name": "fox-gale-sizes",
+      "x": 2224,
+      "y": 1088,
+      "w": 512,
+      "h": 128,
+      "bbox": [
+        2224,
+        1088,
+        2736,
+        1216
+      ],
+      "background": "transparent",
+      "samples": [
+        {
+          "size": 96,
+          "bbox": [
+            16,
+            16,
+            112,
+            112
+          ]
+        },
+        {
+          "size": 64,
+          "bbox": [
+            160,
+            32,
+            224,
+            96
+          ]
+        },
+        {
+          "size": 32,
+          "bbox": [
+            304,
+            48,
+            336,
+            80
+          ]
+        },
+        {
+          "size": 16,
+          "bbox": [
+            440,
+            56,
+            456,
+            72
+          ]
+        }
+      ]
+    },
+    {
+      "name": "fox-gale-thumb",
+      "x": 2224,
+      "y": 1328,
+      "w": 192,
+      "h": 192,
+      "bbox": [
+        2224,
+        1328,
+        2416,
+        1520
+      ],
+      "background": "transparent"
+    },
+    {
+      "name": "fox-listen-hero",
+      "x": 64,
+      "y": 1904,
+      "w": 640,
+      "h": 640,
+      "bbox": [
+        64,
+        1904,
+        704,
+        2544
+      ],
+      "background": "transparent"
+    },
+    {
+      "name": "fox-listen-sizes",
+      "x": 752,
+      "y": 1904,
+      "w": 512,
+      "h": 128,
+      "bbox": [
+        752,
+        1904,
+        1264,
+        2032
+      ],
+      "background": "transparent",
+      "samples": [
+        {
+          "size": 96,
+          "bbox": [
+            16,
+            16,
+            112,
+            112
+          ]
+        },
+        {
+          "size": 64,
+          "bbox": [
+            160,
+            32,
+            224,
+            96
+          ]
+        },
+        {
+          "size": 32,
+          "bbox": [
+            304,
+            48,
+            336,
+            80
+          ]
+        },
+        {
+          "size": 16,
+          "bbox": [
+            440,
+            56,
+            456,
+            72
+          ]
+        }
+      ]
+    },
+    {
+      "name": "fox-listen-thumb",
+      "x": 752,
+      "y": 2144,
+      "w": 192,
+      "h": 192,
+      "bbox": [
+        752,
+        2144,
+        944,
+        2336
+      ],
+      "background": "transparent"
+    },
+    {
+      "name": "fox-pounce-hero",
+      "x": 1536,
+      "y": 1904,
+      "w": 640,
+      "h": 640,
+      "bbox": [
+        1536,
+        1904,
+        2176,
+        2544
+      ],
+      "background": "transparent"
+    },
+    {
+      "name": "fox-pounce-sizes",
+      "x": 2224,
+      "y": 1904,
+      "w": 512,
+      "h": 128,
+      "bbox": [
+        2224,
+        1904,
+        2736,
+        2032
+      ],
+      "background": "transparent",
+      "samples": [
+        {
+          "size": 96,
+          "bbox": [
+            16,
+            16,
+            112,
+            112
+          ]
+        },
+        {
+          "size": 64,
+          "bbox": [
+            160,
+            32,
+            224,
+            96
+          ]
+        },
+        {
+          "size": 32,
+          "bbox": [
+            304,
+            48,
+            336,
+            80
+          ]
+        },
+        {
+          "size": 16,
+          "bbox": [
+            440,
+            56,
+            456,
+            72
+          ]
+        }
+      ]
+    },
+    {
+      "name": "fox-pounce-thumb",
+      "x": 2224,
+      "y": 2144,
+      "w": 192,
+      "h": 192,
+      "bbox": [
+        2224,
+        2144,
+        2416,
+        2336
+      ],
+      "background": "transparent"
+    },
+    {
+      "name": "fox-boreal-hero",
+      "x": 64,
+      "y": 2720,
+      "w": 640,
+      "h": 640,
+      "bbox": [
+        64,
+        2720,
+        704,
+        3360
+      ],
+      "background": "transparent"
+    },
+    {
+      "name": "fox-boreal-sizes",
+      "x": 752,
+      "y": 2720,
+      "w": 512,
+      "h": 128,
+      "bbox": [
+        752,
+        2720,
+        1264,
+        2848
+      ],
+      "background": "transparent",
+      "samples": [
+        {
+          "size": 96,
+          "bbox": [
+            16,
+            16,
+            112,
+            112
+          ]
+        },
+        {
+          "size": 64,
+          "bbox": [
+            160,
+            32,
+            224,
+            96
+          ]
+        },
+        {
+          "size": 32,
+          "bbox": [
+            304,
+            48,
+            336,
+            80
+          ]
+        },
+        {
+          "size": 16,
+          "bbox": [
+            440,
+            56,
+            456,
+            72
+          ]
+        }
+      ]
+    },
+    {
+      "name": "fox-boreal-thumb",
+      "x": 752,
+      "y": 2960,
+      "w": 192,
+      "h": 192,
+      "bbox": [
+        752,
+        2960,
+        944,
+        3152
+      ],
+      "background": "transparent"
+    },
+    {
+      "name": "fox-chirps-hero",
+      "x": 1536,
+      "y": 2720,
+      "w": 640,
+      "h": 640,
+      "bbox": [
+        1536,
+        2720,
+        2176,
+        3360
+      ],
+      "background": "transparent"
+    },
+    {
+      "name": "fox-chirps-sizes",
+      "x": 2224,
+      "y": 2720,
+      "w": 512,
+      "h": 128,
+      "bbox": [
+        2224,
+        2720,
+        2736,
+        2848
+      ],
+      "background": "transparent",
+      "samples": [
+        {
+          "size": 96,
+          "bbox": [
+            16,
+            16,
+            112,
+            112
+          ]
+        },
+        {
+          "size": 64,
+          "bbox": [
+            160,
+            32,
+            224,
+            96
+          ]
+        },
+        {
+          "size": 32,
+          "bbox": [
+            304,
+            48,
+            336,
+            80
+          ]
+        },
+        {
+          "size": 16,
+          "bbox": [
+            440,
+            56,
+            456,
+            72
+          ]
+        }
+      ]
+    },
+    {
+      "name": "fox-chirps-thumb",
+      "x": 2224,
+      "y": 2960,
+      "w": 192,
+      "h": 192,
+      "bbox": [
+        2224,
+        2960,
+        2416,
+        3152
+      ],
+      "background": "transparent"
+    },
+    {
+      "name": "fox-compare-row",
+      "x": 192,
+      "y": 3632,
+      "w": 2560,
+      "h": 640,
+      "bbox": [
+        192,
+        3632,
+        2752,
+        4272
+      ],
+      "background": "#1E3A5F",
+      "placements": [
+        {
+          "name": "muff",
+          "bbox": [
+            54,
+            243,
+            267,
+            397
+          ],
+          "alpha_area_px": 25358
+        },
+        {
+          "name": "rime",
+          "bbox": [
+            376,
+            243,
+            585,
+            397
+          ],
+          "alpha_area_px": 25441
+        },
+        {
+          "name": "cache",
+          "bbox": [
+            696,
+            242,
+            903,
+            399
+          ],
+          "alpha_area_px": 25447
+        },
+        {
+          "name": "gale",
+          "bbox": [
+            1015,
+            238,
+            1225,
+            403
+          ],
+          "alpha_area_px": 25420
+        },
+        {
+          "name": "listen",
+          "bbox": [
+            1331,
+            236,
+            1549,
+            404
+          ],
+          "alpha_area_px": 25438
+        },
+        {
+          "name": "pounce",
+          "bbox": [
+            1654,
+            219,
+            1865,
+            421
+          ],
+          "alpha_area_px": 25521
+        },
+        {
+          "name": "boreal",
+          "bbox": [
+            1972,
+            210,
+            2187,
+            431
+          ],
+          "alpha_area_px": 25467
+        },
+        {
+          "name": "chirps",
+          "bbox": [
+            2256,
+            260,
+            2544,
+            381
+          ],
+          "alpha_area_px": 25440
+        }
+      ],
+      "optical_normalization": "Equal full-art alpha-weighted area, including scenery.",
+      "target_alpha_area_px": 25452
+    },
+    {
+      "name": "fox-species-check",
+      "x": 64,
+      "y": 4464,
+      "w": 1536,
+      "h": 384,
+      "bbox": [
+        64,
+        4464,
+        1600,
+        4848
+      ],
+      "background": "transparent",
+      "ink": "#F8FAFC",
+      "directions": [
+        {
+          "name": "rime",
+          "bbox": [
+            0,
+            0,
+            512,
+            384
+          ],
+          "art_bbox": [
+            36,
+            30,
+            476,
+            355
+          ]
+        },
+        {
+          "name": "cache",
+          "bbox": [
+            512,
+            0,
+            1024,
+            384
+          ],
+          "art_bbox": [
+            548,
+            25,
+            988,
+            359
+          ]
+        },
+        {
+          "name": "muff",
+          "bbox": [
+            1024,
+            0,
+            1536,
+            384
+          ],
+          "art_bbox": [
+            1060,
+            33,
+            1500,
+            351
+          ]
+        }
+      ]
+    }
+  ]
+}

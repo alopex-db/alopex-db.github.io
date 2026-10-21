@@ -5,14 +5,14 @@
   },
   "bbox_convention": "half-open: [x, y, x+w, y+h]",
   "design_decisions": [
-    "Use one fox instead of parent + child to retain a clear small-size silhouette.",
-    "Use flat approved fills and transparent eye apertures; mono is one ink.",
+    "The sole master is assets/brand/character/mark-head-flat.png; both face sources are verbatim copies. No face normalization, recoloring or drawing is permitted.",
+    "Legacy light and mono paths retain the master colors. Mono is not single-ink; white artwork has limited contrast on light surfaces.",
     "Canvas widened to 2688px to contain native 2560px tiles with 64px margins.",
-    "Submarks share the fox silhouette and functional symbols; light uses deep blue, dark uses snow with ice accents.",
+    "Submarks share the unchanged master fox; existing functional symbols retain their background-specific colors.",
     "Skulk and Chirps README lockups reuse the corresponding submarks and the engine wordmark typeface treatment.",
     "Favicon proof contains actual 16/32/48/64px rasterizations; labels are outside its bbox.",
     "Transparent dark variants must be previewed on a dark background; no matte is baked in.",
-    "Favicon and avatar plates use deep blue #1E3A5F: snow contrast and a visible plate against both light and dark chrome.",
+    "Favicon and avatar plates composite the unchanged master on night #0B1929.",
     "Avatar fox is optically centered and contained inside a centered 85%-diameter circle; plate bleeds to all corners."
   ],
   "palette": {
@@ -39,6 +39,12 @@
       "index": 0
     }
   },
+  "mark_master": "assets/brand/character/mark-head-flat.png",
+  "mark_sources": [
+    "assets/brand/mark-source/mark-face.png",
+    "assets/brand/mark-source/mark-plate.png",
+    "assets/brand/mark-source/mark-face-small.png"
+  ],
   "export_size_convention": "integer = square edge; [width, height] = rectangle; empty export = proof only",
   "tiles": [
     {
@@ -79,7 +85,7 @@
       "w": 512,
       "h": 512,
       "background": "transparent",
-      "purpose": "Engine icon for light backgrounds",
+      "purpose": "Legacy light path: original master colors; limited light contrast",
       "export": [
         {
           "path": "mark-light.png",
@@ -110,7 +116,7 @@
       "w": 512,
       "h": 512,
       "background": "transparent",
-      "purpose": "Single-ink silhouette with transparent eye cuts",
+      "purpose": "Legacy mono path: original master colors; not single ink",
       "export": [
         {
           "path": "mark-mono.png",
@@ -386,7 +392,7 @@
       "w": 512,
       "h": 128,
       "background": "transparent",
-      "purpose": "Proof only: native 16 / 32 / 48 / 64 px dark-ink marks; no export",
+      "purpose": "Proof only: unchanged master at native 16 / 32 / 48 / 64 px; no export",
       "export": []
     },
     {
@@ -395,8 +401,8 @@
       "y": 768,
       "w": 512,
       "h": 512,
-      "background": "#1E3A5F",
-      "purpose": "Opaque snow fox on deep blue for light and dark browser chrome",
+      "background": "#0B1929",
+      "purpose": "Original master on night plate for light and dark browser chrome",
       "export": [
         {
           "path": "favicon-plate.png",
@@ -426,7 +432,7 @@
       "y": 1344,
       "w": 512,
       "h": 512,
-      "background": "#1E3A5F",
+      "background": "#0B1929",
       "purpose": "Opaque organization avatar; fox inside centered 85% circle",
       "export": [
         {

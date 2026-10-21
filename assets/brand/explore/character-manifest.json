@@ -1,0 +1,513 @@
+{
+  "canvas": {
+    "width": 2400,
+    "height": 3136,
+    "mode": "RGBA"
+  },
+  "status": "Exploration only; no shipped identity replacement.",
+  "bbox_convention": "Half-open [x, y, x+w, y+h]; all tile bboxes are exact crop regions.",
+  "palette": {
+    "deep": "#1E3A5F",
+    "blue_light": "#2E5077",
+    "blue_dark": "#152C4A",
+    "ice": "#5FB4C9",
+    "aurora": "#7EC8E3",
+    "frost": "#B8D4E3",
+    "silver": "#C0C5CE",
+    "snow": "#F8FAFC",
+    "night": "#0B1929"
+  },
+  "warm_accent": null,
+  "palette_reason": "No warm accent needed. Night is the palette near-black used for noses and eyes; snow and frost express a winter coat.",
+  "rendering": "Pillow primitives only. Characters drawn at 2048x2048; all outputs LANCZOS downsampled from unchanged masters.",
+  "preview": "Catalog gutters are night; transparent tile bboxes retain alpha 0. Snow wordmarks are intended for dark backgrounds.",
+  "fonts": {
+    "brand": {
+      "path": "/System/Library/Fonts/Supplemental/Futura.ttc",
+      "index": 0
+    },
+    "body": {
+      "path": "/System/Library/Fonts/SFNS.ttf",
+      "index": 0
+    }
+  },
+  "directions": [
+    {
+      "name": "puff",
+      "why": "A friendly head-only avatar: winter cheek volume and open eyes communicate welcome without props.",
+      "distinction": "Soft circular head; expression lives in two large eyes.",
+      "use": "Community avatar, docs welcome, primary mascot beside the existing mark.",
+      "tradeoff": "Most overtly cute; the round ears can read as a polar bear at tiny sizes.",
+      "small_size_assessment": {
+        "64": "Clear cheeks, ears, eyes and muzzle.",
+        "48": "Expression remains open and friendly.",
+        "32": "Fox cheek shape survives; eye highlights soften.",
+        "16": "Readable face, but fox species is ambiguous: round ears and muzzle can read as a polar bear. Not an unqualified favicon."
+      }
+    },
+    {
+      "name": "perch",
+      "why": "A whole companion that can sit beside documentation or peek above a panel; posture adds personality beyond a logo.",
+      "distinction": "Alert seated body, tucked paws and a tail wrapped across the feet.",
+      "use": "Repo avatar at 48px+, docs companion, release illustrations.",
+      "tradeoff": "Body reduces available face pixels; more mascot than symbol.",
+      "small_size_assessment": {
+        "64": "Seated pose, tail and face remain clear.",
+        "48": "Paws merge slightly; seated silhouette remains clear.",
+        "32": "Tail wrap reads; face becomes secondary.",
+        "16": "Pale seated silhouette survives, but eyes and tail separation become muddy. Too ambiguous for a standalone favicon."
+      }
+    },
+    {
+      "name": "drift",
+      "why": "Quiet reliability expressed by a fox asleep inside its own tail: a calm alternative to an alert guardian.",
+      "distinction": "Asymmetric curled sleeping body; pose carries the expression.",
+      "use": "Docs empty states, idle terminal companion, larger stickers.",
+      "tradeoff": "Suggests rest rather than speed; weak species recognition when reduced.",
+      "small_size_assessment": {
+        "64": "Sleeping face and enveloping tail read clearly.",
+        "48": "Curled pose reads; eyelids become delicate.",
+        "32": "Sleep expression fades; tail remains a crescent.",
+        "16": "Unreadable as a fox: a pale curled smudge with a dark notch. Reject as favicon; keep as an illustration option."
+      }
+    },
+    {
+      "name": "beacon",
+      "why": "A bridge from the current geometric identity to a friendly mascot: fewer large shapes, broad eye spacing, and no decorative details.",
+      "distinction": "Compact graphic face with rounded ear caps, two-tone cheeks and bold eyes.",
+      "use": "Best favicon candidate, repo avatar, compact software lockup.",
+      "tradeoff": "Less expressive than Puff or Perch; still somewhat emblem-like.",
+      "small_size_assessment": {
+        "64": "All face shapes are distinct.",
+        "48": "Broad cheeks and dark eyes remain clear.",
+        "32": "Strong face and muzzle; minimal detail loss.",
+        "16": "Best of the four: eyes, nose and broad ears remain separated. Still reads as a face more readily than an unmistakable fox; stronger candidate than proof of species recognition."
+      }
+    }
+  ],
+  "recommendation": {
+    "ranking": [
+      "beacon",
+      "puff",
+      "perch",
+      "drift"
+    ],
+    "reasons": [
+      "Beacon best preserves face structure at 16px and bridges software mark and mascot.",
+      "Puff is the friendliest avatar; use at 32px+ where the face has room.",
+      "Perch offers richer companion poses but needs more pixels.",
+      "Drift is distinctive at illustration size; unsuitable for a favicon."
+    ],
+    "deployment": "Consider Beacon as a replacement candidate or Puff as a companion to the current mark; no replacement authorized."
+  },
+  "tiles": [
+    {
+      "name": "char-puff-hero",
+      "x": 64,
+      "y": 272,
+      "w": 512,
+      "h": 512,
+      "bbox": [
+        64,
+        272,
+        576,
+        784
+      ],
+      "background": "transparent"
+    },
+    {
+      "name": "char-puff-sizes",
+      "x": 64,
+      "y": 880,
+      "w": 512,
+      "h": 128,
+      "bbox": [
+        64,
+        880,
+        576,
+        1008
+      ],
+      "background": "transparent",
+      "samples": [
+        {
+          "size": 64,
+          "bbox": [
+            32,
+            32,
+            96,
+            96
+          ]
+        },
+        {
+          "size": 48,
+          "bbox": [
+            168,
+            40,
+            216,
+            88
+          ]
+        },
+        {
+          "size": 32,
+          "bbox": [
+            304,
+            48,
+            336,
+            80
+          ]
+        },
+        {
+          "size": 16,
+          "bbox": [
+            440,
+            56,
+            456,
+            72
+          ]
+        }
+      ],
+      "rasterization": "2048px master -> target via LANCZOS; composited 1:1"
+    },
+    {
+      "name": "char-puff-lockup",
+      "x": 64,
+      "y": 1152,
+      "w": 1024,
+      "h": 256,
+      "bbox": [
+        64,
+        1152,
+        1088,
+        1408
+      ],
+      "background": "transparent"
+    },
+    {
+      "name": "char-perch-hero",
+      "x": 640,
+      "y": 272,
+      "w": 512,
+      "h": 512,
+      "bbox": [
+        640,
+        272,
+        1152,
+        784
+      ],
+      "background": "transparent"
+    },
+    {
+      "name": "char-perch-sizes",
+      "x": 640,
+      "y": 880,
+      "w": 512,
+      "h": 128,
+      "bbox": [
+        640,
+        880,
+        1152,
+        1008
+      ],
+      "background": "transparent",
+      "samples": [
+        {
+          "size": 64,
+          "bbox": [
+            32,
+            32,
+            96,
+            96
+          ]
+        },
+        {
+          "size": 48,
+          "bbox": [
+            168,
+            40,
+            216,
+            88
+          ]
+        },
+        {
+          "size": 32,
+          "bbox": [
+            304,
+            48,
+            336,
+            80
+          ]
+        },
+        {
+          "size": 16,
+          "bbox": [
+            440,
+            56,
+            456,
+            72
+          ]
+        }
+      ],
+      "rasterization": "2048px master -> target via LANCZOS; composited 1:1"
+    },
+    {
+      "name": "char-perch-lockup",
+      "x": 1216,
+      "y": 1152,
+      "w": 1024,
+      "h": 256,
+      "bbox": [
+        1216,
+        1152,
+        2240,
+        1408
+      ],
+      "background": "transparent"
+    },
+    {
+      "name": "char-drift-hero",
+      "x": 1216,
+      "y": 272,
+      "w": 512,
+      "h": 512,
+      "bbox": [
+        1216,
+        272,
+        1728,
+        784
+      ],
+      "background": "transparent"
+    },
+    {
+      "name": "char-drift-sizes",
+      "x": 1216,
+      "y": 880,
+      "w": 512,
+      "h": 128,
+      "bbox": [
+        1216,
+        880,
+        1728,
+        1008
+      ],
+      "background": "transparent",
+      "samples": [
+        {
+          "size": 64,
+          "bbox": [
+            32,
+            32,
+            96,
+            96
+          ]
+        },
+        {
+          "size": 48,
+          "bbox": [
+            168,
+            40,
+            216,
+            88
+          ]
+        },
+        {
+          "size": 32,
+          "bbox": [
+            304,
+            48,
+            336,
+            80
+          ]
+        },
+        {
+          "size": 16,
+          "bbox": [
+            440,
+            56,
+            456,
+            72
+          ]
+        }
+      ],
+      "rasterization": "2048px master -> target via LANCZOS; composited 1:1"
+    },
+    {
+      "name": "char-drift-lockup",
+      "x": 64,
+      "y": 1504,
+      "w": 1024,
+      "h": 256,
+      "bbox": [
+        64,
+        1504,
+        1088,
+        1760
+      ],
+      "background": "transparent"
+    },
+    {
+      "name": "char-beacon-hero",
+      "x": 1792,
+      "y": 272,
+      "w": 512,
+      "h": 512,
+      "bbox": [
+        1792,
+        272,
+        2304,
+        784
+      ],
+      "background": "transparent"
+    },
+    {
+      "name": "char-beacon-sizes",
+      "x": 1792,
+      "y": 880,
+      "w": 512,
+      "h": 128,
+      "bbox": [
+        1792,
+        880,
+        2304,
+        1008
+      ],
+      "background": "transparent",
+      "samples": [
+        {
+          "size": 64,
+          "bbox": [
+            32,
+            32,
+            96,
+            96
+          ]
+        },
+        {
+          "size": 48,
+          "bbox": [
+            168,
+            40,
+            216,
+            88
+          ]
+        },
+        {
+          "size": 32,
+          "bbox": [
+            304,
+            48,
+            336,
+            80
+          ]
+        },
+        {
+          "size": 16,
+          "bbox": [
+            440,
+            56,
+            456,
+            72
+          ]
+        }
+      ],
+      "rasterization": "2048px master -> target via LANCZOS; composited 1:1"
+    },
+    {
+      "name": "char-beacon-lockup",
+      "x": 1216,
+      "y": 1504,
+      "w": 1024,
+      "h": 256,
+      "bbox": [
+        1216,
+        1504,
+        2240,
+        1760
+      ],
+      "background": "transparent"
+    },
+    {
+      "name": "compare-current",
+      "x": 64,
+      "y": 1920,
+      "w": 512,
+      "h": 512,
+      "bbox": [
+        64,
+        1920,
+        576,
+        2432
+      ],
+      "background": "transparent",
+      "geometry_source": "scripts/render_brand_book.py:fox",
+      "mode": "dark",
+      "geometry_modified": false
+    },
+    {
+      "name": "compare-row",
+      "x": 176,
+      "y": 2544,
+      "w": 2048,
+      "h": 512,
+      "bbox": [
+        176,
+        2544,
+        2224,
+        3056
+      ],
+      "background": "#1E3A5F",
+      "optical_normalization": "Equal alpha-weighted visible area: approximately 54000 px per character, centered in five equal cells.",
+      "placements": [
+        {
+          "name": "puff",
+          "bbox": [
+            53,
+            130,
+            357,
+            381
+          ],
+          "alpha_area_px": 54061
+        },
+        {
+          "name": "perch",
+          "bbox": [
+            486,
+            115,
+            743,
+            397
+          ],
+          "alpha_area_px": 53908
+        },
+        {
+          "name": "drift",
+          "bbox": [
+            875,
+            141,
+            1173,
+            371
+          ],
+          "alpha_area_px": 54081
+        },
+        {
+          "name": "beacon",
+          "bbox": [
+            1292,
+            124,
+            1575,
+            387
+          ],
+          "alpha_area_px": 54044
+        },
+        {
+          "name": "current",
+          "bbox": [
+            1699,
+            101,
+            1988,
+            411
+          ],
+          "alpha_area_px": 53962
+        }
+      ]
+    }
+  ]
+}

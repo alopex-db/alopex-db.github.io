@@ -1,0 +1,958 @@
+{
+  "canvas": {
+    "width": 2944,
+    "height": 4256,
+    "mode": "RGBA"
+  },
+  "bbox_convention": "Half-open [x,y,x+w,y+h]. Exact artwork crops; labels only in gutters. Minimum gap 48px.",
+  "status": "Cute redo. Cuteness governs. Earlier geometry is not imported, traced or reused.",
+  "prior_sheet_diagnosis": [
+    "Long profile muzzles, small high eyes and pointed tails made the guardian sheet read as adult diagrams.",
+    "Angular surfaces overpowered expression. This redo uses chibi anatomy, soft cheeks, large low eyes and rounded tails."
+  ],
+  "palette": {
+    "deep": "#1E3A5F",
+    "blue-light": "#2E5077",
+    "blue-dark": "#152C4A",
+    "ice": "#5FB4C9",
+    "aurora": "#7EC8E3",
+    "frost": "#B8D4E3",
+    "silver": "#C0C5CE",
+    "snow": "#F8FAFC",
+    "night": "#0B1929",
+    "rose": "#E99BA4"
+  },
+  "warm_accent": {
+    "name": "rose",
+    "hex": "#E99BA4",
+    "uses": [
+      "nose",
+      "blush",
+      "inner ears",
+      "tiny mouth interior"
+    ],
+    "blush_opacity": 82,
+    "reason": "One soft rose hue makes the nose and cheeks feel warm against snow without changing the pale coat."
+  },
+  "geometry_rules": {
+    "head_width": 336,
+    "head_height": 220,
+    "total_height": 439,
+    "total_height_to_head_height": 1.995,
+    "eye_diameter": 68,
+    "eye_diameter_to_head_width": 0.20238095238095238,
+    "eye_center_y_from_head_top": 137,
+    "head_horizontal_midline": 110,
+    "eye_pair_outer_span": 178,
+    "eye_pair_span_to_head_width": 0.5297619047619048,
+    "catchlight_diameter": 17,
+    "catchlight_to_eye_diameter": 0.25,
+    "nose_width": 22,
+    "nose_to_eye_diameter": 0.3235294117647059,
+    "muzzle_depth": 65,
+    "muzzle_depth_to_head_width": 0.19345238095238096,
+    "ear_height_above_head": 85,
+    "ear_height_to_head_height": 0.38636363636363635,
+    "minimum_polygon_corner_radius_ratio": 0.08,
+    "base_body_bbox": [
+      218,
+      373,
+      425,
+      564
+    ],
+    "base_tail_bbox": [
+      327,
+      344,
+      568,
+      561
+    ],
+    "front_tail_bbox": [
+      137,
+      489,
+      530,
+      574
+    ]
+  },
+  "geometry_notes": [
+    "Measurements are local construction coordinates, before pose transforms; head height measures the face mass excluding protruding ears.",
+    "Sitter total height is approximately twice its face height; crouched, curled and peeking poses compress visible height further.",
+    "Body and tail use ellipse blobs; paws have no joints. Tail area exceeds the body area.",
+    "Rounded triangles are built by dilating a convex triangle with circular caps. Every vertex receives >=8% radius; no sharp polygon tip is left exposed.",
+    "Open eyes always have a solid night ellipse and a 25% upper-left snow catchlight, plus a smaller lower-right catchlight.",
+    "Closed eyes in sleeping and happy expressions use curved eyelids instead of an iris; these intentional expression exceptions have no catchlight.",
+    "The sleepy expression keeps open oval eyes and both catchlights. All direction faces except Doze have open eyes.",
+    "Blush is on all eight directions; the single warm hue is alpha-composited over the opaque cheek, not baked into a rectangular matte."
+  ],
+  "rendering": "Pillow only; 2560px RGBA masters. LANCZOS for every final size. Pose rotations use Pillow BICUBIC at master resolution. No hand-tuned tiny variants.",
+  "directions": [
+    {
+      "name": "mochi",
+      "pose": "Front-on sitter, tail wrapped around its feet; steady eye contact and a tiny w smile.",
+      "concept": "The everyday survivor: comfortable before, during and after the weather changes.",
+      "trait": "Unbreakable: ordinary comfort is the constant, not a heroic pose.",
+      "expression": "Open, trusting eyes; warm blush; small w smile.",
+      "cute_reason": "YES: oversized cheeks, huge sparkling eyes and a tail blanket make it feel like a small companion.",
+      "at_16px": "A pale big-eared face with two dark eyes; smile and blush disappear. The tail merges into a soft base.",
+      "blush": true,
+      "cuteness_review": {
+        "size_px": 192,
+        "is_cute": true,
+        "reason": "YES: oversized cheeks, huge sparkling eyes and a tail blanket make it feel like a small companion."
+      },
+      "construction_metrics": "Shared face measurements in geometry_rules; uniform per-pose scaling preserves these ratios."
+    },
+    {
+      "name": "pillow",
+      "pose": "Lying flat on two soft storage slabs, chin resting between round paws.",
+      "concept": "At home on the data; relaxed enough to use the store as a pillow.",
+      "trait": "Durable storage: data is a dependable resting place.",
+      "expression": "Wide eyes looking up; slightly squashed cheeks and a shy smile.",
+      "cute_reason": "YES: the chin is low between marshmallow paws; the enormous face does all the emotional work.",
+      "at_16px": "A wide-eyed pale loaf over a blue baseline. The storage slabs merge; the relaxed face remains.",
+      "blush": true,
+      "cuteness_review": {
+        "size_px": 192,
+        "is_cute": true,
+        "reason": "YES: the chin is low between marshmallow paws; the enormous face does all the emotional work."
+      },
+      "construction_metrics": "Shared face measurements in geometry_rules; uniform per-pose scaling preserves these ratios."
+    },
+    {
+      "name": "doze",
+      "pose": "Curled into a soft tail ball, cheek tucked against the tail, sleepy arcs above.",
+      "concept": "Waiting out the conditions by being completely comfortable.",
+      "trait": "Unbreakable: rest and endurance, without suffering or defiance.",
+      "expression": "Closed smiling eyelids, tiny nose and rosy sleeping cheeks.",
+      "cute_reason": "YES: closed curved eyelids, tucked cheeks and a huge tail make a cozy sleeping bundle.",
+      "at_16px": "A curled pale sleeping bundle with two ear tips. Eyes, nose and sleep arcs vanish; fails as a standalone fox icon.",
+      "blush": true,
+      "cuteness_review": {
+        "size_px": 192,
+        "is_cute": true,
+        "reason": "YES: closed curved eyelids, tucked cheeks and a huge tail make a cozy sleeping bundle."
+      },
+      "construction_metrics": "Shared face measurements in geometry_rules; uniform per-pose scaling preserves these ratios."
+    },
+    {
+      "name": "peek",
+      "pose": "Eyes and large ears above a rounded snow ledge; two tiny paws holding its top.",
+      "concept": "Snow covers most of the body; the little fox is still happily present.",
+      "trait": "Native search: looking out from beneath the surface.",
+      "expression": "Curious open eyes; small smile just above the ledge.",
+      "cute_reason": "YES: the face-to-paw scale and low eye placement make the peeking gesture inviting.",
+      "at_16px": "Two dark eyes and ears above a rounded blue-white bank. Paws merge; curiosity survives, species is ambiguous.",
+      "blush": true,
+      "cuteness_review": {
+        "size_px": 192,
+        "is_cute": true,
+        "reason": "YES: the face-to-paw scale and low eye placement make the peeking gesture inviting."
+      },
+      "construction_metrics": "Shared face measurements in geometry_rules; uniform per-pose scaling preserves these ratios."
+    },
+    {
+      "name": "tumble",
+      "pose": "Rear and enormous tail lifted over a tilted, delighted face diving toward soft powder.",
+      "concept": "A hunting pounce becomes joyful curiosity, with the face kept visible.",
+      "trait": "Native search: diving into what cannot be seen from the surface.",
+      "expression": "Bright open eyes, rosy cheeks and a happy open mouth.",
+      "cute_reason": "YES: the tilted oversized head, tiny reaching paws and lifted tail read as playful clumsiness.",
+      "at_16px": "A diagonal pale puff with a dark face and tail bump. The dive is lost; illustration-only at this scale.",
+      "blush": true,
+      "cuteness_review": {
+        "size_px": 192,
+        "is_cute": true,
+        "reason": "YES: the tilted oversized head, tiny reaching paws and lifted tail read as playful clumsiness."
+      },
+      "construction_metrics": "Shared face measurements in geometry_rules; uniform per-pose scaling preserves these ratios."
+    },
+    {
+      "name": "flurry",
+      "pose": "Seated and comfortable while rounded wind strokes pass; soft cheek fur streams sideways.",
+      "concept": "Bad conditions are outside the character; its relaxed gaze does not change.",
+      "trait": "Unbreakable: the blizzard is ordinary weather for this animal.",
+      "expression": "Calm, wide sparkling eyes, rosy cheeks and a small w smile.",
+      "cute_reason": "YES: rounded windblown cheek lobes and a tail blanket keep the storm scene cuddly, not embattled.",
+      "at_16px": "A big-eyed pale sitter with faint streaks; weather becomes noise. Use the underlying sitter for a tiny icon.",
+      "blush": true,
+      "cuteness_review": {
+        "size_px": 192,
+        "is_cute": true,
+        "reason": "YES: rounded windblown cheek lobes and a tail blanket keep the storm scene cuddly, not embattled."
+      },
+      "construction_metrics": "Shared face measurements in geometry_rules; uniform per-pose scaling preserves these ratios."
+    },
+    {
+      "name": "chime",
+      "pose": "Two small chibi foxes lean nose to nose, calling through small rounded arcs.",
+      "concept": "Chirps: a tiny exchange between companions keeps the ecosystem connected.",
+      "trait": "Ecosystem continuity: short calls connect the group across distance.",
+      "expression": "Both have bright open eyes, blush and gentle open smiles.",
+      "cute_reason": "YES: the affectionate pair and giant eyes give the strongest social, sticker-like moment.",
+      "at_16px": "Two pale heads with dark eye specks. Calls and individual expressions disappear; not a small single-character icon.",
+      "blush": true,
+      "cuteness_review": {
+        "size_px": 192,
+        "is_cute": true,
+        "reason": "YES: the affectionate pair and giant eyes give the strongest social, sticker-like moment."
+      },
+      "construction_metrics": "Shared face measurements in geometry_rules; uniform per-pose scaling preserves these ratios."
+    },
+    {
+      "name": "pitter",
+      "pose": "A tiny walker with one lifted blob paw, a body-sized tail and round prints behind it.",
+      "concept": "Trail: keep going, leaving a readable trace in the snow.",
+      "trait": "Runs without support: the small animal keeps moving on its own; prints also carry the Trail record metaphor.",
+      "expression": "A soft inquisitive gaze, blush and a small smile.",
+      "cute_reason": "YES: the lifted mitten paw and oversize face give the walk a toddler-like rhythm.",
+      "at_16px": "A pale face with a tail and one little foot. Prints disappear; the character survives better than the walking story.",
+      "blush": true,
+      "cuteness_review": {
+        "size_px": 192,
+        "is_cute": true,
+        "reason": "YES: the lifted mitten paw and oversize face give the walk a toddler-like rhythm."
+      },
+      "construction_metrics": "Shared face measurements in geometry_rules; uniform per-pose scaling preserves these ratios."
+    }
+  ],
+  "expressions": {
+    "character": "mochi",
+    "order": [
+      "neutral",
+      "happy",
+      "sleepy",
+      "surprised"
+    ],
+    "same_body_and_ears": true,
+    "only_changes": "Eyelid/eye shape and mouth; catchlights remain on every open eye."
+  },
+  "recommendation": {
+    "cuteness_ranking": [
+      "mochi",
+      "chime",
+      "pillow",
+      "peek",
+      "doze",
+      "tumble",
+      "pitter",
+      "flurry"
+    ],
+    "owner_shortlist": [
+      "mochi",
+      "chime",
+      "pillow",
+      "flurry"
+    ],
+    "reasons": {
+      "mochi": "Strongest single companion: eye contact, round face and tail blanket; versatile expression system.",
+      "chime": "Most affectionate interaction; a natural Chirps character story.",
+      "pillow": "Chin on paws gives the clearest cozy database scene.",
+      "peek": "A simple face-and-paws sticker that remains inviting at small scales.",
+      "doze": "Cozy sleeping bundle; expression is deliberately quiet and weak at 16px.",
+      "tumble": "Playful and energetic; pose needs thumbnail space to read.",
+      "pitter": "Sweet lifted-paw walk, but the Trail prints need more pixels.",
+      "flurry": "The base character is cute; wind adds noise. Shortlisted for the survival message rather than novelty."
+    },
+    "discard": [],
+    "tiny_icon_limit": "Doze, Tumble and Chime lose their stories at 16px; none is approved as a final favicon."
+  },
+  "fonts": {
+    "catalog": {
+      "path": "/System/Library/Fonts/Supplemental/Arial.ttf"
+    }
+  },
+  "tiles": [
+    {
+      "name": "cute-mochi-hero",
+      "x": 64,
+      "y": 272,
+      "w": 640,
+      "h": 640,
+      "bbox": [
+        64,
+        272,
+        704,
+        912
+      ],
+      "background": "transparent"
+    },
+    {
+      "name": "cute-mochi-sizes",
+      "x": 752,
+      "y": 272,
+      "w": 512,
+      "h": 128,
+      "bbox": [
+        752,
+        272,
+        1264,
+        400
+      ],
+      "background": "transparent",
+      "samples": [
+        {
+          "size": 96,
+          "bbox": [
+            16,
+            16,
+            112,
+            112
+          ]
+        },
+        {
+          "size": 64,
+          "bbox": [
+            160,
+            32,
+            224,
+            96
+          ]
+        },
+        {
+          "size": 32,
+          "bbox": [
+            304,
+            48,
+            336,
+            80
+          ]
+        },
+        {
+          "size": 16,
+          "bbox": [
+            440,
+            56,
+            456,
+            72
+          ]
+        }
+      ]
+    },
+    {
+      "name": "cute-mochi-thumb",
+      "x": 752,
+      "y": 512,
+      "w": 192,
+      "h": 192,
+      "bbox": [
+        752,
+        512,
+        944,
+        704
+      ],
+      "background": "transparent"
+    },
+    {
+      "name": "cute-pillow-hero",
+      "x": 1536,
+      "y": 272,
+      "w": 640,
+      "h": 640,
+      "bbox": [
+        1536,
+        272,
+        2176,
+        912
+      ],
+      "background": "transparent"
+    },
+    {
+      "name": "cute-pillow-sizes",
+      "x": 2224,
+      "y": 272,
+      "w": 512,
+      "h": 128,
+      "bbox": [
+        2224,
+        272,
+        2736,
+        400
+      ],
+      "background": "transparent",
+      "samples": [
+        {
+          "size": 96,
+          "bbox": [
+            16,
+            16,
+            112,
+            112
+          ]
+        },
+        {
+          "size": 64,
+          "bbox": [
+            160,
+            32,
+            224,
+            96
+          ]
+        },
+        {
+          "size": 32,
+          "bbox": [
+            304,
+            48,
+            336,
+            80
+          ]
+        },
+        {
+          "size": 16,
+          "bbox": [
+            440,
+            56,
+            456,
+            72
+          ]
+        }
+      ]
+    },
+    {
+      "name": "cute-pillow-thumb",
+      "x": 2224,
+      "y": 512,
+      "w": 192,
+      "h": 192,
+      "bbox": [
+        2224,
+        512,
+        2416,
+        704
+      ],
+      "background": "transparent"
+    },
+    {
+      "name": "cute-doze-hero",
+      "x": 64,
+      "y": 1088,
+      "w": 640,
+      "h": 640,
+      "bbox": [
+        64,
+        1088,
+        704,
+        1728
+      ],
+      "background": "transparent"
+    },
+    {
+      "name": "cute-doze-sizes",
+      "x": 752,
+      "y": 1088,
+      "w": 512,
+      "h": 128,
+      "bbox": [
+        752,
+        1088,
+        1264,
+        1216
+      ],
+      "background": "transparent",
+      "samples": [
+        {
+          "size": 96,
+          "bbox": [
+            16,
+            16,
+            112,
+            112
+          ]
+        },
+        {
+          "size": 64,
+          "bbox": [
+            160,
+            32,
+            224,
+            96
+          ]
+        },
+        {
+          "size": 32,
+          "bbox": [
+            304,
+            48,
+            336,
+            80
+          ]
+        },
+        {
+          "size": 16,
+          "bbox": [
+            440,
+            56,
+            456,
+            72
+          ]
+        }
+      ]
+    },
+    {
+      "name": "cute-doze-thumb",
+      "x": 752,
+      "y": 1328,
+      "w": 192,
+      "h": 192,
+      "bbox": [
+        752,
+        1328,
+        944,
+        1520
+      ],
+      "background": "transparent"
+    },
+    {
+      "name": "cute-peek-hero",
+      "x": 1536,
+      "y": 1088,
+      "w": 640,
+      "h": 640,
+      "bbox": [
+        1536,
+        1088,
+        2176,
+        1728
+      ],
+      "background": "transparent"
+    },
+    {
+      "name": "cute-peek-sizes",
+      "x": 2224,
+      "y": 1088,
+      "w": 512,
+      "h": 128,
+      "bbox": [
+        2224,
+        1088,
+        2736,
+        1216
+      ],
+      "background": "transparent",
+      "samples": [
+        {
+          "size": 96,
+          "bbox": [
+            16,
+            16,
+            112,
+            112
+          ]
+        },
+        {
+          "size": 64,
+          "bbox": [
+            160,
+            32,
+            224,
+            96
+          ]
+        },
+        {
+          "size": 32,
+          "bbox": [
+            304,
+            48,
+            336,
+            80
+          ]
+        },
+        {
+          "size": 16,
+          "bbox": [
+            440,
+            56,
+            456,
+            72
+          ]
+        }
+      ]
+    },
+    {
+      "name": "cute-peek-thumb",
+      "x": 2224,
+      "y": 1328,
+      "w": 192,
+      "h": 192,
+      "bbox": [
+        2224,
+        1328,
+        2416,
+        1520
+      ],
+      "background": "transparent"
+    },
+    {
+      "name": "cute-tumble-hero",
+      "x": 64,
+      "y": 1904,
+      "w": 640,
+      "h": 640,
+      "bbox": [
+        64,
+        1904,
+        704,
+        2544
+      ],
+      "background": "transparent"
+    },
+    {
+      "name": "cute-tumble-sizes",
+      "x": 752,
+      "y": 1904,
+      "w": 512,
+      "h": 128,
+      "bbox": [
+        752,
+        1904,
+        1264,
+        2032
+      ],
+      "background": "transparent",
+      "samples": [
+        {
+          "size": 96,
+          "bbox": [
+            16,
+            16,
+            112,
+            112
+          ]
+        },
+        {
+          "size": 64,
+          "bbox": [
+            160,
+            32,
+            224,
+            96
+          ]
+        },
+        {
+          "size": 32,
+          "bbox": [
+            304,
+            48,
+            336,
+            80
+          ]
+        },
+        {
+          "size": 16,
+          "bbox": [
+            440,
+            56,
+            456,
+            72
+          ]
+        }
+      ]
+    },
+    {
+      "name": "cute-tumble-thumb",
+      "x": 752,
+      "y": 2144,
+      "w": 192,
+      "h": 192,
+      "bbox": [
+        752,
+        2144,
+        944,
+        2336
+      ],
+      "background": "transparent"
+    },
+    {
+      "name": "cute-flurry-hero",
+      "x": 1536,
+      "y": 1904,
+      "w": 640,
+      "h": 640,
+      "bbox": [
+        1536,
+        1904,
+        2176,
+        2544
+      ],
+      "background": "transparent"
+    },
+    {
+      "name": "cute-flurry-sizes",
+      "x": 2224,
+      "y": 1904,
+      "w": 512,
+      "h": 128,
+      "bbox": [
+        2224,
+        1904,
+        2736,
+        2032
+      ],
+      "background": "transparent",
+      "samples": [
+        {
+          "size": 96,
+          "bbox": [
+            16,
+            16,
+            112,
+            112
+          ]
+        },
+        {
+          "size": 64,
+          "bbox": [
+            160,
+            32,
+            224,
+            96
+          ]
+        },
+        {
+          "size": 32,
+          "bbox": [
+            304,
+            48,
+            336,
+            80
+          ]
+        },
+        {
+          "size": 16,
+          "bbox": [
+            440,
+            56,
+            456,
+            72
+          ]
+        }
+      ]
+    },
+    {
+      "name": "cute-flurry-thumb",
+      "x": 2224,
+      "y": 2144,
+      "w": 192,
+      "h": 192,
+      "bbox": [
+        2224,
+        2144,
+        2416,
+        2336
+      ],
+      "background": "transparent"
+    },
+    {
+      "name": "cute-chime-hero",
+      "x": 64,
+      "y": 2720,
+      "w": 640,
+      "h": 640,
+      "bbox": [
+        64,
+        2720,
+        704,
+        3360
+      ],
+      "background": "transparent"
+    },
+    {
+      "name": "cute-chime-sizes",
+      "x": 752,
+      "y": 2720,
+      "w": 512,
+      "h": 128,
+      "bbox": [
+        752,
+        2720,
+        1264,
+        2848
+      ],
+      "background": "transparent",
+      "samples": [
+        {
+          "size": 96,
+          "bbox": [
+            16,
+            16,
+            112,
+            112
+          ]
+        },
+        {
+          "size": 64,
+          "bbox": [
+            160,
+            32,
+            224,
+            96
+          ]
+        },
+        {
+          "size": 32,
+          "bbox": [
+            304,
+            48,
+            336,
+            80
+          ]
+        },
+        {
+          "size": 16,
+          "bbox": [
+            440,
+            56,
+            456,
+            72
+          ]
+        }
+      ]
+    },
+    {
+      "name": "cute-chime-thumb",
+      "x": 752,
+      "y": 2960,
+      "w": 192,
+      "h": 192,
+      "bbox": [
+        752,
+        2960,
+        944,
+        3152
+      ],
+      "background": "transparent"
+    },
+    {
+      "name": "cute-pitter-hero",
+      "x": 1536,
+      "y": 2720,
+      "w": 640,
+      "h": 640,
+      "bbox": [
+        1536,
+        2720,
+        2176,
+        3360
+      ],
+      "background": "transparent"
+    },
+    {
+      "name": "cute-pitter-sizes",
+      "x": 2224,
+      "y": 2720,
+      "w": 512,
+      "h": 128,
+      "bbox": [
+        2224,
+        2720,
+        2736,
+        2848
+      ],
+      "background": "transparent",
+      "samples": [
+        {
+          "size": 96,
+          "bbox": [
+            16,
+            16,
+            112,
+            112
+          ]
+        },
+        {
+          "size": 64,
+          "bbox": [
+            160,
+            32,
+            224,
+            96
+          ]
+        },
+        {
+          "size": 32,
+          "bbox": [
+            304,
+            48,
+            336,
+            80
+          ]
+        },
+        {
+          "size": 16,
+          "bbox": [
+            440,
+            56,
+            456,
+            72
+          ]
+        }
+      ]
+    },
+    {
+      "name": "cute-pitter-thumb",
+      "x": 2224,
+      "y": 2960,
+      "w": 192,
+      "h": 192,
+      "bbox": [
+        2224,
+        2960,
+        2416,
+        3152
+      ],
+      "background": "transparent"
+    },
+    {
+      "name": "cute-expressions",
+      "x": 64,
+      "y": 3632,
+      "w": 1536,
+      "h": 384,
+      "bbox": [
+        64,
+        3632,
+        1600,
+        4016
+      ],
+      "background": "transparent",
+      "character": "mochi",
+      "expressions": [
+        {
+          "expression": "neutral",
+          "bbox": [
+            0,
+            0,
+            384,
+            384
+          ]
+        },
+        {
+          "expression": "happy",
+          "bbox": [
+            384,
+            0,
+            768,
+            384
+          ]
+        },
+        {
+          "expression": "sleepy",
+          "bbox": [
+            768,
+            0,
+            1152,
+            384
+          ]
+        },
+        {
+          "expression": "surprised",
+          "bbox": [
+            1152,
+            0,
+            1536,
+            384
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,84 +1,96 @@
 # Alopex DB brand assets
 
-Everything in this directory is generated. Do not hand-edit a PNG here.
+The sole approved mark master is
+`assets/brand/character/mark-head-flat.png`, from the calm character set.
+Candidate A and the other plate experiments are historical alternatives, not
+production sources. The retired geometric face is also no longer used.
+**Never hand-edit a shipped PNG or redraw, flatten, recolor or reshape the face.**
+
+## Two registers, one fox
+
+| Surface | Identity to use |
+|:--|:--|
+| GitHub repositories, organization profiles and the documentation site | The mark in this directory; the calm-tone character in `assets/brand/character/` for figures and illustrations. |
+| asopi.tech, video, social and merchandise | The glossy cute character maintained in the **asopitech-labs** organization, not this repository's shipping kit. |
+
+Both characters are the same arctic fox in different registers. Local exploration
+folders remain historical work. GitHub social-preview cards here use the mark.
+
+## Sources and rebuilding
+
+`assets/brand/mark-source/` contains:
+
+- `mark-face.png`: a **byte-for-byte copy** of the approved transparent master.
+- `mark-face-small.png`: another byte-for-byte copy of that same master. There
+  are no simplified eyes, enlarged glints, trimmed cheeks or other retouches.
+- `mark-plate.png`: that artwork centered on an opaque night `#0B1929` plate.
+  Framing is measured from alpha; the artwork's alpha is not cleaned or changed.
+- `shipped-sizes.json`: the 74 original filenames and measured pixel dimensions.
+
+From the repository root:
 
 ```bash
-python3 scripts/render_brand_book.py    # draws design-book.png + manifest.json
-python3 scripts/export_brand_assets.py  # slices the shipping assets out of it
+python3 -m pip install -r requirements-brand.txt
+python3 scripts/prepare_brand_mark.py
+python3 scripts/compose_brand_assets.py
+python3 scripts/verify_brand_assets.py
 ```
 
-`design-book.png` is the single large catalog every asset is cut from, and
-`manifest.json` records each tile's exact pixel box, background, and the sizes
-it ships at. Changing a shape means changing `scripts/render_brand_book.py` and
-re-running both commands — the manifest and the artwork are generated from one
-geometry source, so they cannot drift apart.
+The preparation command copies the master and composites the plate. The old
+normalization script has been removed: there is no palette classification,
+feature drawing, morphological simplification or eye-highlight reconstruction.
+The compositor scales and places the sources in the established layouts,
+preserving typography, copy and project symbols. It rebuilds the catalogue,
+manifest and all 74 PNG paths at their original dimensions.
 
-## Which file to use where
+Verification checks file-byte and full-image pixel identity for both transparent
+sources, plus separate left/right eye crops against the master. It also checks
+the plate composition, legacy export paths and sizes, small exports, avatar
+framing, aliases and the current catalogue. Never replace these identity checks
+with a subjective similarity assessment.
 
-| Use | File |
+## Legacy filenames and limitations
+
+The existing filenames remain for compatibility with live pages and open pull
+requests. **The `dark`, `light` and `mono` face exports now use the same original
+artwork and original colours.** The suffixes do not authorize recoloring it.
+Consequently, `mark-mono*.png` is **not a single-ink asset**, and the white face
+has limited contrast on light backgrounds. A genuine monochrome adaptation or
+new light-background face treatment needs separate approval; do not invent one.
+
+| Use | Existing file |
 |:--|:--|
-| README / org profile hero, dark theme | `lockup-horizontal-dark-800.png` |
-| README / org profile hero, light theme | `lockup-horizontal-light-800.png` |
-| Docs theme header logo | `mark-dark-256.png` |
-| Homepage hero mark | `mark-light-256.png` + `mark-dark-256.png` (Material `#only-light` / `#only-dark`) |
-| Browser tab / GitHub repo icon | `favicon.png` (48 px, from `favicon-plate`) |
-| iOS home screen | `apple-touch-icon.png` (180 px) |
-| GitHub organization avatar | `avatar-org.png` (512 px, upload at github.com/organizations/alopex-db/settings/profile) |
-| GitHub repo social preview card | `social-preview-1280.png` (1280×640, per-repo Settings → Social preview) |
-| Open Graph / Twitter card for the docs site | `social-preview.png` (wired in `docs/overrides/main.html`) |
-| Slide or banner header | `readme-banner-1280.png` |
-| Single-ink print, stickers, stamps | `mark-mono.png` |
-| Family project icons, light background | `submark-skulk.png`, `submark-chirps.png`, `submark-trail.png`, `submark-dataui.png` |
-| Family project icons, dark background | the same names with `-dark` |
-| Skulk / Chirps repo hero | `lockup-skulk-{light,dark}-800.png`, `lockup-chirps-{light,dark}-800.png` |
+| Transparent mark, best on dark backgrounds | `mark-dark.png` and its size variants |
+| Legacy light/mono references, same unchanged artwork | `mark-light*.png`, `mark-mono*.png` |
+| Browser tab with a visible opaque plate | `favicon.png`, `favicon-plate-16.png`, `favicon-plate-32.png` |
+| iOS home screen | `apple-touch-icon.png` |
+| Organization avatar | `avatar-org.png` and its size variants |
+| README lockups | `lockup-horizontal-{light,dark}*`, `lockup-stacked-dark*` |
+| Sibling project lockups | `lockup-{skulk,chirps}-{light,dark}*` |
+| Family figures | `submark-{skulk,chirps,trail,dataui}*` |
+| GitHub social preview | `social-preview.png`, `social-preview-1280.png` |
+| README banner | `readme-banner.png`, `readme-banner-1280.png` |
 
-Transparent variants carry no matte: preview a `*-dark` file on a dark
-background and a `*-light` file on a light one. The `favicon-plate` and
-`avatar-org` tiles are deliberately **opaque** — the platform draws them as a
-filled square against browser chrome we do not control.
+Plates bleed night to every edge. Avatar artwork fits within a centered circle
+about 85% of the square edge for round GitHub crops. Small-size exports use
+LANCZOS scaling of the same original artwork. At 16 px the subtle eye glints and
+fur detail may disappear; accept that limitation rather than changing features.
+A plate supplies contrast against uncontrolled light or dark browser chrome.
 
-## Palette
+The functional symbols retain their existing meanings: Skulk a time-series
+signal, Chirps a connected mesh, Trail ordered event tracks, Data UI interface
+panes. Their shapes, colours, typography and layout remain as before; only the
+fox artwork has been replaced.
+
+## Palette and history
 
 ![Alopex DB palette](palette-strip.png)
 
-| Token | Hex | Token | Hex |
-|:--|:--|:--|:--|
-| deep | `#1E3A5F` | night | `#0B1929` |
-| blue-light | `#2E5077` | panel | `#0F2137` |
-| blue-dark | `#152C4A` | snow | `#F8FAFC` |
-| ice | `#5FB4C9` | text | `#E8EEF2` |
-| aurora | `#7EC8E3` | silver | `#C0C5CE` |
-| frost | `#B8D4E3` | silver-light | `#DFE1E8` |
+The palette strip and surrounding kit retain their established colours.
+The master retains **all original pixel colours and antialiasing**, including its
+subtle eye glints. Do not quantize it to the palette strip or erase faint edges.
 
-The same tokens are defined as CSS variables in
-`docs/assets/stylesheets/extra.css`.
-
-## Rules
-
-- **Minimum size for the mark: 16 px.** Below that use the plate
-  (`favicon-plate-16.png`), never the transparent mark.
-- **Do not recolor.** Pick the variant that fits the background: `-light`,
-  `-dark`, or `-mono`.
-- **Do not stretch.** Scale proportionally; the exported sizes are there so you
-  rarely have to.
-- **Do not add effects.** The identity is flat on purpose — gradients and
-  shadows are what made the previous logo illegible at small sizes.
-- **Clear space:** keep at least half the mark's height free on every side of a
-  lockup.
-
-## Design decisions on record
-
-- One fox, not the earlier parent-and-child pair: a single silhouette survives
-  32 px and below, which the pair did not.
-- Flat approved fills with transparent eye apertures; the mono variant is one
-  ink.
-- Submarks share the fox silhouette and add one large functional symbol each,
-  so the family reads as a family.
-- The favicon and avatar plates are deep blue `#1E3A5F` — it holds snow-white
-  contrast and stays visible against both light and dark browser chrome.
-- The avatar's fox sits inside a centered circle of 85% of the edge, because
-  GitHub crops avatars to a circle in most places.
-
-The previous mark, `../logo.svg`, is kept for reference. It is gradient-based,
-white-on-transparent (invisible on light backgrounds), and unreadable below
-about 64 px — which is why this set replaced it.
+The old geometric fox is gone from the compositor.
+[`../logo.svg`](../logo.svg) remains only as history.
+Candidates A–F stay in `assets/brand/character/mark/` as a record and must never be
+used as fallback sources. Every production face comes from the one master.

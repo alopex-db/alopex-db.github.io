@@ -1,0 +1,36 @@
+{
+  "master": "assets/brand/character/mark-head-flat.png",
+  "master_sha256": "f980e68c74d93a274102ca17083e72970eb6885c7d75a08d32da30bedcbefbc8",
+  "eye_regions_xyxy": {
+    "left": [
+      325,
+      700,
+      530,
+      890
+    ],
+    "right": [
+      720,
+      700,
+      930,
+      890
+    ]
+  },
+  "sources": {
+    "mark-face.png": {
+      "file_bytes_identical": true,
+      "full_face_different_pixels": 0,
+      "eye_different_pixels": {
+        "left": 0,
+        "right": 0
+      }
+    },
+    "mark-face-small.png": {
+      "file_bytes_identical": true,
+      "full_face_different_pixels": 0,
+      "eye_different_pixels": {
+        "left": 0,
+        "right": 0
+      }
+    }
+  }
+}

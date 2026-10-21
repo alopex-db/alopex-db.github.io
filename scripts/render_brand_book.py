@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Render the Alopex DB catalog and crop manifest using only Pillow.
+"""Compose the Alopex DB catalogue from approved raster mark sources.
 
 Run from any directory: python3 scripts/render_brand_book.py
 Coordinates use half-open boxes: (x, y, x + w, y + h). No assets are exported.
@@ -7,6 +7,7 @@ Coordinates use half-open boxes: (x, y, x + w, y + h). No assets are exported.
 from pathlib import Path
 import json
 from PIL import Image, ImageDraw, ImageFont
+from brand_mark import fox, plate
 
 ROOT = Path(__file__).resolve().parents[1]
 OUT = ROOT / 'docs/assets/images/brand'
@@ -25,14 +26,14 @@ def tile(name, x, y, w, h, purpose, sizes, background='transparent'):
                                          for suffix, size in sizes])
 
 
-# This is the sole geometry source for both rendering and manifest generation.
+# This is the layout source for rendering and manifest generation; the face is raster artwork.
 # Square exports use integer size; rectangular exports use [width, height].
 TILES = [
     tile('mark-dark', 64, 160, 512, 512, 'Engine icon for dark backgrounds',
          [('', 512), ('-256', 256), ('-64', 64), ('-32', 32), ('-16', 16)]),
-    tile('mark-light', 640, 160, 512, 512, 'Engine icon for light backgrounds',
+    tile('mark-light', 640, 160, 512, 512, 'Legacy light path: original master colors; limited light contrast',
          [('', 512), ('-256', 256), ('-64', 64), ('-32', 32), ('-16', 16)]),
-    tile('mark-mono', 1216, 160, 512, 512, 'Single-ink silhouette with transparent eye cuts',
+    tile('mark-mono', 1216, 160, 512, 512, 'Legacy mono path: original master colors; not single ink',
          [('', 512), ('-64', 64), ('-32', 32), ('-16', 16)]),
     tile('lockup-horizontal-dark', 64, 768, 1536, 384, 'README picture source for dark backgrounds',
          [('', [1536, 384]), ('-800', [800, 200]), ('-400', [400, 100])]),
@@ -54,12 +55,12 @@ TILES = [
          [('', [2560, 640]), ('-1280', [1280, 320])], P['night']),
     tile('palette-strip', 64, 4768, 1536, 256, 'All twelve approved palette colors with hex values',
          [('', [1536, 256])], P['snow']),
-    tile('favicon-proof', 64, 5120, 512, 128, 'Proof only: native 16 / 32 / 48 / 64 px dark-ink marks; no export',
+    tile('favicon-proof', 64, 5120, 512, 128, 'Proof only: unchanged master at native 16 / 32 / 48 / 64 px; no export',
          []),
-    tile('favicon-plate', 2112, 768, 512, 512, 'Opaque snow fox on deep blue for light and dark browser chrome',
-         [('', 512), ('-180', 180), ('-48', 48), ('-32', 32), ('-16', 16)], P['deep']),
+    tile('favicon-plate', 2112, 768, 512, 512, 'Original master on night plate for light and dark browser chrome',
+         [('', 512), ('-180', 180), ('-48', 48), ('-32', 32), ('-16', 16)], P['night']),
     tile('avatar-org', 2112, 1344, 512, 512, 'Opaque organization avatar; fox inside centered 85% circle',
-         [('', 512), ('-256', 256), ('-96', 96)], P['deep']),
+         [('', 512), ('-256', 256), ('-96', 96)], P['night']),
 ]
 
 # Append the family collection without moving any approved tile.
@@ -106,25 +107,6 @@ def text(im, xy, value, size, color, role='body', center=False):
     d.text((x - box[0], y - box[1]), value, font=f, fill=color)
 
 
-def fox(size, mode='light'):
-    """One connected fox silhouette. Eye apertures remain empty in every mode."""
-    s = 4
-    im = Image.new('RGBA', (size * s, size * s))
-    d = ImageDraw.Draw(im)
-    def poly(points, fill):
-        d.polygon([(round(x * size * s / 100), round(y * size * s / 100))
-                   for x, y in points], fill=fill)
-    ink = P['snow'] if mode == 'dark' else P['deep']
-    poly([(14, 8), (38, 25), (62, 25), (86, 8), (90, 57),
-          (72, 78), (50, 94), (28, 78), (10, 57)], ink)
-    if mode != 'mono':
-        poly([(38, 25), (62, 25), (50, 47)], P['ice'])
-    for points in [[(20, 44), (43, 53), (37, 61), (23, 55)],
-                   [(80, 44), (57, 53), (63, 61), (77, 55)]]:
-        poly(points, (0, 0, 0, 0))
-    return im.resize((size, size), Image.Resampling.LANCZOS)
-
-
 def paste_fox(im, x, y, size, mode='dark'):
     im.alpha_composite(fox(size, mode), (x, y))
 
@@ -149,13 +131,9 @@ def render(t):
     if name.startswith('mark-'):
         mark(0, 0, 512, name.removeprefix('mark-'))
     elif name == 'favicon-plate':
-        # Large silhouette: ~13px wide at 16px, with two broad eye apertures.
-        # Alpha compositing fills the apertures with the opaque plate color.
-        mark(0, -5, 512)
+        im = plate(w * scale)
     elif name == 'avatar-org':
-        # Center the actual silhouette, not its nominal square. The ear tips
-        # stay within radius 217.6px even when GitHub applies a circular crop.
-        mark(64, 60, 384)
+        im = plate(w * scale, avatar=True)
     elif name.startswith(('lockup-skulk-', 'lockup-chirps-')):
         _, family, mode = name.split('-')
         sibling_name = f'submark-{family}' + ('-dark' if mode == 'dark' else '')
@@ -223,7 +201,7 @@ def render(t):
         # Do not render a large fox and scale the whole proof down afterward.
         proof = Image.new('RGBA', (w, h))
         for cx, size in zip((64, 192, 320, 448), (16, 32, 48, 64)):
-            proof.alpha_composite(fox(size), (cx-size//2, (h-size)//2))
+            proof.alpha_composite(fox(size, 'light'), (cx-size//2, (h-size)//2))
         return proof
     else:
         raise ValueError(name)
@@ -246,7 +224,7 @@ def main():
     OUT.mkdir(parents=True, exist_ok=True)
     book = Image.new('RGBA', (CANVAS['width'], CANVAS['height']), P['snow'])
     text(book, (64, 30), 'ALOPEX DB / ARCTIC IDENTITY', 38, P['deep'], 'brand')
-    text(book, (1760, 42), '01   SINGLE FOX / FLAT COLOR / OPEN SOURCE', 21, P['deep'])
+    text(book, (1760, 42), '03   APPROVED MASTER / UNTOUCHED ARTWORK', 21, P['deep'])
     for t in TILES:
         name, x, y = t['name'], t['x'], t['y']
         # A caption ends above its tile; a simple paste replaces alpha exactly.
@@ -256,11 +234,11 @@ def main():
         if t['background'] == 'transparent':
             assert artwork.getpixel((0, 0))[3] == 0
     text(book, (1840, 210), 'ONE FOX. ONE ENGINE.', 31, P['deep'], 'brand')
-    text(book, (1840, 282), 'Parent + child reduced to one silhouette.', 24, P['deep'])
+    text(book, (1840, 282), 'Master: character/mark-head-flat.png', 24, P['deep'])
     text(book, (1840, 330), 'Family identity lives in sibling submarks.', 24, P['deep'])
-    text(book, (1840, 378), 'Transparent eye cuts survive one ink.', 24, P['deep'])
-    text(book, (1840, 466), 'Dark variants use snow + ice.', 24, P['deep'])
-    text(book, (1840, 514), 'Light variants use deep blue + ice.', 24, P['deep'])
+    text(book, (1840, 378), 'Same unaltered artwork at every size.', 24, P['deep'])
+    text(book, (1840, 466), 'Original eyes and subtle glints intact.', 24, P['deep'])
+    text(book, (1840, 514), 'Legacy light / mono paths: same colors.', 24, P['deep'])
     text(book, (1840, 562), 'Empty tile areas are alpha 0.', 24, P['deep'])
     for cx, size in zip((128, 256, 384, 512), (16, 32, 48, 64)):
         text(book, (cx, 5268), f'{size}px', 18, P['deep'], center=True)
@@ -268,17 +246,21 @@ def main():
     manifest = {
         'canvas': CANVAS, 'bbox_convention': 'half-open: [x, y, x+w, y+h]',
         'design_decisions': [
-            'Use one fox instead of parent + child to retain a clear small-size silhouette.',
-            'Use flat approved fills and transparent eye apertures; mono is one ink.',
+            'The sole master is assets/brand/character/mark-head-flat.png; both face sources are verbatim copies. No face normalization, recoloring or drawing is permitted.',
+            'Legacy light and mono paths retain the master colors. Mono is not single-ink; white artwork has limited contrast on light surfaces.',
             'Canvas widened to 2688px to contain native 2560px tiles with 64px margins.',
-            'Submarks share the fox silhouette and functional symbols; light uses deep blue, dark uses snow with ice accents.',
+            'Submarks share the unchanged master fox; existing functional symbols retain their background-specific colors.',
             'Skulk and Chirps README lockups reuse the corresponding submarks and the engine wordmark typeface treatment.',
             'Favicon proof contains actual 16/32/48/64px rasterizations; labels are outside its bbox.',
             'Transparent dark variants must be previewed on a dark background; no matte is baked in.',
-            'Favicon and avatar plates use deep blue #1E3A5F: snow contrast and a visible plate against both light and dark chrome.',
+            'Favicon and avatar plates composite the unchanged master on night #0B1929.',
             'Avatar fox is optically centered and contained inside a centered 85%-diameter circle; plate bleeds to all corners.',
         ],
         'palette': P, 'fonts': SELECTED_FONTS,
+        'mark_master': 'assets/brand/character/mark-head-flat.png',
+        'mark_sources': ['assets/brand/mark-source/mark-face.png',
+                         'assets/brand/mark-source/mark-plate.png',
+                         'assets/brand/mark-source/mark-face-small.png'],
         'export_size_convention': 'integer = square edge; [width, height] = rectangle; empty export = proof only',
         'tiles': TILES,
     }

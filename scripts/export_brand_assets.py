@@ -1,13 +1,14 @@
 #!/usr/bin/env python3
 """Crop the shipped brand assets out of the design book.
 
-`scripts/render_brand_book.py` draws one large catalog image
+`scripts/render_brand_book.py` composes one large catalog image from raster sources
 (`docs/assets/images/brand/design-book.png`) plus `manifest.json`, which records
 the exact pixel box of every tile and the sizes it ships at. This script is the
 second half of that pipeline: it slices the catalog into the individual files
 that the README, the org profile, and the MkDocs theme reference.
 
-Run after any change to the design book:
+Prefer `python3 scripts/compose_brand_assets.py` to rebuild and check all 74 paths.
+The lower-level commands are:
 
     python3 scripts/render_brand_book.py
     python3 scripts/export_brand_assets.py
@@ -21,6 +22,7 @@ import sys
 from pathlib import Path
 
 from PIL import Image
+from brand_mark import fox, plate
 
 ROOT = Path(__file__).resolve().parents[1]
 BRAND = ROOT / "docs" / "assets" / "images" / "brand"
@@ -69,7 +71,14 @@ def main() -> int:
 
         for export in exports:
             size = target_size(export["size"])
-            out = crop if size == crop.size else crop.resize(size, Image.LANCZOS)
+            if tile['name'].startswith('mark-') and size[0] <= 32:
+                out = fox(size[0], tile['name'].removeprefix('mark-'), small=True)
+            elif tile['name'] == 'favicon-plate' and size[0] <= 32:
+                out = plate(size[0], small=True)
+            elif tile['name'] == 'avatar-org':
+                out = plate(size[0], avatar=True)
+            else:
+                out = crop if size == crop.size else crop.resize(size, Image.LANCZOS)
             if opaque:
                 out = out.convert("RGB")
             path = BRAND / export["path"]

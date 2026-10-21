@@ -1,0 +1,86 @@
+[
+  {
+    "file": "mark-a-detailed.png",
+    "size": [
+      1254,
+      1254
+    ],
+    "mode": "RGB",
+    "corner": [
+      14,
+      31,
+      48
+    ],
+    "rgb_colors": 10430
+  },
+  {
+    "file": "mark-b-simplified.png",
+    "size": [
+      1254,
+      1254
+    ],
+    "mode": "RGB",
+    "corner": [
+      12,
+      30,
+      46
+    ],
+    "rgb_colors": 9730
+  },
+  {
+    "file": "mark-c-geometric.png",
+    "size": [
+      1254,
+      1254
+    ],
+    "mode": "RGB",
+    "corner": [
+      14,
+      30,
+      45
+    ],
+    "rgb_colors": 8940
+  },
+  {
+    "file": "mark-d-minimal.png",
+    "size": [
+      1254,
+      1254
+    ],
+    "mode": "RGB",
+    "corner": [
+      13,
+      30,
+      46
+    ],
+    "rgb_colors": 9343
+  },
+  {
+    "file": "mark-e-twotone.png",
+    "size": [
+      1254,
+      1254
+    ],
+    "mode": "RGB",
+    "corner": [
+      15,
+      30,
+      46
+    ],
+    "rgb_colors": 7004
+  },
+  {
+    "file": "mark-f-abstract.png",
+    "size": [
+      1254,
+      1254
+    ],
+    "mode": "RGB",
+    "corner": [
+      12,
+      29,
+      43
+    ],
+    "rgb_colors": 7833
+  }
+]
