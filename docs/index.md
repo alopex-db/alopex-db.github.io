@@ -545,6 +545,8 @@ Currently in early development — the concept and component model are published
 
 Alopex DB is open-source under the **Apache 2.0 License**.
 
+Read the author's blog post, [Even So, I'm Building Alopex DB](https://asopi.tech/en/blog/20260715_1), on why this engine is being built.
+
 We welcome contributions from engineers passionate about Rust, Distributed Systems, and Vector Search.
 
 [Contributing Guide](contributing.md){ .md-button }
